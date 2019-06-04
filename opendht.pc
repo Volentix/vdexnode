@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+Name: OpenDHT
+Description: C++ Distributed Hash Table library
+Version: 1.9.4
+Libs: -L${libdir} -lopendht
+Libs.private: -lpthread
+Requires.private: gnutls >= 3.1, libargon2
+Cflags: -I${includedir}

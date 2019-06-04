@@ -1,101 +1,92 @@
+# vdexnetwork
 
-<br>
-<h1 style="margin-top:10px">
-    vDexNode
-</h1>
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-A lightweight C++11 node
+> Nodes of the VDEx network
 
-vDexNode provides an easy to use distributed in-memory data store.
-Every node in the network can read and write values to the store.
-Values are distributed over the network, with redundancy.
+vDexNode provides:
 
- * Lightweight and scalable, designed for large networks and small devices
- * High resilience to network disruption
- * Public key cryptography layer providing optional data signature and encryption (using GnuTLS)
- * IPv4 and IPv6 support
- * Clean and powerful C++11 map API
- * Python 3 bindings
- * REST API
+- Distributed in-memory data store 
 
-#### How-to build a simple client app
-```bash
-g++ main.cpp -std=c++11 -lopendht -lgnutls
-```
 
-## Examples
-### C++ example
-The `tools` directory includes simple example programs :
-* `dhtnode`, a command line tool, mostly used for debuging, allowing to perform operations supported by the library (get, put etc.) with text values.
-* `dhtchat`, a very simple IM client working over the dht.
+## Table of Contents
 
-Example program launching a DHT node, connecting to the network and performing some basic operations:
-```c++
-#include <opendht.h>
-#include <vector>
+- [offer](#offer)
+- [conditions](#conditions)
+- [install](#install)
+- [usage](#usage)
+- [API](#api)
+- [Maintainers](#maintainers)
+- [Contribute](#contribute)
+- [License](#license)
 
-int main()
-{
-    dht::DhtRunner node;
 
-    // Launch a dht node on a new thread, using a
-    // generated RSA key pair, and listen on port 4222.
-    node.run(4222, dht::crypto::generateIdentity(), true);
 
-    // Join the network through any running node,
-    // here using a known bootstrap node.
-    node.bootstrap("bootstrap.ring.cx", "4222");
+## offer
+As a part of VolentixLabs R&D, 
+you can to rent your node to the 
+network before the launch on the main net.
+Your public key will be assigned to your node.
+VTX rewards will be set for: <br />
+    -  First come first serve to the 1st 21 nodes @ 10 VTX/day <br />
+    -  Sebsequent 21 to 50 nodes @ 5 VTX/day <br />
+Offer ends Sept 1 2019
 
-    // put some data on the dht
-    std::vector<uint8_t> some_data(5, 10);
-    node.put("unique_key", some_data);
+## conditions
 
-    // put some data on the dht, signed with our generated private key
-    node.putSigned("unique_key_42", some_data);
+1. Your machine is always on and available on needed ports.<br />
+2. Logs are on.<br />
+3. Update mechanism is working.<br />
+4. You have staked enough vtx.<br />
 
-    // get data from the dht
-    node.get("other_unique_key", [](const std::vector<std::shared_ptr<dht::Value>>& values) {
-        // Callback called when values are found
-        for (const auto& value : values)
-            std::cout << "Found value: " << *value << std::endl;
-        return true; // return false to stop the search
-    });
+## approval
+- Please send key to marwan@volentixlabs.com 
+  for approval.
+  
+## install
+**Mac**
+1. install brew
+2. brew install git gnutls msgpack
+3. git clone git@github.com:Volentix/vDexNetwork.git
 
-    // wait for dht threads to end
-    node.join();
-    return 0;
-}
-```
-### Python 3 example
-```python
-import opendht as dht
+**linux**
+1. sudo apt install git libncurses5-dev libreadline-dev nettle-dev libgnutls28-dev 
+    <br />libargon2-0-dev libmsgpack-dev
+    <br />librestbed-dev libjsoncpp-dev
+2. sudo apt-get install cython3 python3-dev python3-setuptools<br />
+3. git clone git@github.com:Volentix/vDexNetwork.git<br />
 
-node = dht.DhtRunner()
-node.run()
 
-# Join the network through any running node,
-# here using a known bootstrap node.
-node.bootstrap("bootstrap.ring.cx", "4222")
+## usage:WIP
 
-# blocking call (provide callback arguments to make the call non-blocking)
-node.put(dht.InfoHash.get("unique_key"), dht.Value(b'some binary data'))
+### docker
+1. cd vDexNetwork
+2. make 
 
-results = node.get(dht.InfoHash.get("unique_key"))
-for r in results:
-    print(r)
-```
+### bare-metal
+1. cd vDexNetwork/vDexNode/tools
+2. ./dhtnode
 
-## Dependencies
-- msgpack-c 1.2+, used for data serialization.
-- GnuTLS 3.3+, used for cryptographic operations.
-- Nettle 2.4+, a GnuTLS dependency for crypto.
-- (optional) restbed used for the REST API. commit fb84213e170bc171fecd825a8e47ed9f881a12cd (https://github.com/AmarOk1412/restbed/tree/async_read_until)
-- (optional) jsoncpp 1.7.4-3+, used for the REST API.
-- Build tested with GCC 5.2+ (GNU/Linux, Windows with MinGW), Clang/LLVM (GNU/Linux, Android, macOS, iOS).
-- Build tested with Microsoft Visual Studio 2015
 
+## API:WIP
+
+
+
+## Maintainers
+
+[@sylvaincormier](https://github.com/sylvaincormier)
+
+## Contribute
+
+See [the contribute file](.github/CONTRIBUTING.md)!
+
+PRs accepted.
+
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
+
+MIT © 2019 Volentix
 
 Copyright (C) 2014-2019 Savoir-faire Linux Inc.
 
@@ -105,8 +96,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 See COPYING or https://www.gnu.org/licenses/gpl-3.0.en.html for the full GPLv3 license.
 
+
 ## Acknowledgements
 This project was originally based on https://github.com/jech/dht by Juliusz Chroboczek.
 It is independent from another project called OpenDHT (Sean Rhea. Ph.D. Thesis, 2005), now extinct.
-
-# vDexNode

@@ -98,7 +98,8 @@ PrivateTmp=true
 WantedBy=multi-user.target
 ```
 Enable and run opendht api
+```bash
 systemctl daemon-reload
 systemctl enable opendht-api
 systemctl start opendht-api
-
+```

@@ -103,3 +103,12 @@ systemctl daemon-reload
 systemctl enable opendht-api
 systemctl start opendht-api
 ```
+
+Example request to api:
+```bash
+curl http://95.216.0.79:9080/getConnectedNodes
+```
+Response
+```bash
+{"Result": "Success", "34030df69a64cbdffd84a1936f1109c4b67aa445": "EOS4y8mHcREZMcnzqWfWPSWLm9oDtWAHPDbNikbN6gB7dD1oPiXhQ", "4ef6b9abf1088ac52d2a7c5126fc7d082e04545a": "EOS6W4d8kBgN7MNyHp3CGPc9KYhbeoTN8qTdqyyiyWQqQnbePDnrJ"}
+```

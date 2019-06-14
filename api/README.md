@@ -39,7 +39,7 @@ After=network.target
 Type=simple
 Restart=always
 WorkingDirectory=/root/opendht
-ExecStart=/usr/bin/dhtnode -s -b bootstap_node_ip:4222 -p 4222 -i --proxyserver 8100 --certificate /root/opendht/node.crt --privkey /root/opendht/node.pem
+ExecStart=/usr/bin/dhtnode -s -b 95.216.0.79:4222 -p 4222 -i --proxyserver 8100 --certificate /root/opendht/node.crt --privkey /root/opendht/node.pem
 RestartSec=10
 TimeoutStopSec=20
 TimeoutStartSec=5
@@ -53,9 +53,52 @@ PrivateTmp=true
 WantedBy=multi-user.target
 '''
 Save file
-Enable and run opendtt node
+Enable and run opendht node
 '''bash
 systemctl daemon-reload
 systemctl enable opendht-node
 systemctl start opendht-node
 '''
+
+6. Install api service
+'''bash
+apt install virtualenv
+mkdir /opt/opendht-api && cd /opt/opendht-api
+git clone git@github.com:Volentix/vDexNode.git -b dev_pt .
+cd ./api
+virtualenv --python=python3 venv
+source venv/bin/activate
+pip3 install -r ./requirements.txt
+deactivate
+'''
+7. Create api service:
+nano /etc/systemd/system/opendht-api.service
+And copy text:
+
+'''bash
+[Unit]
+Description=opendht api
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/opt/opendht-api/api
+ExecStart=/opt/opendht-api/api/venv/bin/python3 ./http_server.py
+RestartSec=10
+TimeoutStopSec=20
+TimeoutStartSec=5
+StartLimitBurst=5
+StartLimitInterval=120
+KillMode=mixed
+SyslogIdentifier=opendhtapi
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+'''
+Enable and run opendht api
+systemctl daemon-reload
+systemctl enable opendht-api
+systemctl start opendht-api
+

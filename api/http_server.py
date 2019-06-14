@@ -10,7 +10,7 @@ def node_scanner(nodes_file):
     while True:
       nodes=[]
       try:
-        process = subprocess.Popen("/usr/local/bin/dhtscanner -b 127.0.0.1 -p 60999 | grep 'Node' | grep -v ':60999' | awk '{print $2}'",shell=True,stdout=subprocess.PIPE,)
+        process = subprocess.Popen("/usr/bin/dhtscanner -b 127.0.0.1 -p 60999 | grep 'Node' | grep -v ':60999' | awk '{print $2}'",shell=True,stdout=subprocess.PIPE,)
         for node in process.communicate()[0].decode("utf-8").split("\n"):
           if len(node)>=40:
             nodes.append(node)

@@ -8,9 +8,10 @@ In addition to the `Volentix Standard Contribution File`, the following contains
 
 ### Communication
 
-TODO:
+Please join us on [Telegram](VERTO/VDEX dev chat)
 
 ## What We Are Looking For
 
-TODO:
+To Do:
 
+- please get in touch with sylvain@volentixlabs.com

@@ -30,7 +30,7 @@ Your public key will be assigned to your node.
 VTX rewards will be set for: <br />
     -  First come first serve to the 1st 21 nodes @ 10 VTX/day <br />
     -  Sebsequent 21 to 50 nodes @ 5 VTX/day <br />
-Offer ends Sept 1 2019
+
 
 ## conditions
 
@@ -44,32 +44,9 @@ Offer ends Sept 1 2019
   for approval.
   
 ## install
-**Mac**
-1. install brew
-2. brew install git gnutls msgpack
-3. git clone git@github.com:Volentix/vDexNetwork.git
 
 **linux**
-1. sudo apt install git libncurses5-dev libreadline-dev nettle-dev libgnutls28-dev 
-    <br />libargon2-0-dev libmsgpack-dev
-    <br />librestbed-dev libjsoncpp-dev
-2. sudo apt-get install cython3 python3-dev python3-setuptools<br />
-3. git clone git@github.com:Volentix/vDexNetwork.git<br />
-
-
-## usage:WIP
-
-### docker
-1. cd vDexNetwork
-2. make 
-
-### bare-metal
-1. cd vDexNetwork/vDexNode/tools
-2. ./dhtnode
-
-
-## API:WIP
-
+https://github.com/Volentix/vDexNode/tree/dev_pt/api
 
 
 ## Maintainers

@@ -22,14 +22,15 @@ vDexNode provides:
 
 
 
-## offer
+## Offer
 As a part of VolentixLabs R&D, 
 you can to rent your node to the 
 network before the launch on the main net.
-Your public key will be assigned to your node.
+Your public key will be assigned to your node and verified with your private key.
 VTX rewards will be set for: <br />
-    -  First come first serve to the 1st 21 nodes @ 10 VTX/day <br />
-    -  Sebsequent 21 to 50 nodes @ 5 VTX/day <br />
+    -  First come first serve to the 1st 21 nodes @ ~10 VTX/day TBD<br />
+    -  Sebsequent 21 to 50 nodes @ ~5 VTX/day TBD<br />
+Start of this offer: TBD(soon).
 
 
 ## conditions

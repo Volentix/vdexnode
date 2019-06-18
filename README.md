@@ -30,11 +30,11 @@ Your public key will be assigned to your node.
 VTX rewards will be set for: <br />
     -  First come first serve to the 1st 21 nodes @ 10 VTX/day <br />
     -  Sebsequent 21 to 50 nodes @ 5 VTX/day <br />
-Offer ends Sept 1 2019
+
 
 ## conditions
 
-1. Your machine is always on and available on needed ports.<br />
+1. Your machine is always on without interruptions.<br />
 2. Logs are on.<br />
 3. Update mechanism is working.<br />
 4. You have staked enough vtx.<br />
@@ -44,31 +44,22 @@ Offer ends Sept 1 2019
   for approval.
   
 ## install
-**Mac**
-1. install brew
-2. brew install git gnutls msgpack
-3. git clone git@github.com:Volentix/vDexNetwork.git
 
-**linux**
-1. sudo apt install git libncurses5-dev libreadline-dev nettle-dev libgnutls28-dev 
-    <br />libargon2-0-dev libmsgpack-dev
-    <br />librestbed-dev libjsoncpp-dev
-2. sudo apt-get install cython3 python3-dev python3-setuptools<br />
-3. git clone git@github.com:Volentix/vDexNetwork.git<br />
+**only docker linux availabale for now**
+1. sudo apt-get install docker git
+2. git clone git@github.com:Volentix/vDexNode.git
+3. cd docker
+4. docker build -t volentix/node .
 
 
-## usage:WIP
+## usage
 
-### docker
-1. cd vDexNetwork
-2. make 
-
-### bare-metal
-1. cd vDexNetwork/vDexNode/tools
-2. ./dhtnode
+docker run -d --name volentixnode -p 8100:8100 -p 4222:4222/udp volentix/node
 
 
-## API:WIP
+
+## API
+docker exec -it volentixnode /usr/bin/dhtscanner -b 127.0.0.1 -p 60999 | grep 'Node' | grep -v ':60999' | awk '{print $2}'
 
 
 

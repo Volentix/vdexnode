@@ -1,6 +1,0 @@
-<map id="dht::IceCandidates" name="dht::IceCandidates">
-<area shape="rect" id="node2" href="$classdht_1_1EncryptedValue.html" title="dht::EncryptedValue\l\&lt; IceCandidates \&gt;" alt="" coords="50,244,190,285"/>
-<area shape="rect" id="node3" href="$classdht_1_1SignedValue.html" title="dht::SignedValue\&lt; IceCandidates \&gt;" alt="" coords="5,169,235,196"/>
-<area shape="rect" id="node4" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; IceCandidates \&gt;" alt="" coords="42,80,198,121"/>
-<area shape="rect" id="node5" href="$classdht_1_1Value_1_1SerializableBase.html" title="dht::Value::SerializableBase" alt="" coords="27,5,213,32"/>
-</map>

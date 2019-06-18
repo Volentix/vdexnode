@@ -23,9 +23,14 @@
 
 namespace dht {
 
+namespace net {
+    class DatagramSocket;
+}
+
 class OPENDHT_PUBLIC DhtInterface {
 public:
     DhtInterface() = default;
+    DhtInterface(const Logger& l) : DHT_LOG(l) {};
     virtual ~DhtInterface() = default;
 
     // [[deprecated]]
@@ -38,6 +43,8 @@ public:
      */
     virtual NodeStatus getStatus(sa_family_t af) const = 0;
     virtual NodeStatus getStatus() const = 0;
+
+    virtual net::DatagramSocket* getSocket() const { return {}; };
 
     /**
      * Get the ID of the DHT node.
@@ -214,11 +221,16 @@ public:
     /**
      * Enable or disable logging of DHT internal messages
      */
-    virtual void setLoggers(LogMethod error = NOLOG, LogMethod warn = NOLOG, LogMethod debug = NOLOG)
-    {
+    virtual void setLoggers(LogMethod error = {}, LogMethod warn = {}, LogMethod debug = {}) {
         DHT_LOG.DBG = debug;
         DHT_LOG.WARN = warn;
         DHT_LOG.ERR = error;
+    }
+
+    virtual void setLogger(const Logger& l) {
+        DHT_LOG.DBG = l.DBG;
+        DHT_LOG.WARN = l.WARN;
+        DHT_LOG.ERR = l.ERR;
     }
 
     /**
@@ -238,8 +250,6 @@ public:
     virtual void pushNotificationReceived(const std::map<std::string, std::string>& data) = 0;
 
 protected:
-    bool logFilerEnable_ {};
-    InfoHash logFiler_ {};
     Logger DHT_LOG;
 };
 

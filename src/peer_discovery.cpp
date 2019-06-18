@@ -35,10 +35,15 @@ typedef SSIZE_T ssize_t;
 #endif
 #include <fcntl.h>
 
+#ifndef IPV6_JOIN_GROUP
+#define IPV6_JOIN_GROUP IPV6_ADD_MEMBERSHIP
+#endif
+
 namespace dht {
 
-constexpr char MULTICAST_ADDRESS_IPV4[10] = "224.0.0.1";
-constexpr char MULTICAST_ADDRESS_IPV6[8] = "ff05::2"; // Site-local multicast
+// Organization-local Scope multicast
+constexpr char MULTICAST_ADDRESS_IPV4[12] = "239.192.0.1";
+constexpr char MULTICAST_ADDRESS_IPV6[10] = "ff08::101";
 
 
 class PeerDiscovery::DomainPeerDiscovery
@@ -144,6 +149,8 @@ PeerDiscovery::DomainPeerDiscovery::DomainPeerDiscovery(sa_family_t domain, in_p
     : domain_(domain), port_(port), sockfd_(initialize_socket(domain))
 {
     socketJoinMulticast(sockfd_, domain);
+    listener_setup();
+    sender_setup();
 }
 
 PeerDiscovery::DomainPeerDiscovery::~DomainPeerDiscovery()
@@ -172,7 +179,7 @@ PeerDiscovery::DomainPeerDiscovery::initialize_socket(sa_family_t domain)
     if (sockfd < 0) {
         throw std::runtime_error(std::string("Socket Creation Error: ") + strerror(errno));
     }
-    net::set_nonblocking(sockfd);
+    net::setNonblocking(sockfd);
     return sockfd;
 }
 
@@ -262,7 +269,6 @@ PeerDiscovery::DomainPeerDiscovery::startDiscovery(const std::string &type, Serv
         if (running_listen_.joinable())
             running_listen_.join();
         drunning_ = true;
-        listener_setup();
         running_listen_ = std::thread(&DomainPeerDiscovery::listenerpack_thread, this);
     }
 }
@@ -300,17 +306,22 @@ PeerDiscovery::DomainPeerDiscovery::listenerpack_thread()
     stop_writefd_ = stopfds_pipe[1];
 
     while (true) {
+        {
+            std::lock_guard<std::mutex> lck(dmtx_);
+            if (not drunning_)
+                break;
+        }
+
         fd_set readfds;
 
         FD_ZERO(&readfds);
         FD_SET(stop_readfd, &readfds);
         FD_SET(sockfd_, &readfds);
 
-
         int data_coming = select(std::max(sockfd_, stop_readfd) + 1, &readfds, nullptr, nullptr, nullptr);
 
         {
-            std::unique_lock<std::mutex> lck(dmtx_);
+            std::lock_guard<std::mutex> lck(dmtx_);
             if (not drunning_)
                 break;
         }
@@ -383,7 +394,6 @@ PeerDiscovery::DomainPeerDiscovery::startPublish(const std::string &type, const 
         if (running_send_.joinable())
             running_send_.join();
         lrunning_ = true;
-        sender_setup();
         running_send_ = std::thread([this](){
             std::unique_lock<std::mutex> lck(mtx_);
             while (lrunning_) {
@@ -437,10 +447,12 @@ PeerDiscovery::DomainPeerDiscovery::stopDiscovery()
 #ifdef _WIN32
 #define write(s, b, f) send((s), (b), (f), 0)
 #endif
-    drunning_ = false;
-    if (stop_writefd_ != -1) {
-        if (write(stop_writefd_, "\0", 1) == -1) {
-            std::cerr << "Can't send stop message: " << strerror(errno) << std::endl;
+    if (drunning_) {
+        drunning_ = false;
+        if (stop_writefd_ != -1) {
+            if (write(stop_writefd_, "\0", 1) == -1) {
+                std::cerr << "Can't send stop message: " << strerror(errno) << std::endl;
+            }
         }
     }
 #ifdef _WIN32
@@ -451,8 +463,10 @@ PeerDiscovery::DomainPeerDiscovery::stopDiscovery()
 void
 PeerDiscovery::DomainPeerDiscovery::stopPublish()
 {
-    lrunning_ = false;
-    cv_.notify_all();
+    if (lrunning_) {
+        lrunning_ = false;
+        cv_.notify_all();
+    }
 }
 
 void
@@ -492,7 +506,6 @@ PeerDiscovery::PeerDiscovery(in_port_t port)
     } catch(const std::exception& e) {
         std::cerr << "Can't start peer discovery (IPv6): " << e.what() << std::endl;
     }
-
 }
 
 PeerDiscovery::~PeerDiscovery(){}

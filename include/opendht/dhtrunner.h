@@ -20,12 +20,13 @@
 
 #pragma once
 
+#include "def.h"
 #include "infohash.h"
 #include "value.h"
 #include "callbacks.h"
 #include "sockaddr.h"
 #include "log_enable.h"
-#include "def.h"
+#include "network_utils.h"
 
 #include <thread>
 #include <mutex>
@@ -52,7 +53,7 @@ struct SecureDhtConfig;
 class OPENDHT_PUBLIC DhtRunner {
 
 public:
-    typedef std::function<void(NodeStatus, NodeStatus)> StatusCallback;
+    using StatusCallback = std::function<void(NodeStatus, NodeStatus)>;
 
     struct Config {
         SecureDhtConfig dht_config;
@@ -61,6 +62,15 @@ public:
         std::string push_node_id;
         bool peer_discovery;
         bool peer_publish;
+    };
+
+    struct Context {
+        std::unique_ptr<Logger> logger {};
+        std::unique_ptr<net::DatagramSocket> sock;
+        std::shared_ptr<PeerDiscovery> peerDiscovery {};
+        StatusCallback statusChangedCallback {};
+        CertificateStoreQuery certificateStore {};
+        Context() {}
     };
 
     DhtRunner();
@@ -296,9 +306,7 @@ public:
      * Returns the currently bound address.
      * @param f: address family of the bound address to retreive.
      */
-    const SockAddr& getBound(sa_family_t f = AF_INET) const {
-        return (f == AF_INET) ? bound4 : bound6;
-    }
+    SockAddr getBound(sa_family_t f = AF_INET) const;
 
     /**
      * Returns the currently bound port, in host byte order.
@@ -316,7 +324,8 @@ public:
 
     std::vector<ValuesExport> exportValues() const;
 
-    void setLoggers(LogMethod err = NOLOG, LogMethod warn = NOLOG, LogMethod debug = NOLOG);
+    void setLogger(const Logger& logger = {});
+    void setLoggers(LogMethod err = {}, LogMethod warn = {}, LogMethod debug = {});
 
     /**
      * Only print logs related to the given InfoHash (if given), or disable filter (if zeroes).
@@ -356,7 +365,7 @@ public:
      * @param threaded: If false, ::loop() must be called periodically. Otherwise a thread is launched.
      * @param cb: Optional callback to receive general state information.
      */
-    void run(in_port_t port = 4222, const crypto::Identity identity = {}, bool threaded = false, NetId network = 0) {
+    void run(in_port_t port = 4222, const crypto::Identity identity = {}, bool threaded = true, NetId network = 0) {
         run(port, {
             /*.dht_config = */{
                 /*.node_config = */{
@@ -375,7 +384,7 @@ public:
             /*.peer_publish = */true,
         });
     }
-    void run(in_port_t port, const Config& config);
+    void run(in_port_t port, const Config& config, Context&& context = {});
 
     /**
      * @param local4: Local IPv4 address and port to bind. Can be null.
@@ -385,12 +394,14 @@ public:
      * @param threaded: If false, loop() must be called periodically. Otherwise a thread is launched.
      * @param cb: Optional callback to receive general state information.
      */
-    void run(const SockAddr& local4, const SockAddr& local6, const Config& config);
+    void run(const SockAddr& local4, const SockAddr& local6, const Config& config, Context&& context = {});
 
     /**
      * Same as @run(sockaddr_in, sockaddr_in6, Identity, bool, StatusCallback), but with string IP addresses and service (port).
      */
-    void run(const char* ip4, const char* ip6, const char* service, const Config& config);
+    void run(const char* ip4, const char* ip6, const char* service, const Config& config, Context&& context = {});
+
+    void run(const Config& config, Context&& context);
 
     void setOnStatusChanged(StatusCallback&& cb) {
         statusCb = std::move(cb);
@@ -403,13 +414,7 @@ public:
      */
     time_point loop() {
         std::lock_guard<std::mutex> lck(dht_mtx);
-        time_point wakeup = time_point::min();
-        try {
-            wakeup = loop_();
-        } catch (const dht::SocketException& e) {
-            startNetwork(bound4, bound6);
-        }
-        return wakeup;
+        return loop_();
     }
 
     /**
@@ -423,6 +428,8 @@ public:
      * All internal state will be lost. The DHT can then be run again with @run().
      */
     void join();
+
+    std::shared_ptr<PeerDiscovery> getPeerDiscovery() const { return peerDiscovery_; };
 
     void setProxyServer(const std::string& proxy, const std::string& pushNodeId = "");
 
@@ -459,8 +466,6 @@ private:
      */
     void tryBootstrapContinuously();
 
-    void stopNetwork();
-    void startNetwork(const SockAddr sin4, const SockAddr sin6);
     time_point loop_();
 
     NodeStatus getStatus() const {
@@ -498,16 +503,8 @@ private:
     mutable std::mutex dht_mtx {};
     std::thread dht_thread {};
     std::condition_variable cv {};
-
-    std::thread rcv_thread {};
     std::mutex sock_mtx {};
-
-    struct ReceivedPacket {
-        Blob data;
-        SockAddr from;
-        time_point received;
-    };
-    std::queue<ReceivedPacket> rcv {};
+    std::queue<std::unique_ptr<net::ReceivedPacket>> rcv {};
 
     /** true if currently actively boostraping */
     std::atomic_bool bootstraping {false};
@@ -515,7 +512,6 @@ private:
     std::vector<std::pair<std::string,std::string>> bootstrap_nodes_all {};
     std::vector<std::pair<std::string,std::string>> bootstrap_nodes {};
     std::thread bootstrap_thread {};
-    /** protects bootstrap_nodes, bootstrap_thread */
     std::mutex bootstrap_mtx {};
     std::condition_variable bootstrap_cv {};
 
@@ -524,22 +520,16 @@ private:
     std::mutex storage_mtx {};
 
     std::atomic_bool running {false};
-    std::atomic_bool running_network {false};
 
     NodeStatus status4 {NodeStatus::Disconnected},
                status6 {NodeStatus::Disconnected};
     StatusCallback statusCb {nullptr};
 
-    int stop_writefd {-1};
-    int s4 {-1}, s6 {-1};
-    SockAddr bound4 {};
-    SockAddr bound6 {};
-
     /** Push notification token */
     std::string pushToken_;
 
     /** PeerDiscovery Parameters */
-    std::unique_ptr<PeerDiscovery> peerDiscovery_;
+    std::shared_ptr<PeerDiscovery> peerDiscovery_;
 };
 
 }

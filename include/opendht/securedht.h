@@ -207,6 +207,9 @@ public:
     NodeStatus getStatus() const override {
         return dht_->getStatus();
     }
+    net::DatagramSocket* getSocket() const override {
+        return dht_->getSocket();
+    };
     bool isRunning(sa_family_t af = 0) const override {
         return dht_->isRunning(af);
     }
@@ -311,10 +314,9 @@ public:
         dht_->pushNotificationReceived(notification);
     }
 
-    void setLoggers(LogMethod error = NOLOG, LogMethod warn = NOLOG, LogMethod debug = NOLOG) override
-    {
-        DhtInterface::setLoggers(error, warn, debug);
-        dht_->setLoggers(error, warn, debug);
+    void setLogger(const Logger& logger) override {
+        DhtInterface::setLogger(logger);
+        dht_->setLogger(logger);
     }
 
     /**

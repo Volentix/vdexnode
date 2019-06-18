@@ -38,7 +38,6 @@ namespace dht {
 constexpr std::chrono::seconds DhtRunner::BOOTSTRAP_PERIOD;
 static constexpr size_t RX_QUEUE_MAX_SIZE = 1024 * 16;
 static constexpr std::chrono::milliseconds RX_QUEUE_MAX_DELAY(500);
-static constexpr in_port_t PEER_DISCOVERY_PORT = 8888;
 static const std::string PEER_DISCOVERY_DHT_SERVICE = "dht";
 
 struct DhtRunner::Listener {
@@ -50,12 +49,11 @@ struct DhtRunner::Listener {
     Where w;
 };
 
-class OPENDHT_PUBLIC NodeInsertionPack{
-public:
-    dht::InfoHash nodeid_;
-    in_port_t node_port_;
-    dht::NetId nid_;
-    MSGPACK_DEFINE(nodeid_, node_port_, nid_)
+struct NodeInsertionPack {
+    dht::InfoHash nodeId;
+    in_port_t port;
+    dht::NetId net;
+    MSGPACK_DEFINE(nodeId, port, net)
 };
 
 DhtRunner::DhtRunner() : dht_()
@@ -79,7 +77,7 @@ DhtRunner::~DhtRunner()
 }
 
 void
-DhtRunner::run(in_port_t port, const DhtRunner::Config& config)
+DhtRunner::run(in_port_t port, const Config& config, Context&& context)
 {
     SockAddr sin4;
     sin4.setFamily(AF_INET);
@@ -87,45 +85,73 @@ DhtRunner::run(in_port_t port, const DhtRunner::Config& config)
     SockAddr sin6;
     sin6.setFamily(AF_INET6);
     sin6.setPort(port);
-    run(sin4, sin6, config);
+    run(sin4, sin6, config, std::move(context));
 }
 
 void
-DhtRunner::run(const char* ip4, const char* ip6, const char* service, const DhtRunner::Config& config)
+DhtRunner::run(const char* ip4, const char* ip6, const char* service, const Config& config, Context&& context)
 {
     auto res4 = SockAddr::resolve(ip4, service);
     auto res6 = SockAddr::resolve(ip6, service);
     run(res4.empty() ? SockAddr() : res4.front(),
-        res6.empty() ? SockAddr() : res6.front(), config);
+        res6.empty() ? SockAddr() : res6.front(), config, std::move(context));
 }
 
 void
-DhtRunner::run(const SockAddr& local4, const SockAddr& local6, const DhtRunner::Config& config)
+DhtRunner::run(const SockAddr& local4, const SockAddr& local6, const Config& config, Context&& context)
 {
+    if (not running) {
+        if (not context.sock)
+            context.sock.reset(new net::UdpSocket(local4, local6, context.logger ? *context.logger : Logger{}));
+        run(config, std::move(context));
+    }
+}
+
+void
+DhtRunner::run(const Config& config, Context&& context)
+{
+    std::lock_guard<std::mutex> lck(dht_mtx);
     if (running)
         return;
-    startNetwork(local4, local6);
 
-    auto dht = std::unique_ptr<DhtInterface>(new Dht(s4, s6, SecureDht::getConfig(config.dht_config)));
+    context.sock->setOnReceive([&] (std::unique_ptr<net::ReceivedPacket>&& pkt) {
+        {
+            std::lock_guard<std::mutex> lck(sock_mtx);
+            if (rcv.size() >= RX_QUEUE_MAX_SIZE) {
+                std::cerr << "Dropping packet: queue is full!" << std::endl;
+                rcv.pop();
+            }
+            rcv.emplace(std::move(pkt));
+        }
+        cv.notify_all();
+    });
+
+    auto dht = std::unique_ptr<DhtInterface>(new Dht(std::move(context.sock), SecureDht::getConfig(config.dht_config)));
     dht_ = std::unique_ptr<SecureDht>(new SecureDht(std::move(dht), config.dht_config));
 
 #ifdef OPENDHT_PROXY_CLIENT
     config_ = config;
 #endif
     enableProxy(not config.proxy_server.empty());
+    if (context.logger and dht_via_proxy_) {
+        dht_via_proxy_->setLogger(*context.logger);
+    }
+    if (context.statusChangedCallback) {
+        statusCb = std::move(context.statusChangedCallback);
+    }
+    if (context.certificateStore) {
+        dht_->setLocalCertificateStore(std::move(context.certificateStore));
+        if (dht_via_proxy_)
+            dht_via_proxy_->setLocalCertificateStore(std::move(context.certificateStore));
+    }
 
     running = true;
     if (not config.threaded)
         return;
-    dht_thread = std::thread([this, local4, local6]() {
+    dht_thread = std::thread([this]() {
         while (running) {
             std::unique_lock<std::mutex> lk(dht_mtx);
-            time_point wakeup;
-            try {
-                wakeup = loop_();
-            } catch (const dht::SocketException& e) {
-                startNetwork(local4, local6);
-            }
+            time_point wakeup = loop_();
 
             auto hasJobToDo = [this]() {
                 if (not running)
@@ -153,37 +179,38 @@ DhtRunner::run(const SockAddr& local4, const SockAddr& local6, const DhtRunner::
     });
 
     if (config.peer_discovery or config.peer_publish) {
-        peerDiscovery_.reset(new PeerDiscovery(PEER_DISCOVERY_PORT));
+        peerDiscovery_ = context.peerDiscovery ?
+            std::move(context.peerDiscovery) :
+            std::make_shared<PeerDiscovery>();
     }
 
     auto netId = config.dht_config.node_config.network;
     if (config.peer_discovery) {
-        peerDiscovery_->startDiscovery(PEER_DISCOVERY_DHT_SERVICE, [this, netId](msgpack::object&& obj, SockAddr&& add){
-            try {
-                auto v = obj.as<NodeInsertionPack>();
-                add.setPort(v.node_port_);
-                if(v.nodeid_ != dht_->getNodeId() && netId == v.nid_){
-                    bootstrap(v.nodeid_, add);
-                }
-            } catch(const msgpack::type_error &e){
-                std::cerr << "Msgpack Info Invalid: " << e.what() << '\n';
+        peerDiscovery_->startDiscovery<NodeInsertionPack>(PEER_DISCOVERY_DHT_SERVICE, [this, netId](NodeInsertionPack&& v, SockAddr&& addr){
+            addr.setPort(v.port);
+            if (v.nodeId != dht_->getNodeId() && netId == v.net){
+                bootstrap(v.nodeId, addr);
             }
         });
     }
     if (config.peer_publish) {
         msgpack::sbuffer sbuf_node;
-        // IPv4
         NodeInsertionPack adc;
-        adc.nid_ = netId;
-        adc.node_port_ = getBoundPort(AF_INET);
-        adc.nodeid_ = dht_->getNodeId();
-        msgpack::pack(sbuf_node, adc);
-        peerDiscovery_->startPublish(AF_INET, PEER_DISCOVERY_DHT_SERVICE, sbuf_node);
+        adc.net = netId;
+        adc.nodeId = dht_->getNodeId();
+        // IPv4
+        if (auto bound4 = dht_->getSocket()->getBound(AF_INET)) {
+            adc.port = bound4.getPort();
+            msgpack::pack(sbuf_node, adc);
+            peerDiscovery_->startPublish(AF_INET, PEER_DISCOVERY_DHT_SERVICE, sbuf_node);
+        }
         // IPv6
-        adc.node_port_ = getBoundPort(AF_INET6);
-        sbuf_node.clear();
-        msgpack::pack(sbuf_node, adc);
-        peerDiscovery_->startPublish(AF_INET6, PEER_DISCOVERY_DHT_SERVICE, sbuf_node);
+        if (auto bound6 = dht_->getSocket()->getBound(AF_INET6)) {
+            adc.port = bound6.getPort();
+            sbuf_node.clear();
+            msgpack::pack(sbuf_node, adc);
+            peerDiscovery_->startPublish(AF_INET6, PEER_DISCOVERY_DHT_SERVICE, sbuf_node);
+        }
     }
 }
 
@@ -199,7 +226,8 @@ DhtRunner::shutdown(ShutdownCallback cb) {
 #endif
     std::lock_guard<std::mutex> lck(storage_mtx);
     pending_ops_prio.emplace([=](SecureDht& dht) mutable {
-        dht.shutdown(cb);
+        if (dht_)
+            dht_->shutdown(cb);
     });
     cv.notify_all();
 }
@@ -207,20 +235,28 @@ DhtRunner::shutdown(ShutdownCallback cb) {
 void
 DhtRunner::join()
 {
-    stopNetwork();
-    running = false;
-    cv.notify_all();
-    bootstrap_cv.notify_all();
-    if (peerDiscovery_) peerDiscovery_->stop();
+    if (peerDiscovery_)
+        peerDiscovery_->stop();
+
+    {
+        std::lock_guard<std::mutex> lck(dht_mtx);
+        running = false;
+        cv.notify_all();
+        bootstrap_cv.notify_all();
+        if (dht_)
+            if (auto sock = dht_->getSocket())
+                sock->stop();
+    }
 
     if (dht_thread.joinable())
         dht_thread.join();
+
     if (bootstrap_thread.joinable())
         bootstrap_thread.join();
-    if (rcv_thread.joinable())
-        rcv_thread.join();
 
-    if (peerDiscovery_) peerDiscovery_->join();
+    if (peerDiscovery_) {
+        peerDiscovery_->join();
+    }
 
     {
         std::lock_guard<std::mutex> lck(storage_mtx);
@@ -233,6 +269,15 @@ DhtRunner::join()
         status4 = NodeStatus::Disconnected;
         status6 = NodeStatus::Disconnected;
     }
+}
+
+SockAddr
+DhtRunner::getBound(sa_family_t af) const {
+    std::lock_guard<std::mutex> lck(dht_mtx);
+    if (dht_)
+        if (auto sock = dht_->getSocket())
+            return sock->getBound(af);
+    return SockAddr{};
 }
 
 void
@@ -292,14 +337,20 @@ DhtRunner::exportValues() const {
 }
 
 void
-DhtRunner::setLoggers(LogMethod error, LogMethod warn, LogMethod debug) {
+DhtRunner::setLogger(const Logger& logger) {
     std::lock_guard<std::mutex> lck(dht_mtx);
     if (dht_)
-        dht_->setLoggers(error, warn, debug);
+        dht_->setLogger(logger);
 #ifdef OPENDHT_PROXY_CLIENT
     if (dht_via_proxy_)
-        dht_via_proxy_->setLoggers(error, warn, debug);
+        dht_via_proxy_->setLogger(logger);
 #endif
+}
+
+void
+DhtRunner::setLoggers(LogMethod error, LogMethod warn, LogMethod debug) {
+    Logger logger {std::move(error), std::move(warn), std::move(debug)};
+    setLogger(logger);
 }
 
 void
@@ -461,7 +512,7 @@ DhtRunner::loop_()
     size_t dropped {0};
     if (not received.empty()) {
         auto now = clock::now();
-        while (not received.empty() and now - received.front().received > RX_QUEUE_MAX_DELAY) {
+        while (not received.empty() and now - received.front()->received > RX_QUEUE_MAX_DELAY) {
             received.pop();
             dropped++;
         }
@@ -471,10 +522,10 @@ DhtRunner::loop_()
     if (not received.empty()) {
         while (not received.empty()) {
             auto& pck = received.front();
-            if (clock::now() - pck.received > RX_QUEUE_MAX_DELAY)
+            if (clock::now() - pck->received > RX_QUEUE_MAX_DELAY)
                 dropped++;
             else
-                wakeup = dht->periodic(pck.data.data(), pck.data.size(), pck.from);
+                wakeup = dht->periodic(pck->data.data(), pck->data.size(), pck->from);
             received.pop();
         }
     } else {
@@ -483,7 +534,7 @@ DhtRunner::loop_()
     }
 
     if (dropped)
-        std::cerr << "Dropped %zu packets with high delay" << dropped << std::endl;
+        std::cerr << "Dropped " << dropped << " packets with high delay" << std::endl;
 
     NodeStatus nstatus4 = dht->getStatus(AF_INET);
     NodeStatus nstatus6 = dht->getStatus(AF_INET6);
@@ -504,167 +555,6 @@ DhtRunner::loop_()
     }
 
     return wakeup;
-}
-
-
-int bindSocket(const SockAddr& addr, SockAddr& bound)
-{
-    bool is_ipv6 = addr.getFamily() == AF_INET6;
-    int sock = socket(is_ipv6 ? PF_INET6 : PF_INET, SOCK_DGRAM, 0);
-    if (sock < 0)
-        throw DhtException(std::string("Can't open socket: ") + strerror(sock));
-    int set = 1;
-#ifdef SO_NOSIGPIPE
-    setsockopt(sock, SOL_SOCKET, SO_NOSIGPIPE, (const char*)&set, sizeof(set));
-#endif
-    if (is_ipv6)
-        setsockopt(sock, IPPROTO_IPV6, IPV6_V6ONLY, (const char*)&set, sizeof(set));
-    net::set_nonblocking(sock);
-    int rc = bind(sock, addr.get(), addr.getLength());
-    if(rc < 0) {
-        rc = errno;
-        close(sock);
-        throw DhtException("Can't bind socket on " + addr.toString() + " " + strerror(rc));
-    }
-    sockaddr_storage ss;
-    socklen_t ss_len = sizeof(ss);
-    getsockname(sock, (sockaddr*)&ss, &ss_len);
-    bound = {ss, ss_len};
-    return sock;
-}
-
-void
-DhtRunner::stopNetwork()
-{
-    running_network = false;
-    if (stop_writefd != -1) {
-        if (write(stop_writefd, "\0", 1) == -1) {
-            perror("write");
-        }
-    }
-}
-
-void
-DhtRunner::startNetwork(const SockAddr sin4, const SockAddr sin6)
-{
-    stopNetwork();
-    if (rcv_thread.joinable())
-        rcv_thread.join();
-
-    int stopfds[2];
-#ifndef _WIN32
-    auto status = pipe(stopfds);
-    if (status == -1) {
-        throw DhtException(std::string("Can't open pipe: ") + strerror(errno));
-    }
-#else
-    net::udpPipe(stopfds);
-#endif
-    int stop_readfd = stopfds[0];
-    stop_writefd = stopfds[1];
-
-    s4 = -1;
-    s6 = -1;
-
-    bound4 = {};
-    if (sin4) {
-        try {
-            s4 = bindSocket(sin4, bound4);
-        } catch (const DhtException& e) {
-            std::cerr << "Can't bind inet socket: " << e.what() << std::endl;
-        }
-    }
-
-#if 1
-    bound6 = {};
-    if (sin6) {
-        try {
-            s6 = bindSocket(sin6, bound6);
-        } catch (const DhtException& e) {
-            std::cerr << "Can't bind inet6 socket: " << e.what() << std::endl;
-        }
-    }
-#endif
-
-    if (s4 == -1 && s6 == -1) {
-        throw DhtException("Can't bind socket");
-    }
-
-    running_network = true;
-    rcv_thread = std::thread([this, stop_readfd]() {
-        try {
-            while (running_network) {
-                fd_set readfds;
-
-                FD_ZERO(&readfds);
-                FD_SET(stop_readfd, &readfds);
-                if(s4 >= 0)
-                    FD_SET(s4, &readfds);
-                if(s6 >= 0)
-                    FD_SET(s6, &readfds);
-
-                int selectFd = std::max({s4, s6, stop_readfd}) + 1;
-                int rc = select(selectFd, &readfds, nullptr, nullptr, nullptr);
-                if(rc < 0) {
-                    if(errno != EINTR) {
-                        perror("select");
-                        std::this_thread::sleep_for( std::chrono::seconds(1) );
-                    }
-                }
-
-                if (not running_network)
-                    break;
-
-                if (rc > 0) {
-                    std::array<uint8_t, 1024 * 64> buf;
-                    sockaddr_storage from;
-                    socklen_t from_len = sizeof(from);
-
-                    if (FD_ISSET(stop_readfd, &readfds)) {
-                        if (recv(stop_readfd, (char*)buf.data(), buf.size(), 0) < 0) {
-                            std::cerr << "Got stop packet error: " << strerror(errno) << std::endl;
-                            break;
-                        }
-                    }
-                    else if (s4 >= 0 && FD_ISSET(s4, &readfds))
-                        rc = recvfrom(s4, (char*)buf.data(), buf.size(), 0, (sockaddr*)&from, &from_len);
-                    else if (s6 >= 0 && FD_ISSET(s6, &readfds))
-                        rc = recvfrom(s6, (char*)buf.data(), buf.size(), 0, (sockaddr*)&from, &from_len);
-                    else
-                        continue;
-
-                    if (rc > 0) {
-                        {
-                            std::lock_guard<std::mutex> lck(sock_mtx);
-                            if (rcv.size() >= RX_QUEUE_MAX_SIZE) {
-                                std::cerr << "Dropping packet: queue is full!" << std::endl;
-                                rcv.pop();
-                            }
-                            rcv.emplace(ReceivedPacket {Blob {buf.begin(), buf.begin()+rc}, SockAddr(from, from_len), clock::now()});
-                        }
-                        cv.notify_all();
-                    } else if (rc == -1) {
-                        std::cerr << "Error receiving packet: " << strerror(errno) << std::endl;
-                    }
-                }
-            }
-        } catch (const std::exception& e) {
-            std::cerr << "Error in DHT networking thread: " << e.what() << std::endl;
-        }
-        if (s4 >= 0)
-            close(s4);
-        if (s6 >= 0)
-            close(s6);
-        s4 = -1;
-        s6 = -1;
-        bound4 = {};
-        bound6 = {};
-        if (stop_readfd != -1)
-            close(stop_readfd);
-        if (stop_writefd != -1)
-            close(stop_writefd);
-        stop_writefd = -1;
-    });
 }
 
 void

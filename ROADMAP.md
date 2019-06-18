@@ -1,3 +1,0 @@
-# Verto Roadmap
-
-TODO:

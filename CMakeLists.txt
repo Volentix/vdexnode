@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.1)
 project (opendht)
 set (opendht_VERSION_MAJOR 1)
-set (opendht_VERSION_MINOR 9.4)
+set (opendht_VERSION_MINOR 10.0)
 set (opendht_VERSION ${opendht_VERSION_MAJOR}.${opendht_VERSION_MINOR})
 set (PACKAGE_VERSION ${opendht_VERSION})
 set (VERSION "${opendht_VERSION}")
@@ -151,7 +151,6 @@ list (APPEND opendht_SOURCES
     src/dhtrunner.cpp
     src/log.cpp
     src/peer_discovery.cpp
-    src/network_utils.h
     src/network_utils.cpp
     src/thread_pool.cpp
 )
@@ -179,6 +178,7 @@ list (APPEND opendht_HEADERS
     include/opendht/log_enable.h
     include/opendht/peer_discovery.h
     include/opendht/thread_pool.h
+    include/opendht/network_utils.h
     include/opendht.h
 )
 

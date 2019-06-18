@@ -56,7 +56,7 @@ void print_node_info(const std::shared_ptr<DhtRunner>& node, const dht_params& p
         std::cout << "port " << port4 << std::endl;
     else
         std::cout << "IPv4 port " << port4 << ", IPv6 port " << port6 << std::endl;
-    if (params.generate_identity)
+    if (params.id.first)
         std::cout << "Public key ID " << node->getId() << std::endl;
 }
 
@@ -205,7 +205,7 @@ void cmd_loop(std::shared_ptr<DhtRunner>& node, dht_params& params
         } else if (op == "log") {
             iss >> idstr;
             InfoHash filter(idstr);
-            params.log = filter == InfoHash{} ? !params.log : true;
+            params.log = filter ? true : !params.log;
             if (params.log)
                 log::enableLogging(*node);
             else
@@ -395,7 +395,7 @@ void cmd_loop(std::shared_ptr<DhtRunner>& node, dht_params& params
             node->cancelPut(id, std::stoul(rem, nullptr, 16));
         }
         else if (op == "s") {
-            if (not params.generate_identity) {
+            if (not params.id.first) {
                 print_id_req();
                 continue;
             }
@@ -410,7 +410,7 @@ void cmd_loop(std::shared_ptr<DhtRunner>& node, dht_params& params
             });
         }
         else if (op == "e") {
-            if (not params.generate_identity) {
+            if (not params.id.first) {
                 print_id_req();
                 continue;
             }
@@ -503,24 +503,26 @@ main(int argc, char **argv)
 
     if (params.daemonize) {
         daemonize();
-    } else if (params.service) {
-        setupSignals();
     }
+    setupSignals();
 
     auto node = std::make_shared<DhtRunner>();
 
     try {
-        dht::crypto::Identity crt {};
-        if (params.generate_identity) {
+        if (not params.id.first and params.generate_identity) {
             auto ca_tmp = dht::crypto::generateEcIdentity("DHT Node CA");
-            crt = dht::crypto::generateIdentity("DHT Node", ca_tmp);
+            params.id = dht::crypto::generateIdentity("DHT Node", ca_tmp);
+            if (not params.save_identity.empty()) {
+                dht::crypto::saveIdentity(ca_tmp, params.save_identity + "_ca", params.privkey_pwd);
+                dht::crypto::saveIdentity(params.id, params.save_identity, params.privkey_pwd);
+            }
         }
 
         dht::DhtRunner::Config config {};
         config.dht_config.node_config.network = params.network;
         config.dht_config.node_config.maintain_storage = false;
         config.dht_config.node_config.persist_path = params.persist_path;
-        config.dht_config.id = crt;
+        config.dht_config.id = params.id;
         config.threaded = true;
         config.proxy_server = params.proxyclient;
         config.push_node_id = "dhtnode";
@@ -529,16 +531,17 @@ main(int argc, char **argv)
         if (not params.proxyclient.empty())
             node->setPushNotificationToken(params.devicekey);
 
-        node->run(params.port, config);
-
+        dht::DhtRunner::Context context {};
         if (params.log) {
             if (params.syslog or (params.daemonize and params.logfile.empty()))
-                log::enableSyslog(*node, "dhtnode");
+                context.logger = log::getSyslogLogger("dhtnode");
             else if (not params.logfile.empty())
-                log::enableFileLogging(*node, params.logfile);
+                context.logger = log::getFileLogger(params.logfile);
             else
-                log::enableLogging(*node);
+                context.logger = log::getStdLogger();
         }
+
+        node->run(params.port, config, std::move(context));
 
         if (not params.bootstrap.first.empty()) {
             //std::cout << "Bootstrap: " << params.bootstrap.first << ":" << params.bootstrap.second << std::endl;
@@ -572,7 +575,7 @@ main(int argc, char **argv)
 
     std::condition_variable cv;
     std::mutex m;
-    std::atomic_bool done {false};
+    bool done {false};
 
     node->shutdown([&]()
     {
@@ -583,7 +586,7 @@ main(int argc, char **argv)
 
     // wait for shutdown
     std::unique_lock<std::mutex> lk(m);
-    cv.wait(lk, [&](){ return done.load(); });
+    cv.wait(lk, [&](){ return done; });
 
     node->join();
 #ifdef WIN32_NATIVE

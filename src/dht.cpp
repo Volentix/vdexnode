@@ -1689,11 +1689,11 @@ Dht::~Dht()
         s.second->clear();
 }
 
-Dht::Dht() : store(), network_engine(DHT_LOG, scheduler) {}
+Dht::Dht() : store(), network_engine(DHT_LOG, scheduler, {}) {}
 
-Dht::Dht(const int& s, const int& s6, const Config& config)
-    : myid(config.node_id ? config.node_id : InfoHash::getRandom()), store(), store_quota(),
-    network_engine(myid, config.network, s, s6, DHT_LOG, scheduler,
+Dht::Dht(std::unique_ptr<net::DatagramSocket>&& sock, const Config& config, const Logger& l)
+    : DhtInterface(l), myid(config.node_id ? config.node_id : InfoHash::getRandom()), store(), store_quota(),
+    network_engine(myid, config.network, std::move(sock), DHT_LOG, scheduler,
             std::bind(&Dht::onError, this, _1, _2),
             std::bind(&Dht::onNewNode, this, _1, _2),
             std::bind(&Dht::onReportedAddr, this, _1, _2),
@@ -1708,13 +1708,14 @@ Dht::Dht(const int& s, const int& s6, const Config& config)
     maintain_storage(config.maintain_storage)
 {
     scheduler.syncTime();
-    if (s < 0 && s6 < 0)
-        return;
-    if (s >= 0) {
+    auto s = network_engine.getSocket();
+    if (not s or (not s->hasIPv4() and not s->hasIPv6()))
+        throw DhtException("Opened socket required");
+    if (s->hasIPv4()) {
         buckets4 = {Bucket {AF_INET}};
         buckets4.is_client = config.is_bootstrap;
     }
-    if (s6 >= 0) {
+    if (s->hasIPv6()) {
         buckets6 = {Bucket {AF_INET6}};
         buckets6.is_client = config.is_bootstrap;
     }
@@ -1722,9 +1723,7 @@ Dht::Dht(const int& s, const int& s6, const Config& config)
     search_id = std::uniform_int_distribution<decltype(search_id)>{}(rd);
 
     uniform_duration_distribution<> time_dis {std::chrono::seconds(3), std::chrono::seconds(5)};
-    auto confirm_nodes_time = scheduler.time() + time_dis(rd);
-    DHT_LOG.d(myid, "Scheduling %s", myid.toString().c_str());
-    nextNodesConfirmation = scheduler.add(confirm_nodes_time, std::bind(&Dht::confirmNodes, this));
+    nextNodesConfirmation = scheduler.add(scheduler.time() + time_dis(rd), std::bind(&Dht::confirmNodes, this));
 
     // Fill old secret
     {
@@ -1735,7 +1734,7 @@ Dht::Dht(const int& s, const int& s6, const Config& config)
 
     expire();
 
-    DHT_LOG.d("DHT initialised with node ID %s", myid.toString().c_str());
+    DHT_LOG.d("DHT node initialised with ID %s", myid.toString().c_str());
 
     if (not persistPath.empty())
         loadState(persistPath);

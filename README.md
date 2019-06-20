@@ -55,12 +55,19 @@ Start of this offer: TBD(soon).
 
 ## usage
 
-docker run -d --name volentixnode -p 8100:8100 -p 4222:4222/udp volentix/node
+1. docker run -d --name volentixnode -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
 
 
 
-## API
-docker exec -it volentixnode /usr/bin/dhtscanner -b 127.0.0.1 -p 60999 | grep 'Node' | grep -v ':60999' | awk '{print $2}'
+2. You can get node info via curl:
+```bash
+curl http://localhost:8100
+```
+
+3. You can scan nodes and keys:
+```bash
+curl http://localhost:9080/getConnectedNodes
+```
 
 
 

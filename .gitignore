@@ -1,0 +1,75 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Autotools
+/ac
+Makefile
+Makefile.in
+/aclocal.m4
+/autom4te.cache/
+/config.*
+/configure
+/depcomp
+/install-sh
+/libtool
+/ltmain.sh
+/m4/
+/missing
+/stamp-h?
+.deps/
+.dirstamp
+.libs/
+*.l[ao]
+*~
+*.pc
+
+# KDevelop
+.kdev4/
+*.kdev4
+
+# VSCode
+.vscode/*
+
+# Eclipse CDT
+.cproject
+.project
+.autotools
+language.settings.xml
+
+# Python
+*.pyc
+*.stamp
+python/opendht.cpp
+python/setup.py
+
+# Doxygen
+doc/Doxyfile
+
+# git backup files
+*.orig
+
+# vim swap files
+*.swp
+*.swo
+
+# build dir
+build

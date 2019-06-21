@@ -26,8 +26,8 @@ RUN git clone --recursive https://github.com/savoirfairelinux/opendht.git \
 	&& cmake -DCMAKE_INSTALL_PREFIX=/usr -DOPENDHT_PYTHON=On -DOPENDHT_LTO=On -DOPENDHT_TESTS=ON -DOPENDHT_PROXY_SERVER=ON -DOPENDHT_PROXY_SERVER_IDENTITY=ON ..  \
 	&& make -j8 && ./opendht_unit_tests && make install
 
-#create node keys
-RUN mkdir /volentix && cd /volentix && openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout ./node.key -out ./node.crt -subj /CN=example.com
+#create dir for node keys
+RUN mkdir /volentix
 
 EXPOSE 9080/tcp
 EXPOSE 8100/tcp
@@ -37,4 +37,4 @@ COPY ./api /api
 RUN cd /api && pip3 install -r ./requirements.txt
 
 ENV EOSKEY ${EOSKEY}
-CMD ((sleep 10;curl -v --retry 6 --retry-delay 10 -X SIGN -H "Content-Type: application/json" -d "{\"data\": \"$(echo {\"$(curl -s http://localhost:8100/ | python3 -c "import sys, json; print (json.load(sys.stdin)['node_id'])")\": \"$EOSKEY\"} | base64 -w 0)\"}" http://localhost:8100/eos) &) && (python3 /api/http_server.py > /api/log.txt &) && (dhtnode -s -b 95.216.0.79:4222 -n 1 -p 4222 -i --proxyserver 8100 --certificate /volentix/node.crt --privkey /volentix/node.key)
+CMD (if test -f "/volentix/node.key"; then echo "Node keys present"; exit 0; fi; echo "First start, generate key for node";openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout /volentix/node.key -out /volentix/node.crt -subj /CN=example.com) && ((sleep 10;curl -v --retry 6 --retry-delay 10 -X SIGN -H "Content-Type: application/json" -d "{\"data\": \"$(echo {\"$(curl -s http://localhost:8100/ | python3 -c "import sys, json; print (json.load(sys.stdin)['node_id'])")\": \"$EOSKEY\"} | base64 -w 0)\"}" http://localhost:8100/eos) &) && (python3 /api/http_server.py > /api/log.txt &) && (dhtnode -s -b 95.216.0.79:4222 -n 1 -p 4222 -i --proxyserver 8100 --certificate /volentix/node.crt --privkey /volentix/node.key)

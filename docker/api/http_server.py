@@ -51,6 +51,9 @@ class HTTPServer(resource.Resource):
     def render_GET(self, req):
         uri = req.uri[1:].decode().rsplit('?', 1)[0]
         if uri == 'getConnectedNodes':
+           req.setHeader('Access-Control-Allow-Origin', '*')
+           req.setHeader('Access-Control-Allow-Methods', 'GET')
+           req.setHeader('Content-type', 'application/json')
            result={'Result':'Success'}
            try:
              f = open(self.nodes_file, "r")

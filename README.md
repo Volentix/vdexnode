@@ -40,20 +40,24 @@ Start of this offer: TBD(soon).
 3. Update mechanism is working.<br />
 4. You have staked enough vtx.<br />
 
-## approval
+## Approval
 - Please send key to marwan@volentixlabs.com 
   for approval.
   
-## install
+## Install
 
 **only docker linux availabale for now**
 1. sudo apt-get install docker git
 2. git clone git@github.com:Volentix/vDexNode.git
-3. cd docker
+3. cd vDexNode/docker
 4. docker build -t volentix/node .
 
 
-## usage
+## Usage
+
+### Pure Docker
+
+You can run the container....
 
 1. docker run -d --name volentixnode -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
 
@@ -68,6 +72,26 @@ curl http://localhost:8100
 ```bash
 curl http://localhost:9080/getConnectedNodes
 ```
+
+### Kubernetes
+
+Add the labels for the side car
+Get the node info by first opening the port on K3s:
+```
+k3s kubectl -n vdex port-forward $(k3s kubectl -n vdex get pod -l app=vdex-node -o jsonpath='{.items[0].metadata.name}') 8100:8100
+```
+
+Now simply curl the endpoint:
+```
+curl http://localhost:8100
+```
+
+k3s kubectl -n vdex port-forward $(k3s kubectl -n vdex get pod -l app=vdex-node -o jsonpath='{.items[0].metadata.name}') 9080:9080
+
+
+See the dashboard:
+k3s kubectl -n istio-system port-forward $(k3s kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001
+
 
 
 

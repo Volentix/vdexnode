@@ -73,6 +73,7 @@ curl http://localhost:8100
 curl http://localhost:9080/getConnectedNodes
 ```
 
+
 ### Kubernetes
 
 Add the labels for the side car
@@ -94,6 +95,10 @@ k3s kubectl -n istio-system port-forward $(k3s kubectl -n istio-system get pod -
 
 
 
+5. You can backup node keys from docker to local host:
+```bash
+docker cp volentixnode:/volentix/node.key .
+docker cp volentixnode:/volentix/node.crt .
 
 ## Maintainers
 

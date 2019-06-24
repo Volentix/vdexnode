@@ -17,15 +17,23 @@ then
     exit 1
 fi
 
-vtx_address_base64=$(echo -n "$vtx_public_address" | base64)
+existingns=$(k3s kubectl get namespaces | grep "$namespace")
+if [ -z "$existingns" ]
+then
+    vtx_address_base64=$(echo -n "$vtx_public_address" | base64)
+    mkdir deploy
+    sed 's/vdex_namespace/'"$namespace"'/' 0.namespace.yaml.template > deploy/0.namespace.yaml
+    sed 's/vdex_namespace/'"$namespace"'/' 1.address-secret.yaml.template | sed 's/vtx_address/'"$vtx_address_base64"'/' > deploy/1.address_secret.yaml
+    sed 's/vdex_namespace/'"$namespace"'/' 2.vdex.yaml.template > deploy/2.vdex.yaml
 
-mkdir deploy
+    k3s kubectl apply -f deploy/0.namespace.yaml
+    k3s kubectl apply -f deploy/1.address_secret.yaml
+    k3s kubectl apply -f deploy/2.vdex.yaml
+else
+    echo "The namespace $namespace already exists"
+    echo "Pleaase delete the namespace or choose another namespace"
+fi
 
-sed 's/vdex_namespace/'"$namespace"'/' 0.namespace.yaml.template > deploy/0.namespace.yaml
-sed 's/vdex_namespace/'"$namespace"'/' 1.address-secret.yaml.template | sed 's/vtx_address/'"$vtx_address_base64"'/' > deploy/1.address_secret.yaml
-sed 's/vdex_namespace/'"$namespace"'/' 2.vdex.yaml.template > deploy/2.vdex.yaml
 
-k3s kubectl apply -f deploy/0.namespace.yaml
-k3s kubectl apply -f deploy/1.address_secret.yaml
-k3s kubectl apply -f deploy/2.vdex.yaml
+
 

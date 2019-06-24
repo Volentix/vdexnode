@@ -22,9 +22,9 @@ if [ -z "$existingns" ]
 then
     vtx_address_base64=$(echo -n "$vtx_public_address" | base64)
     mkdir deploy
-    sed 's/vdex_namespace/'"$namespace"'/' 0.namespace.yaml.template > deploy/0.namespace.yaml
-    sed 's/vdex_namespace/'"$namespace"'/' 1.address-secret.yaml.template | sed 's/vtx_address/'"$vtx_address_base64"'/' > deploy/1.address_secret.yaml
-    sed 's/vdex_namespace/'"$namespace"'/' 2.vdex.yaml.template > deploy/2.vdex.yaml
+    sed 's/?vdex_namespace?/'"$namespace"'/' 0.namespace.yaml.template > deploy/0.namespace.yaml
+    sed 's/?vdex_namespace?/'"$namespace"'/' 1.address-secret.yaml.template | sed 's/?vtx_address?/'"$vtx_address_base64"'/' > deploy/1.address_secret.yaml
+    sed 's/?vdex_namespace?/'"$namespace"'/' 2.vdex.yaml.template > deploy/2.vdex.yaml
 
     k3s kubectl apply -f deploy/0.namespace.yaml
     k3s kubectl apply -f deploy/1.address_secret.yaml

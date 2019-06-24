@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: vdex-node
-  namespace: vdex_namespace
+  namespace: ?vdex_namespace?
   labels:
     app: vdex-node
     version: "0.0.1"

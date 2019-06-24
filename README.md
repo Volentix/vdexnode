@@ -43,6 +43,12 @@ Start of this offer: TBD(soon).
 ## approval
 - Please send key to marwan@volentixlabs.com 
   for approval.
+## selection criteria
+1. Geolocation
+    We will prioritize nodes as to diversify our network geographically.
+2. Computer architecture, ressources and bandwidth.
+3. VTX
+    We will prioritize the most serious holders of VTX
   
 ## install
 

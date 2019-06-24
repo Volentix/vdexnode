@@ -40,9 +40,8 @@ Start of this offer: TBD(soon).
 3. Update mechanism is working.<br />
 4. You have staked enough vtx.<br />
 
-## approval
-- Please send key to marwan@volentixlabs.com 
-  for approval.
+
+
 ## selection criteria
 1. Geolocation
     We will prioritize nodes as to diversify our network geographically.
@@ -57,11 +56,17 @@ Start of this offer: TBD(soon).
 2. git clone git@github.com:Volentix/vDexNode.git
 3. cd docker
 4. docker build -t volentix/node .
+5. Create an EOS wallet and import your private key
+6. Generate a key pair and import in your wallet
+7. Create an EOS account
 
+## approval
+- Please send account name to  marwan@volentixlabs.com 
+  for approval.
 
 ## usage
 
-1. docker run -d --name volentixnode -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
+1. docker run -d --name volentixnode -e "EOSKEY=InsertYourVertoKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
 
 
 

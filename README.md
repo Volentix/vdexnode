@@ -33,6 +33,7 @@ VTX rewards will be set for: <br />
 Start of this offer: TBD(soon).
 
 
+
 ### Conditions
 
 1. Your machine is always on without interruptions.<br />
@@ -48,7 +49,7 @@ Start of this offer: TBD(soon).
 3. VTX<br />
     We will prioritize the most serious holders of VTX
 ### Approval
-- Please send key to marwan@volentixlabs.com 
+- Please send public key to marwan@volentixlabs.com 
   for approval.
   
 ## Install

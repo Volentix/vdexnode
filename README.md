@@ -40,6 +40,13 @@ Start of this offer: TBD(soon).
 3. Update mechanism is working.<br />
 4. You have staked enough vtx.<br />
 
+
+## selection criteria
+1. Geolocation<br />
+    We will prioritize nodes as to diversify our network geographically.
+2. Computer architecture, ressources and bandwidth.
+3. VTX<br />
+    We will prioritize the most serious holders of VTX
 ### Approval
 - Please send key to marwan@volentixlabs.com 
   for approval.

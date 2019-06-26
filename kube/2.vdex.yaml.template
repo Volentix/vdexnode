@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: vdex-node
-        image: volentixlabs/vdexnode:0.0.3
+        image: volentix/vdexnode:0.0.1
         ports:
         - containerPort: 9080
         - containerPort: 8100

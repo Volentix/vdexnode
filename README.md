@@ -61,7 +61,7 @@ git clone git@github.com:Volentix/vDexNode.git
 2. Change into the docker folder:
 ```bash
 cd vDexNode/docker
-```
+``` 
 
 3. Build the container locally:
 ```bash
@@ -70,7 +70,7 @@ docker build -t volentix/node .
 
 4. Finally, you can run the container locally:
 ```bash
-docker run -d --name volentixnode -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
+docker run -d --name volentixnode -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/vdexnode:0.0.1
 ```
 
 5. You can then curl the instance:

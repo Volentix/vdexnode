@@ -7,7 +7,7 @@ docker build -t volentix/node .
 
 2. Run new node:
 ```bash
-docker run -d --name volentixnode -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
+docker run -d --name volentixnode -e "IP=InsertYouBootstrapIP" -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
 ```
 
 3. You can get node info via curl:

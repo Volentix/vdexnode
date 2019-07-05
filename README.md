@@ -72,6 +72,8 @@ docker build -t volentix/node .
 ```bash
 docker run -d --name volentixnode -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/vdexnode:0.0.1
 ```
+docker run -d --name volentixnode -e "IP=InsertYouBootstrapIP" -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
+
 
 5. You can then curl the instance:
 ```bash

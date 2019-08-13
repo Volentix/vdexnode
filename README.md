@@ -54,21 +54,54 @@ Start of this offer: TBD(soon).
 
 **Note: only docker linux availabale for now**
 
-1. Clone the repo:
+1. Install dependencies
+```bash
+sudo apt-get install git build-essential
+
+# for docker you can follow the official instructions: https://docs.docker.com/install/
+# or use the following Ubuntu instructions:
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+sudo apt-get update
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+    
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+sudo usermod -aG docker $(whoami)
+
+# Remember to log out and back in for this to take effect!
+```
+
+2. Clone the repo:
 ```bash
 git clone git@github.com:Volentix/vDexNode.git
 ```
-2. Change into the docker folder:
+3. Change into the docker folder:
 ```bash
 cd vDexNode/docker
 ``` 
 
-3. Build the container locally:
+4. Build the container locally:
 ```bash
 docker build -t volentix/node .
 ```
 
-4. Finally, you can run the container locally:
+5. Finally, you can run the container locally:
 ```bash
 docker run -d --name volentixnode -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/vdexnode:0.0.1
 ```

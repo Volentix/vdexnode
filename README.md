@@ -75,10 +75,10 @@ Check your install is 18.0.3 LTS
 * sudo usermod -aG docker $(whoami)
 * reboot
 * docker pull volentixlabs/vdexnode:0.0.1
-* EOS block explorer: https://bloks.io/
+* EOS block explorer: https://eosflare.io/
 * Insert EOS account name (12 characters)
 * Copy active key
-* Insert in following command
+* Insert in following command:<br />
 docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
 * curl http://localhost:9080/getConnectedNodes
 

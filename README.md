@@ -67,14 +67,20 @@ Copy paste the following commands in terminal one by one:
 
 * reboot
 
-Copy paste the following command in terminal one by one:
+Copy paste the following command in terminal:
 * docker pull volentixlabs/vdexnode:0.0.1
+
+Retreive your EOS public key from your account name:
 
 * EOS block explorer: https://eosflare.io/
 * Insert EOS account name (12 characters)
 * Copy active key
-Copy paste the following command in terminal one by one:
+
+
+Copy paste the following command in terminal:
 * docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
+<br />
+
 ---END OF INSTALL---
 
 To check runni8ng nodes on the network:

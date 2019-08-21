@@ -70,7 +70,8 @@ Copy paste the following commands in terminal one by one:
 Copy paste the following command in terminal:
 * docker pull volentixlabs/vdexnode:0.0.1
 
-Retreive your EOS public key(the key you got from Verto) from your account name:
+Retreive your EOS public key(the key you got from Verto) from your account name:<br />
+
 If you only have your account name:
 
 * EOS block explorer: https://eosflare.io/
@@ -85,7 +86,7 @@ Copy paste the following command in terminal:
 
 ---END OF INSTALL---
 
-To check runni8ng nodes on the network:
+To check running nodes on the network:
 * curl http://localhost:9080/getConnectedNodes
 
 ### Support

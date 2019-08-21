@@ -28,8 +28,8 @@ you can to rent your node to the
 network before the launch on the main net.
 Your public key will be assigned to your node and verified with your private key.
 VTX rewards will be set for: <br />
-    -  First come first serve to the 1st 21 nodes @ ~10 VTX/day TBD<br />
-    -  Sebsequent 21 to 50 nodes @ ~5 VTX/day TBD<br />
+    -  First come first serve to the 1st 21 nodes @ ~8 VTX/day TBD<br />
+    -  Sebsequent 22 to 42 nodes @ 3 VTX/day TBD<br />
 Start of this offer: TBD(soon).
 
 ### Conditions
@@ -54,6 +54,8 @@ Start of this offer: TBD(soon).
 
 Check your install is 18.04.3 LTS
 
+Copy paste the following commands in terminal one by one:
+
 * sudo apt-get update
 * sudo apt-get upgrade
 * sudo apt-get install git build-essential apt-transport-https ca-certificates curl gnupg-agent software-properties-common
@@ -62,13 +64,20 @@ Check your install is 18.04.3 LTS
 * sudo apt-get update
 * sudo apt-get install docker-ce docker-ce-cli containerd.io
 * sudo usermod -aG docker $(whoami)
+
 * reboot
+
+Copy paste the following command in terminal one by one:
 * docker pull volentixlabs/vdexnode:0.0.1
+
 * EOS block explorer: https://eosflare.io/
 * Insert EOS account name (12 characters)
 * Copy active key
-* Insert in following command:<br />
-docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
+Copy paste the following command in terminal one by one:
+* docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
+---END OF INSTALL---
+
+To check runni8ng nodes on the network:
 * curl http://localhost:9080/getConnectedNodes
 
 ### Support

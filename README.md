@@ -71,7 +71,8 @@ Check your install is 18.04.3 LTS
 docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
 * curl http://localhost:9080/getConnectedNodes
 
-
+### Support
+Telegram: https://t.me/volentixnodesupport
 
 
 ## Maintainers

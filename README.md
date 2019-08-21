@@ -70,11 +70,13 @@ Copy paste the following commands in terminal one by one:
 Copy paste the following command in terminal:
 * docker pull volentixlabs/vdexnode:0.0.1
 
-Retreive your EOS public key from your account name:
+Retreive your EOS public key(the key you got from Verto) from your account name:
+If you only have your account name:
 
 * EOS block explorer: https://eosflare.io/
 * Insert EOS account name (12 characters)
-* Copy active key
+* Go to permissions
+* Copy public key
 
 
 Copy paste the following command in terminal:

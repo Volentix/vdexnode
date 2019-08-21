@@ -52,14 +52,11 @@ Start of this offer: TBD(soon).
   
 ### Install
 
-Check your install is 18.0.3 LTS
+Check your install is 18.04.3 LTS
 
 * sudo apt-get update
 * sudo apt-get upgrade
-* sudo apt-get install git build-essential
-* sudo apt-get update
-
-* sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+* sudo apt-get install git build-essential apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 * curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 * sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 * sudo apt-get update

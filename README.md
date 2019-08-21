@@ -30,29 +30,21 @@ Your public key will be assigned to your node and verified with your private key
 VTX rewards will be set for: <br />
     -  First come first serve to the 1st 21 nodes @ ~8 VTX/day TBD<br />
     -  Sebsequent 22 to 42 nodes @ 3 VTX/day TBD<br />
-Start of this offer: TBD(soon).
 
-### Conditions
 
-1. Your machine is always on without interruptions.<br />
-2. Logs are on.<br />
-3. Update mechanism is working.<br />
-4. You have staked enough vtx.<br />
-5. You have an EOS account for your public key
 
 ## selection criteria
-1. Geolocation<br />
-    We will prioritize nodes as to diversify our network geographically.
-2. Computer architecture, ressources and bandwidth.
-3. VTX<br />
-    We will prioritize the most serious holders of VTX
-### Approval
-- Please send public key to marwan@volentixlabs.com 
-  for approval or for EOS account.
+1. Geolocation
+2. Your machine is always on without interruptions.
+3. You have an EOS account for your public key 
+4. 10000 VTX + 
+5. Computer architecture, ressources and bandwidth.
+     
+
   
 ### Install
 
-Check your install is 18.04.3 LTS
+Check your install is Ubuntu Bionic Beaver 18.04.3 LTS: Activities->about
 
 Copy paste the following commands in terminal one by one:
 

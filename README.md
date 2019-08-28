@@ -1,3 +1,4 @@
+
 # vdexnetwork
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
@@ -10,12 +11,9 @@ vDexNode provides:
 
 
 ## Table of Contents
-
 - [offer](#offer)
-- [conditions](#conditions)
+- [conditions](#selection-criteria)
 - [install](#install)
-- [usage](#usage)
-- [API](#api)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
@@ -23,66 +21,95 @@ vDexNode provides:
 
 
 ## Offer
-As a part of VolentixLabs R&D, 
-you can to rent your node to the 
-network before the launch on the main net.
+As a part of VolentixLabs R&D, you can to rent your node to the network before the launch on the main net.
+
 Your public key will be assigned to your node and verified with your private key.
-VTX rewards will be set for: <br />
-    -  First come first serve to the 1st 21 nodes @ ~8 VTX/day TBD<br />
-    -  Sebsequent 22 to 42 nodes @ 3 VTX/day TBD<br />
+VTX rewards will be set for: 
+   - First come first serve to the 1st 21 nodes @ ~8 VTX/day TBD
+   -  Sebsequent 22 to 42 nodes @ 3 VTX/day TBD
 
 
 
-## selection criteria
+## Selection criteria
 1. Geolocation
 2. Your machine is always on without interruptions.
 3. You have an EOS account for your public key 
-4. 10000 VTX + 
+4. 10000+ VTX on the balance
 5. Computer architecture, ressources and bandwidth.
-     
 
-  
-### Install
+## Install
+### Prerequisites
+Docker software is required to simplify the vDex Node installation.
+You need the 64-bit version of one of these Ubuntu versions to install the Docker software:
+-   Disco 19.04
+-   Cosmic 18.10
+-   Bionic 18.04 (LTS)
+-   Xenial 16.04 (LTS)
 
-Check your install is Ubuntu Bionic Beaver 18.04.3 LTS: Activities->about
+Check your Ubuntu: `Activities -> about`
 
-Copy paste the following commands in terminal one by one:
-
-* sudo apt-get update
-* sudo apt-get upgrade
-* sudo apt-get install git build-essential apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-* curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-* sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-* sudo apt-get update
-* sudo apt-get install docker-ce docker-ce-cli containerd.io
-* sudo usermod -aG docker $(whoami)
-
-* reboot
-
-Copy paste the following command in terminal:
-* docker pull volentixlabs/vdexnode:0.0.1
-
-Retreive your EOS public key(the key you got from Verto) from your account name:<br />
-
-If you only have your account name:
-
-* EOS block explorer: https://eosflare.io/
-* Insert EOS account name (12 characters)
-* Go to permissions
-* Copy public key
+Just in case, it is recommended to remove old versions of docker, if they were installed earlier
+```bash
+sudo apt-get remove docker docker-engine docker.io containerd runc
+```
 
 
-Copy paste the following command in terminal:
-* docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
-<br />
+### Docker installation
+Follow the instruction below:
+```bash
+sudo apt-get update
+sudo apt-get install build-essential apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 
----END OF INSTALL---
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-To check running nodes on the network:
-* curl http://localhost:9080/getConnectedNodes
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo usermod -aG docker $(whoami)
+reboot # or log out and back in
+```
+
+### Docker container
+Copy paste the following command in terminal to get the vDex Node docker image:
+```bash
+docker pull volentixlabs/vdexnode:0.0.1
+```
+
+Now you need to get you `active` EOS public key (The key you got from Verto app) which is associated with your EOS account name
+
+If you only have your EOS account name, follow the instructions below:
+
+* Go to EOS block explorer: https://eosflare.io/
+* Insert EOS account name in the search field (12 characters)
+* Go to permissions tab
+* Copy your `active` EOS public key
+
+<img width="1414" alt="Screen Shot 2019-08-28 at 10 12 41 AM" src="https://user-images.githubusercontent.com/2269864/63877425-77876380-c97c-11e9-88e3-cd0a43d4cca5.png">
+
+To run the Docker container copy paste the following command in terminal:
+
+Don't forget to replace the `Your public key` with your real `active` EOS public key before executing the command.
+```bash
+docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
+```
+That's it!
+
+To check running nodes on the network copy paste the command below into your terminal:
+```bash
+curl http://localhost:9080/getConnectedNodes
+```
+The output will look something like this:
+<img width="1254" alt="Screen_Shot_2019-08-28_at_10_21_20_AM" src="https://user-images.githubusercontent.com/2269864/63878270-1f516100-c97e-11e9-8c53-5b18fac324cb.png">
+
+But you can try the command below that will make the output prettier and make sure that your `active` EOS public key appears in the list:
+```bash
+curl http://localhost:9080/getConnectedNodes | json_pp
+```
+<img width="753" alt="Screen_Shot_2019-08-28_at_10_21_47_AM" src="https://user-images.githubusercontent.com/2269864/63878247-0f398180-c97e-11e9-8623-e072beb6a083.png">
 
 ### Support
-Telegram: https://t.me/volentixnodesupport
+If you need any help, write to our telegram support channel: https://t.me/volentixnodesupport
 
 
 ## Maintainers
@@ -100,3 +127,5 @@ Small note: If editing the README, please conform to the [standard-readme](https
 ## Acknowledgements
 This project was originally based on https://github.com/jech/dht by Juliusz Chroboczek.
 It is independent from another project called OpenDHT (Sean Rhea. Ph.D. Thesis, 2005), now extinct.
+
+## License

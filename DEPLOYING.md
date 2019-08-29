@@ -37,7 +37,7 @@ It is assumed that you already have an AWS account and are logged into the manag
 8. You don't need to do anything here, so just click on `Next: Configure Security Group` button.
 <img width="1426" alt="8" src="https://user-images.githubusercontent.com/2269864/63956148-c562a100-ca3a-11e9-84f6-d68d30f31f86.png">
 
-9. Choose `Create a new security group` and insert a name for the new security group. The `SSH` rule should be already configured by default. If not, click `Add Rule` button and add the rule as on screenshot. Also, add the rule to allow All the traffic with all the ports from any resource as you see on screenshot.
+9. Choose `Create a new security group` and insert a name for the new security group. The `SSH` rule should be already configured by default. If not, click `Add Rule` button and add the rule as on screenshot. Also, add the rule to allow `All the traffic` with `all the ports` from `any source` as you see on screenshot.
 
 	>This temporary solution is necessary until the ports and type of traffic necessary for the operation of the nodes are precisely determined. Documentation will be updated.
 

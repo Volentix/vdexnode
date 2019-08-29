@@ -7,7 +7,7 @@
 
 vDexNode provides:
 
-- Distributed in-memory data store 
+- Distributed in-memory data store
 
 
 ## Table of Contents
@@ -24,7 +24,7 @@ vDexNode provides:
 As a part of VolentixLabs R&D, you can to rent your node to the network before the launch on the main net.
 
 Your public key will be assigned to your node and verified with your private key.
-VTX rewards will be set for: 
+VTX rewards will be set for:
    - First come first serve to the 1st 21 nodes @ ~8 VTX/day TBD
    -  Sebsequent 22 to 42 nodes @ 3 VTX/day TBD
 
@@ -33,12 +33,13 @@ VTX rewards will be set for:
 ## Selection criteria
 1. Geolocation
 2. Your machine is always on without interruptions.
-3. You have an EOS account for your public key 
+3. You have an EOS account for your public key
 4. 10000+ VTX on the balance
 5. Computer architecture, ressources and bandwidth.
 
 ## Install
 ### Prerequisites
+You will find detailed instructions on configuring a server for a vDexNode [here](DEPLOYING.md).
 Docker software is required to simplify the vDex Node installation.
 You need the 64-bit version of one of these Ubuntu versions to install the Docker software:
 -   Disco 19.04
@@ -129,3 +130,7 @@ This project was originally based on https://github.com/jech/dht by Juliusz Chro
 It is independent from another project called OpenDHT (Sean Rhea. Ph.D. Thesis, 2005), now extinct.
 
 ## License
+[License file](LICENSE)
+[Copying file](COPYING)
+[Security file](SECURITY.md)
+[Code of conduct](CODE_OF_CONDUCT.md)

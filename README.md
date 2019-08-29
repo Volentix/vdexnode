@@ -40,6 +40,7 @@ VTX rewards will be set for:
 ## Install
 ### Prerequisites
 You will find detailed instructions on configuring a server for a vDexNode [here](DEPLOYING.md).
+
 Docker software is required to simplify the vDex Node installation.
 You need the 64-bit version of one of these Ubuntu versions to install the Docker software:
 -   Disco 19.04
@@ -130,7 +131,7 @@ This project was originally based on https://github.com/jech/dht by Juliusz Chro
 It is independent from another project called OpenDHT (Sean Rhea. Ph.D. Thesis, 2005), now extinct.
 
 ## License
-[License file](LICENSE)
-[Copying file](COPYING)
-[Security file](SECURITY.md)
-[Code of conduct](CODE_OF_CONDUCT.md)
+* [License file](LICENSE)
+* [Copying file](COPYING)
+* [Security file](SECURITY.md)
+* [Code of conduct](CODE_OF_CONDUCT.md)

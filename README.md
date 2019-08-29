@@ -11,9 +11,9 @@ vDexNode provides:
 
 
 ## Table of Contents
-- [offer](#offer)
-- [conditions](#selection-criteria)
-- [install](#install)
+- [Offer](#offer)
+- [Conditions](#selection-criteria)
+- [Install](#install)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)

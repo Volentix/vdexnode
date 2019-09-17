@@ -43,10 +43,7 @@ You will find detailed instructions on configuring a server for a vDexNode [here
 
 Docker software is required to simplify the vDex Node installation.
 You need the 64-bit version of one of these Ubuntu versions to install the Docker software:
--   Disco 19.04
--   Cosmic 18.10
 -   Bionic 18.04 (LTS)
--   Xenial 16.04 (LTS)
 
 Check your Ubuntu: `Activities -> about`
 

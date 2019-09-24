@@ -27,7 +27,7 @@ def location_scanner(locations_file):
     while True:
       locations = []
       try:
-        process = subprocess.Popen("/usr/bin/dhtscanner -b 127.0.0.1 -n 1 -p 60999 | grep 'Node' | grep -v ':60999' | awk '{print $3}' | sed -e 's/:.*//'", shell=True, stdout=subprocess.PIPE,)
+        process = subprocess.Popen("/usr/bin/dhtscanner -b 127.0.0.1 -n 1 -p 60999 | grep 'Node' | grep -v ':60999' | awk '{print $2 \"@\" $3}' | sed -e 's/:.*//'", shell=True, stdout=subprocess.PIPE,)
         for node in process.communicate()[0].decode("utf-8").split("\n"):
           if len(node) >= 40:
             locations.append(node)
@@ -50,16 +50,33 @@ class HTTPServer(resource.Resource):
         self.locations_file = locations_file
         self.nodeurl=nodeurl
 
+    def get_nodes_eoskeys(self):
+      nodes_keys = {}
+      try:
+        r = requests.get(self.nodeurl+'/eos')
+        content = r.content.decode("utf-8").split("\n")
+        for j in content:
+          if j != "\n" and j != "":
+            data = json.loads(j)
+            b64_string = data["data"]
+            b64_string += "=" * ((4 - len(b64_string) % 4) % 4)
+            for node, key in (json.loads(base64.b64decode(b64_string).decode("utf-8").split("\n")[0])).items():
+              nodes_keys[node] = key
+      except Exception as e:
+          print(e)
+      return nodes_keys
+
     def get_coordinates(self, array):
-      locations=[]
-      for ip in array:
+      locations={}
+      for item in array:
         try:
           # TODO refactor, debug and test
-          r = requests.get('https://ipinfo.io/' + ip + '/json')
+          node_id, node_ip = item.split('@')
+          r = requests.get('https://ipinfo.io/' + node_ip + '/json')
           content=r.content.decode("utf-8")
           ob = json.loads(content)
           if ob['loc'] and ob['city']:
-            locations.append([ob['city'], ob['loc']])
+            locations[node_id] = [ob['city'], ob['loc']]
         except Exception as e:
           print(e)
       return locations

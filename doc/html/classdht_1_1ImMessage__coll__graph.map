@@ -1,0 +1,9 @@
+<map id="dht::ImMessage" name="dht::ImMessage">
+<area shape="rect" id="node2" href="$classdht_1_1SignedValue.html" title="dht::SignedValue\&lt; ImMessage \&gt;" alt="" coords="517,39,731,66"/>
+<area shape="rect" id="node3" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; ImMessage \&gt;" alt="" coords="251,5,407,47"/>
+<area shape="rect" id="node4" href="$classdht_1_1Value_1_1SerializableBase.html" title="dht::Value::SerializableBase" alt="" coords="5,13,192,39"/>
+<area shape="rect" id="node5" href="$classdht_1_1Hash.html" title="dht::Hash\&lt; HASH_LEN \&gt;" alt="" coords="241,82,416,109"/>
+<area shape="rect" id="node6" href="$structdht_1_1ValueType.html" title="dht::ValueType" alt="" coords="569,269,679,295"/>
+<area shape="rect" id="node7" title="STL class. " alt="" coords="289,267,369,294"/>
+<area shape="rect" id="node8" title="STL class. " alt="" coords="35,260,162,301"/>
+</map>

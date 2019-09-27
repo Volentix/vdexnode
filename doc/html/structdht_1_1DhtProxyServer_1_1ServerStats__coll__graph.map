@@ -1,0 +1,5 @@
+<map id="dht::DhtProxyServer::ServerStats" name="dht::DhtProxyServer::ServerStats">
+<area shape="rect" id="node2" href="$structdht_1_1NodeInfo.html" title="dht::NodeInfo" alt="" coords="93,109,194,136"/>
+<area shape="rect" id="node3" href="$structdht_1_1NodeStats.html" title="dht::NodeStats" alt="" coords="5,5,116,32"/>
+<area shape="rect" id="node4" href="$classdht_1_1Hash.html" title="dht::Hash\&lt; HASH_LEN \&gt;" alt="" coords="140,5,315,32"/>
+</map>

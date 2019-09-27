@@ -1,0 +1,6 @@
+<map id="dht::Query" name="dht::Query">
+<area shape="rect" id="node2" title="STL class. " alt="" coords="29,96,109,123"/>
+<area shape="rect" id="node3" title="STL class. " alt="" coords="5,5,132,47"/>
+<area shape="rect" id="node4" href="$structdht_1_1Where.html" title="Serializable dht::Value filter. " alt="" coords="217,96,304,123"/>
+<area shape="rect" id="node5" href="$structdht_1_1Select.html" title="Serializable Value field selection. " alt="" coords="329,96,414,123"/>
+</map>

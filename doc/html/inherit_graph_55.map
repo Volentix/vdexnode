@@ -1,0 +1,23 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classdht_1_1Value_1_1SerializableBase.html" title="dht::Value::SerializableBase" alt="" coords="5,209,192,235"/>
+<area shape="rect" id="node2" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; DhtMessage \&gt;" alt="" coords="256,5,412,47"/>
+<area shape="rect" id="node4" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; IceCandidates \&gt;" alt="" coords="256,71,412,112"/>
+<area shape="rect" id="node8" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; ImMessage \&gt;" alt="" coords="256,136,412,177"/>
+<area shape="rect" id="node11" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; IndexEntry \&gt;" alt="" coords="256,201,412,243"/>
+<area shape="rect" id="node13" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; IpServiceAnnouncement \&gt;" alt="" coords="240,267,428,308"/>
+<area shape="rect" id="node15" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\&lt; T \&gt;" alt="" coords="240,333,428,359"/>
+<area shape="rect" id="node18" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; TrustRequest \&gt;" alt="" coords="256,384,412,425"/>
+<area shape="rect" id="node3" href="$classdht_1_1DhtMessage.html" title="dht::DhtMessage" alt="" coords="529,13,652,39"/>
+<area shape="rect" id="node5" href="$classdht_1_1SignedValue.html" title="dht::SignedValue\&lt; IceCandidates \&gt;" alt="" coords="476,78,705,105"/>
+<area shape="rect" id="node6" href="$classdht_1_1EncryptedValue.html" title="dht::EncryptedValue\l\&lt; IceCandidates \&gt;" alt="" coords="769,71,909,112"/>
+<area shape="rect" id="node7" href="$classdht_1_1IceCandidates.html" title="dht::IceCandidates" alt="" coords="973,78,1105,105"/>
+<area shape="rect" id="node9" href="$classdht_1_1SignedValue.html" title="dht::SignedValue\&lt; ImMessage \&gt;" alt="" coords="484,143,697,170"/>
+<area shape="rect" id="node10" href="$classdht_1_1ImMessage.html" title="dht::ImMessage" alt="" coords="781,143,897,170"/>
+<area shape="rect" id="node12" href="$structdht_1_1indexation_1_1IndexEntry.html" title="dht::indexation::IndexEntry" alt="" coords="501,209,680,235"/>
+<area shape="rect" id="node14" href="$classdht_1_1IpServiceAnnouncement.html" title="dht::IpServiceAnnouncement" alt="" coords="495,274,686,301"/>
+<area shape="rect" id="node16" href="$classdht_1_1SignedValue.html" title="dht::SignedValue\&lt; T \&gt;" alt="" coords="514,333,667,359"/>
+<area shape="rect" id="node17" href="$classdht_1_1EncryptedValue.html" title="dht::EncryptedValue\&lt; T \&gt;" alt="" coords="753,333,925,359"/>
+<area shape="rect" id="node19" href="$classdht_1_1SignedValue.html" title="dht::SignedValue\&lt; TrustRequest \&gt;" alt="" coords="479,391,703,418"/>
+<area shape="rect" id="node20" href="$classdht_1_1EncryptedValue.html" title="dht::EncryptedValue\l\&lt; TrustRequest \&gt;" alt="" coords="769,384,909,425"/>
+<area shape="rect" id="node21" href="$classdht_1_1TrustRequest.html" title="dht::TrustRequest" alt="" coords="976,391,1103,418"/>
+</map>

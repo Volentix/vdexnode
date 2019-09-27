@@ -1,0 +1,1 @@
+/usr/bin/c++   -Wno-return-type -Wall -Wextra -Wnon-virtual-dtor -pedantic-errors -fvisibility=hidden -DMSGPACK_DISABLE_LEGACY_NIL -DMSGPACK_DISABLE_LEGACY_CONVERT -O3 -DNDEBUG  -rdynamic CMakeFiles/dhtscanner.dir/dhtscanner.cpp.o  -o dhtscanner -Wl,-rpath,/home/sylvain/vDexNode: -lreadline ../libopendht.so.1.10.0 

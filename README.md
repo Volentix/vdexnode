@@ -28,6 +28,9 @@ VTX rewards will be set for:
    - 1st 21 nodes @ ~8 VTX/day 
    - 22 to 42 nodes @ 3 VTX/day 
 
+***Disclaimer: this is a test network and the sole purpose of this network is for R&D purposes. 
+The network might not work as intended and you temporarily might not receive VTX at all on a certain day or until issues are resolved.
+Please report if you have not received your VTX but do not expect this VTX as guaranteed.*** 
 
 
 ## Selection criteria

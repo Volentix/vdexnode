@@ -25,8 +25,8 @@ As a part of VolentixLabs R&D, you can to rent your node to the network before t
 
 Your public key will be assigned to your node and verified with your private key.
 VTX rewards will be set for:
-   - First come first serve to the 1st 21 nodes @ ~8 VTX/day TBD
-   -  Sebsequent 22 to 42 nodes @ 3 VTX/day TBD
+   - 1st 21 nodes @ ~8 VTX/day 
+   - 22 to 42 nodes @ 3 VTX/day 
 
 
 
@@ -90,7 +90,7 @@ To run the Docker container copy paste the following command in terminal:
 
 Don't forget to replace the `Your public key` with your real `active` EOS public key before executing the command.
 ```bash
-docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
+docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.2
 ```
 That's it!
 

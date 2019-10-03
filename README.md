@@ -34,7 +34,7 @@ Please report if you have not received your VTX but do not expect this VTX as gu
 
 
 ## Selection criteria
-1. Geolocation
+1. Geolocation (No residents or servers from the United States)
 2. Your machine is always on without interruptions.
 3. You have an EOS account for your public key
 4. 10000+ VTX on the balance

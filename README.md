@@ -76,7 +76,7 @@ reboot # or log out and back in
 ### Docker container
 Copy paste the following command in terminal to get the vDex Node docker image:
 ```bash
-docker pull volentix/vdexnode:0.0.2
+docker pull volentixlabs/vdexnode:0.0.1
 ```
 
 Now you need to get you `active` EOS public key (The key you got from Verto app) which is associated with your EOS account name
@@ -94,7 +94,7 @@ To run the Docker container copy paste the following command in terminal:
 
 Don't forget to replace the `Your public key` with your real `active` EOS public key before executing the command.
 ```bash
-docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/vdexnode:0.0.2
+docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
 ```
 That's it!
 

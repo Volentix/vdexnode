@@ -94,20 +94,20 @@ To run the Docker container copy paste the following command in terminal:
 
 Don't forget to replace the `Your public key` with your real `active` EOS public key before executing the command.
 ```bash
-docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
+docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 8000:8000 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1
 ```
 That's it!
 
 To check running nodes on the network copy paste the command below into your terminal:
 ```bash
-curl http://localhost:9080/getConnectedNodes
+curl http://localhost:8000/getConnectedNodes
 ```
 The output will look something like this:
 <img width="1254" alt="Screen_Shot_2019-08-28_at_10_21_20_AM" src="https://user-images.githubusercontent.com/2269864/63878270-1f516100-c97e-11e9-8c53-5b18fac324cb.png">
 
 But you can try the command below that will make the output prettier and make sure that your `active` EOS public key appears in the list:
 ```bash
-curl http://localhost:9080/getConnectedNodes | json_pp
+curl http://localhost:8000/getConnectedNodes | json_pp
 ```
 <img width="753" alt="Screen_Shot_2019-08-28_at_10_21_47_AM" src="https://user-images.githubusercontent.com/2269864/63878247-0f398180-c97e-11e9-8623-e072beb6a083.png">
 
@@ -127,7 +127,7 @@ Follow the screenshot with an example of updating the version from `0.0.1` to `0
 - Next command `docker rm vdexnode` removes the container
 - Command `docker pull volentixlabs/vdexnode:0.0.2` will upgrade your image with the new version `0.0.2`. Remember this version!
 - Next step is to run the new container with new image: 
-`docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.2` Don't forget to put the new version of the image in the end of the command as well as your public key!
+`docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 8000:8000 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.2` Don't forget to put the new version of the image in the end of the command as well as your public key!
 - Thats it.
 
 ### Rollback
@@ -144,7 +144,7 @@ Follow the screenshot with an example of rolling back the version from `0.0.2` t
 - Next command `docker rm vdexnode` removes the container
 - Command `docker pull volentixlabs/vdexnode:0.0.1` will download the image with the required version `0.0.1`. Remember this version!
 - Next step is to run the new container with new image: 
-`docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1` Don't forget to put the new version of the image in the end of the command as well as your public key!
+`docker run -d --name vdexnode -e "IP=95.216.0.79" -e "EOSKEY=Your public key" -p 8000:8000 -p 8100:8100 -p 4222:4222/udp volentixlabs/vdexnode:0.0.1` Don't forget to put the new version of the image in the end of the command as well as your public key!
 - Thats it.
 
 ### Support

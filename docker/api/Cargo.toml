@@ -1,0 +1,18 @@
+[package]
+name = "api"
+version = "0.1.0"
+authors = ["Sébastien Blin <sebastien.blin@savoirfairelinux.com>"]
+edition = "2018"
+
+[dependencies]
+env_logger = "0.5.6"
+log = "0.4.1"
+opendht = { git = "https://github.com/savoirfairelinux/opendht/" }
+rocket = "0.4.0"
+rocket_contrib = "0.4.0"
+reqwest = "0.9.5"
+rmp-serde = "0.14.0"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+structopt = "0.3"

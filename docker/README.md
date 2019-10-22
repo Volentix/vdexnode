@@ -7,7 +7,7 @@ docker build -t volentix/node .
 
 2. Run new node:
 ```bash
-docker run -d --name volentixnode -e "IP=InsertYouBootstrapIP" -e "EOSKEY=InsertYourKeyHere" -p 9080:9080 -p 8100:8100 -p 4222:4222/udp volentix/node
+docker run -d --name volentixnode -e "IP=InsertYouBootstrapIP" -e "EOSKEY=InsertYourKeyHere" -p 8000:8000 -p 8100:8100 -p 4222:4222/udp volentix/node
 ```
 
 3. You can get node info via curl:
@@ -17,7 +17,7 @@ curl http://localhost:8100
 
 4. You can scan nodes and keys:
 ```bash
-curl http://localhost:9080/getConnectedNodes
+curl http://localhost:8000/getConnectedNodes
 ```
 
 5. You can backup node keys from docker to local host:

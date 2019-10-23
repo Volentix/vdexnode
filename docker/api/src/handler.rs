@@ -85,4 +85,7 @@ impl Handler {
         result
     }
 
+    pub fn info(&mut self) -> EosNodeInfo {
+        self.eosnode.info.clone()
+    }
 }

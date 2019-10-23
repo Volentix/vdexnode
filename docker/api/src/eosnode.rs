@@ -14,6 +14,16 @@ pub struct EosNodeInfo {
     pub key: String,
 }
 
+impl Clone for EosNodeInfo {
+    fn clone(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            key: self.key.clone(),
+            ips: self.ips.clone(),
+        }
+    }
+}
+
 pub struct EosNode {
     pub info: EosNodeInfo,
     pub dht: Box<DhtRunner>,

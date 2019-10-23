@@ -1,4 +1,5 @@
 use crate::handler::Handler;
+use crate::eosnode::EosNodeInfo;
 use rocket::State;
 use rocket_contrib::json::Json;
 use std::sync::{ Arc, Mutex };
@@ -168,6 +169,13 @@ fn nodes_location(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, V
     Json(nodes_location)
 }
 
+#[get("/")]
+fn node_infos(handler: State<Arc<Mutex<Handler>>>) -> Json<EosNodeInfo> {
+    let mut handler = handler.lock().unwrap();
+    let info = handler.info();
+    Json(info)
+}
+
 pub struct Server;
 
 impl Server {
@@ -224,7 +232,7 @@ impl Server {
 
         rocket::ignite()
             .manage(handler)
-            .mount("/", routes![nodes_location, connected_nodes, get, set, signup_keygen, signup_sign])
+            .mount("/", routes![nodes_location, connected_nodes, get, set, signup_keygen, signup_sign, node_infos])
             .attach(cors)
             .launch();
     }

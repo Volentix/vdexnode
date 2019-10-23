@@ -10,6 +10,7 @@ log = "0.4.1"
 opendht = { git = "https://github.com/savoirfairelinux/opendht/" }
 rocket = "0.4.0"
 rocket_contrib = "0.4.0"
+rocket_cors = { git = "https://github.com/lawliet89/rocket_cors", branch = "master" }
 reqwest = "0.9.5"
 rmp-serde = "0.14.0"
 serde = "1.0"

@@ -6,6 +6,7 @@ extern crate log;
 extern crate opendht;
 #[macro_use] extern crate rocket;
 extern crate rocket_contrib;
+extern crate rocket_cors;
 extern crate reqwest;
 extern crate rmp_serde as rmps;
 extern crate serde_derive;

@@ -3,6 +3,7 @@ use rocket::State;
 use rocket_contrib::json::Json;
 use std::sync::{ Arc, Mutex };
 use std::collections::HashMap;
+use std::str::FromStr;
 
 
 #[get("/getConnectedNodes")]
@@ -24,9 +25,23 @@ pub struct Server;
 
 impl Server {
     pub fn run(handler: Arc<Mutex<Handler>>) {
+        let allowed_origins = rocket_cors::AllowedOrigins::all();
+        let allowed_methods: rocket_cors::AllowedMethods = ["Get", "Post", "Delete", "Head", "Options", "Put", "Patch"]
+            .iter().map(|s| FromStr::from_str(s).unwrap()).collect();
+
+        let cors = rocket_cors::CorsOptions {
+            allowed_origins,
+            allowed_methods,
+            allowed_headers: rocket_cors::AllowedHeaders::all(),
+            allow_credentials: true,
+            ..Default::default()
+        }
+        .to_cors().ok().expect("Incorrect CORS specified");
+
         rocket::ignite()
             .manage(handler)
             .mount("/", routes![nodes_location, connected_nodes])
+            .attach(cors)
             .launch();
     }
 }

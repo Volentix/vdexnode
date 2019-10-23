@@ -2,7 +2,10 @@ use crate::opt::Opt;
 use opendht::{ DhtRunner, DhtRunnerConfig, InfoHash, Value };
 use serde::{ Deserialize, Serialize };
 use rmps::Serializer;
+use std::collections::HashMap;
 use std::{ thread, time };
+use std::sync::{Arc, Mutex};
+
 
 #[derive(Serialize, Deserialize)]
 pub struct EosNodeInfo {
@@ -14,10 +17,11 @@ pub struct EosNodeInfo {
 pub struct EosNode {
     pub info: EosNodeInfo,
     pub dht: Box<DhtRunner>,
+    pub nodes: Arc<Mutex<HashMap<String, EosNodeInfo>>>,
 }
 
 impl EosNode {
-    pub fn new(opt: Opt) -> EosNode {
+    pub fn new(opt: Opt, nodes: Arc<Mutex<HashMap<String, EosNodeInfo>>>) -> EosNode {
         let mut dht = DhtRunner::new();
         let mut config = DhtRunnerConfig::new();
         config.dht_config.node_config.network =  opt.network;
@@ -40,6 +44,7 @@ impl EosNode {
                 ips: Vec::new(),
                 key: opt.eoskey,
             },
+            nodes,
         };
         node.init_ips();
         node

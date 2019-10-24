@@ -72,7 +72,7 @@ fn main() {
         panic!("too few arguments")
     }
 
-    let data = fs::read_to_string("/volentix/config/server.conf")
+    let data = fs::read_to_string("config/server.conf")
         .expect("Unable to read params, make sure config file is present in the same folder ");
     let params: Params = serde_json::from_str(&data).unwrap();
     let PARTIES: u32 = params.parties.parse::<u32>().unwrap();

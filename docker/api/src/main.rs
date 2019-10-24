@@ -37,11 +37,11 @@ fn main() {
     let shared_info = Arc::new(Mutex::new(HashMap::new()));
     let mut node = EosNode::new(opt, shared_info.clone());
     node.announce();
+    println!("Current node id: {}", node.info.id);
 
     // TODO: inject --certificate && --privkey
 
     // Follow other nodes
-    // TODO move in node?
     let mut value_cb = |v: Box<Value>, expired: bool| {
         let cur = Cursor::new(v.as_bytes());
         let mut de = Deserializer::new(cur);

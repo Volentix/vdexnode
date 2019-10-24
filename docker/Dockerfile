@@ -50,9 +50,10 @@ RUN cd /mpt && cargo build --release --bin sign && cargo build --release --bin g
 RUN mv /api/target/release/api /usr/bin/api
 RUN mv /mpt/target/release/sign /usr/bin/sign
 RUN mv /mpt/target/release/generate_key /usr/bin/generate_key
-RUN rm -rf /api/target /api/Cargo.lock
+RUN rm -rf /api /mpt
 
 # TODO clean useless files (src directories)
 
 ENV EOSKEY ${EOSKEY}
+WORKDIR /volentix
 ENTRYPOINT ["/entrypoint.sh"]

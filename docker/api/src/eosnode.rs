@@ -6,7 +6,10 @@ use std::collections::HashMap;
 use std::{ thread, time };
 use std::sync::{Arc, Mutex};
 
-
+/**
+ * Contains node informations announced on hash(eos)
+ * and used for /getConnectedNodes /getNodesLocation
+ */
 #[derive(Serialize, Deserialize)]
 pub struct EosNodeInfo {
     pub id: String,
@@ -24,13 +27,21 @@ impl Clone for EosNodeInfo {
     }
 }
 
+/**
+ * Represents the EOSNode
+ */
 pub struct EosNode {
     pub info: EosNodeInfo,
-    pub dht: Box<DhtRunner>,
-    pub nodes: Arc<Mutex<HashMap<String, EosNodeInfo>>>,
+    pub dht: Box<DhtRunner>, // used as a storage
+    pub nodes: Arc<Mutex<HashMap<String, EosNodeInfo>>>, // known informations about the network
 }
 
 impl EosNode {
+    /**
+     * Bootstrap to the eos network and init info.
+     * @param opt       nodes options given by the user
+     * @param nodes     will store known infos on the network
+     */
     pub fn new(opt: Opt, nodes: Arc<Mutex<HashMap<String, EosNodeInfo>>>) -> EosNode {
         let mut dht = DhtRunner::new();
         let mut config = DhtRunnerConfig::new();
@@ -60,6 +71,9 @@ impl EosNode {
         node
     }
 
+    /**
+     * Get the public ips detected through the DHT
+     */
     fn init_ips(&mut self) {
         let mut public_addresses = self.dht.public_addresses();
         let ten_millis = time::Duration::from_millis(10);
@@ -74,11 +88,13 @@ impl EosNode {
             panic!("No public address found. Abort");
         }
 
-        println!("Current node id: {}", self.dht.node_id());
         let public_addresses: Vec<String> = public_addresses.iter().map(|addr| format!("{}", addr)).collect();
         self.info.ips = public_addresses;
     }
 
+    /**
+     * Do a permanent put on the DHT to announce the presence of the node
+     */
     pub fn announce(&mut self) {
         let mut buf = Vec::new();
         self.info.serialize(&mut Serializer::new(&mut buf)).unwrap();

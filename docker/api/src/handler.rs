@@ -6,6 +6,9 @@ use std::str::FromStr;
 use std::sync::{ Arc, Condvar, Mutex };
 use opendht::{ InfoHash, Value };
 
+/**
+ * Do get and put operations on the DHT and format info for the server
+ */
 pub struct Handler {
     eosnode: EosNode,
 }
@@ -17,6 +20,10 @@ impl Handler {
         }
     }
 
+    /**
+     * Retrieve known nodes from the EOS Node
+     * @return      The format returned will be {node_id: eos_key}
+     */
     pub fn get_connected_nodes(&mut self) -> HashMap<String, String> {
         let mut result = HashMap::new();
         for (id, node) in &(*self.eosnode.nodes.lock().unwrap()) {
@@ -25,6 +32,10 @@ impl Handler {
         result
     }
 
+    /**
+     * Get nodes locations via ipinfo.io
+     * @return      { node_id: [city, location]}
+     */
     pub fn get_nodes_location(&mut self) -> HashMap<String, Vec<String>> {
         let mut locations = HashMap::new();
 
@@ -53,20 +64,28 @@ impl Handler {
         locations
     }
 
+    /**
+     * Insert a key on the DHT, this does a permanent put on the DHT
+     * @param key       key of the hashmap
+     * @param value     value of the hashmap
+     */
     pub fn insert(&mut self, key: Vec<u8>, value: String) {
         let mut put_done_cb = |_: bool| {
-            println!("Key successfully announced");
+            info!("Key successfully announced");
         };
-        println!("INSERT {}", InfoHash::from_bytes(&key));
         self.eosnode.dht.permanent_put(&InfoHash::from_bytes(&key), Value::new(&*value), &mut put_done_cb);
     }
 
+    /**
+     * Retrieve a value at a given hash
+     * @return one value retrieven
+     * @note this return only one value!
+     */
     pub fn get(&mut self, key: Vec<u8>) -> Option<String> {
         let mut result = None;
         let pair = Arc::new((Mutex::new(false), Condvar::new()));
         let pair2 = pair.clone();
         let mut get_cb = |v: Box<Value>| {
-            println!("Get value: {}", *v);
             result = Some(String::from_utf8(v.as_bytes()).unwrap_or(String::new()));
         };
         let mut done_cb = |_: bool| {
@@ -75,7 +94,6 @@ impl Handler {
             *done = true;
             cvar.notify_one();
         };
-        println!("GET {}", InfoHash::from_bytes(&key));
         self.eosnode.dht.get(&InfoHash::from_bytes(&key), &mut get_cb, &mut done_cb);
         let (lock, cvar) = &*pair;
         let mut done = lock.lock().unwrap();
@@ -85,6 +103,9 @@ impl Handler {
         result
     }
 
+    /**
+     * Return the node infos
+     */
     pub fn info(&mut self) -> EosNodeInfo {
         self.eosnode.info.clone()
     }

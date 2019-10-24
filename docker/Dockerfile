@@ -40,12 +40,20 @@ EXPOSE 8000/tcp
 EXPOSE 8100/tcp
 EXPOSE 4222/udp
 
+COPY ./config/ /volentix/config/
 COPY ./api /api
+COPY ./mpt /mpt
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod 700 entrypoint.sh
 RUN cd /api && cargo build --release
+RUN cd /mpt && cargo build --release --bin sign && cargo build --release --bin generate_key
 RUN mv /api/target/release/api /usr/bin/api
-RUN rm -rf /api/target /api/Cargo.lock
+RUN mv /mpt/target/release/sign /usr/bin/sign
+RUN mv /mpt/target/release/generate_key /usr/bin/generate_key
+RUN rm -rf /api /mpt
+
+# TODO clean useless files (src directories)
 
 ENV EOSKEY ${EOSKEY}
-CMD /entrypoint.sh
+WORKDIR /volentix
+ENTRYPOINT ["/entrypoint.sh"]

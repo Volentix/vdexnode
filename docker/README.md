@@ -2,17 +2,17 @@
 
 1. Build docker image:
 ```bash
-docker build -t volentix/node .
+make build
 ```
 
 2. Run new node:
 ```bash
-docker run -d --name volentixnode -e "IP=InsertYouBootstrapIP" -e "EOSKEY=InsertYourKeyHere" -p 8000:8000 -p 8100:8100 -p 4222:4222/udp volentix/node
+IP="InsertYouBootstrapIP" EOSKEY="InsertYourKeyHere" make run-server
 ```
 
 3. You can get node info via curl:
 ```bash
-curl http://localhost:8100
+curl http://localhost:8000
 ```
 
 4. You can scan nodes and keys:
@@ -25,3 +25,19 @@ curl http://localhost:8000/getConnectedNodes
 docker cp volentixnode:/volentix/node.key .
 docker cp volentixnode:/volentix/node.crt .
 ```
+
+6. Run in separate terminals
+```bash
+make client=tester1 run-key_gen
+make client=tester2 run-key_gen
+```
+to generate keys for parties. Keys will appear in `client_data` directory.
+
+7. Run in separate terminals
+```bash
+make client=tester1 msg="test message" run-sign
+make client=tester2 msg="test message" run-sign
+```
+
+to sign test message. The same message should be used by all signers.
+Once t+1 parties join the protocol will run and will output to screen signatue (R,s)

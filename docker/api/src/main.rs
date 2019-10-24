@@ -12,6 +12,7 @@ extern crate rmp_serde as rmps;
 extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
+extern crate uuid;
 
 mod eosnode;
 mod handler;
@@ -34,11 +35,11 @@ use structopt::StructOpt;
 fn main() {
     let opt = Opt::from_args();
     let shared_info = Arc::new(Mutex::new(HashMap::new()));
-    let mut node = EosNode::new(opt);
+    let mut node = EosNode::new(opt, shared_info.clone());
     node.announce();
+    println!("Current node id: {}", node.info.id);
 
-    // TODO: inject --certificate && --privkey 
-    // TODO MultiParty Threshold
+    // TODO: inject --certificate && --privkey
 
     // Follow other nodes
     let mut value_cb = |v: Box<Value>, expired: bool| {
@@ -58,6 +59,6 @@ fn main() {
     };
     let _ = node.dht.listen(&InfoHash::get("eos"), &mut value_cb);
 
-    let handler = Handler::new(shared_info);
+    let handler = Handler::new(node);
     Server::run(Arc::new(Mutex::new(handler)))
 }

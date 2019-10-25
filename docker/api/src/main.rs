@@ -39,8 +39,6 @@ fn main() {
     node.announce();
     println!("Current node id: {}", node.info.id);
 
-    // TODO: inject --certificate && --privkey
-
     // Follow other nodes
     let mut value_cb = |v: Box<Value>, expired: bool| {
         let cur = Cursor::new(v.as_bytes());

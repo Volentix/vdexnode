@@ -18,6 +18,9 @@ pub struct Opt {
     #[structopt(short = "k", long = "privkey")]
     pub privkey: String,
 
+    #[structopt(short = "s", long = "password", default_value = "")]
+    pub password: String,
+
     #[structopt(short = "p", long = "port", default_value = "4222")]
     pub port: u16,
 }

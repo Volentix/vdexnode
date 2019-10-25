@@ -1,5 +1,6 @@
 use crate::opt::Opt;
 use opendht::{ DhtRunner, DhtRunnerConfig, InfoHash, Value };
+use opendht::crypto::{ DhtCertificate, PrivateKey };
 use serde::{ Deserialize, Serialize };
 use rmps::Serializer;
 use std::collections::HashMap;
@@ -45,6 +46,9 @@ impl EosNode {
     pub fn new(opt: Opt, nodes: Arc<Mutex<HashMap<String, EosNodeInfo>>>) -> EosNode {
         let mut dht = DhtRunner::new();
         let mut config = DhtRunnerConfig::new();
+        let cert = DhtCertificate::import(&*opt.certificate).ok().expect("Can't read cert file. Make sure that keys are generated");
+        let pk = PrivateKey::import(&*opt.privkey, &*opt.password);
+        config.set_identity(cert, pk);
         config.dht_config.node_config.network =  opt.network;
         dht.run_config(opt.port, config);
         let service : Vec<&str> = opt.bootstrap.rsplitn(2, ":").collect();

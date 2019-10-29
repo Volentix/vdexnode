@@ -1,11 +1,14 @@
-use crate::handler::Handler;
+use crate::handler::{ ChatReader, Handler };
 use crate::eosnode::EosNodeInfo;
+use rocket::response::Stream;
+use rocket::http::RawStr;
 use rocket::State;
 use rocket_contrib::json::Json;
 use std::sync::{ Arc, Mutex };
 use std::collections::HashMap;
 use std::str::FromStr;
 use std::fs;
+use std::io::{ self, Error, ErrorKind };
 use serde::{ Deserialize, Serialize };
 use rmps::Serializer;
 use uuid::Uuid;
@@ -196,6 +199,44 @@ fn nodes_location(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, V
     Json(nodes_location)
 }
 
+#[get("/room/<room>")]
+fn stream(handler: State<Arc<Mutex<Handler>>>, room: &RawStr) -> io::Result<Stream<ChatReader>> {
+    let mut handler = handler.lock().unwrap();
+    let room = room.url_decode().unwrap_or(String::new());
+    if room.is_empty() {
+        return Err(Error::new(ErrorKind::Other, "Cannot decode room"));
+    }
+    Ok(Stream::from(handler.join(room)))
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Message {
+    pub message: String
+}
+
+#[post("/room/<room>", format = "application/json", data = "<message>")]
+fn put_msg(handler: State<Arc<Mutex<Handler>>>, room: &RawStr, message: Json<Message>) -> Json<bool> {
+    let mut handler = handler.lock().unwrap();
+    let room = room.url_decode().unwrap_or(String::new());
+    if room.is_empty() {
+        return Json(false);
+    }
+    handler.send(room, &*message.message);
+    Json(true)
+}
+
+#[post("/room/<room>/<user>", format = "application/json", data = "<message>")]
+fn put_encrypted_msg(handler: State<Arc<Mutex<Handler>>>, room: &RawStr, user: &RawStr, message: Json<Message>) -> Json<bool> {
+    let mut handler = handler.lock().unwrap();
+    let room = room.url_decode().unwrap_or(String::new());
+    let user = user.url_decode().unwrap_or(String::new());
+    if room.is_empty() || user.is_empty() {
+        return Json(false);
+    }
+    handler.send_to_user(room, user, &*message.message);
+    Json(true)
+}
+
 /**
  * Return node's infos
  */
@@ -269,7 +310,7 @@ impl Server {
         // Launch server
         rocket::ignite()
             .manage(handler)
-            .mount("/", routes![nodes_location, connected_nodes, get, set, signup_keygen, signup_sign, node_infos])
+            .mount("/", routes![nodes_location, connected_nodes, get, put_msg, put_encrypted_msg, set, signup_keygen, signup_sign, stream, node_infos])
             .attach(cors)
             .launch();
     }

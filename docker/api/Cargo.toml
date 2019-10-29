@@ -11,9 +11,9 @@ zk-paillier = { git = "https://github.com/KZen-networks/zk-paillier"}
 env_logger = "0.5.6"
 hex = "0.3.2"
 log = "0.4.1"
-opendht = { git = "https://github.com/AmarOk1412/opendht/", branch = "feat/rust" }
-rocket = "0.4.0"
-rocket_contrib = "0.4.0"
+opendht = { git = "https://github.com/AmarOk1412/opendht/", branch="feat/rust" }
+rocket = "0.4.2"
+rocket_contrib = "0.4.2"
 rocket_cors = { git = "https://github.com/lawliet89/rocket_cors", branch = "master" }
 reqwest = "0.9.5"
 rmp-serde = "0.14.0"

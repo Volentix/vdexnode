@@ -16,6 +16,7 @@ pub struct EosNodeInfo {
     pub id: String,
     pub ips: Vec<String>,
     pub key: String,
+    pub public_key: String,
 }
 
 impl Clone for EosNodeInfo {
@@ -23,6 +24,7 @@ impl Clone for EosNodeInfo {
         Self {
             id: self.id.clone(),
             key: self.key.clone(),
+            public_key: self.public_key.clone(),
             ips: self.ips.clone(),
         }
     }
@@ -47,7 +49,7 @@ impl EosNode {
         let mut dht = DhtRunner::new();
         let mut config = DhtRunnerConfig::new();
         let cert = DhtCertificate::import(&*opt.certificate).ok().expect("Can't read cert file. Make sure that keys are generated");
-        let pk = PrivateKey::import(&*opt.privkey, &*opt.password);
+        let pk = PrivateKey::import(&*opt.privkey, &*opt.password).ok().expect("Can't read key file. Make sure that keys are generated");
         config.set_identity(cert, pk);
         config.dht_config.node_config.network =  opt.network;
         dht.run_config(opt.port, config);
@@ -62,11 +64,13 @@ impl EosNode {
         }
         dht.bootstrap(host, port);
         let node_id = dht.node_id();
+        let public_key = format!("{}", dht.id());
         let mut node = EosNode {
             dht,
             info: EosNodeInfo {
                 id: format!("{}", node_id),
                 ips: Vec::new(),
+                public_key,
                 key: opt.eoskey,
             },
             nodes,
@@ -105,6 +109,6 @@ impl EosNode {
         let mut put_done_cb = |_: bool| {
             info!("Node successfully announced");
         };
-        self.dht.permanent_put(&InfoHash::get("eos"), Value::from_bytes(&buf), &mut put_done_cb);
+        self.dht.put_signed(&InfoHash::get("eos"), Value::from_bytes(&buf), &mut put_done_cb, true);
     }
 }

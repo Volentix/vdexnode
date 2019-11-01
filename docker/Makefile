@@ -9,6 +9,9 @@ clean:
 build:
 	docker build -t volentix/vdexnode . --no-cache=true
 
+push:
+	docker push volentix/vdexnode
+
 network:
 	docker network create $(NETWORK_NAME)
 

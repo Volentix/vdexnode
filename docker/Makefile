@@ -1,13 +1,13 @@
 PROJECT_NAME = volentix
 PROJECT_PATH ?= $(shell pwd)
 NETWORK_NAME = volentix
-SERVER_NAME = volentixnode
+SERVER_NAME = vdexnode
 
 clean:
-	docker rm -f volentixnode
+	docker rm -f vdexnode
 
 build:
-	docker build -t volentix/node .
+	docker build -t volentix/vdexnode . --no-cache=true
 
 network:
 	docker network create $(NETWORK_NAME)
@@ -15,7 +15,7 @@ network:
 run-server:
 	docker run -d --name $(SERVER_NAME) --network $(NETWORK_NAME) \
 	-e "IP=${IP}" -e "EOSKEY=${EOSKEY}" \
-	-p 8000:8000 -p 4222:4222/udp volentix/node server
+	-p 8000:8000 -p 4222:4222/udp volentix/vdexnode:latest server
 
 run-key_gen:
 	docker run --rm -ti --network $(NETWORK_NAME) -v config:/volentix/config:z \
@@ -28,7 +28,7 @@ run-sign:
 	volentix/node sign http://$(SERVER_NAME):8000 /volentix/client_data/$(client).key '$(msg)'
 
 attach-server:
-	docker exec -ti volentixnode bash
+	docker exec -ti vdexnode bash
 
 %:
 	@:

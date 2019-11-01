@@ -15,10 +15,16 @@ push:
 network:
 	docker network create $(NETWORK_NAME)
 
-run-server:
+run-server-dockerhub:
 	docker run -d --name $(SERVER_NAME) --network $(NETWORK_NAME) \
 	-e "IP=${IP}" -e "EOSKEY=${EOSKEY}" \
 	-p 8000:8000 -p 4222:4222/udp volentix/vdexnode:latest server
+
+run-server:
+	docker run -d --name $(SERVER_NAME) --network $(NETWORK_NAME) \
+	-e "IP=${IP}" -e "EOSKEY=${EOSKEY}" \
+	-p 8000:8000 -p 4222:4222/udp vdexnode server
+
 
 run-key_gen:
 	docker run --rm -ti --network $(NETWORK_NAME) -v config:/volentix/config:z \

@@ -189,6 +189,16 @@ fn connected_nodes(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, 
     Json(connected_nodes)
 }
 
+
+#[get("/getConnectedIP")]
+fn connected_nodes(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, String>> {
+    let mut handler = handler.lock().unwrap();
+    let mut connected_nodes = handler.get_connected_nodes_IP();
+    connected_nodes.insert("Result".to_string(), "Success".to_string());
+    Json(connected_nodes)
+}
+
+
 /**
  * Return nodes location on the DHT
  */

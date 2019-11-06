@@ -7,7 +7,7 @@ clean:
 	docker rm -f vdexnode
 
 build:
-	docker build -t volentix/vdexnode . --no-cache=true
+	docker build -t vdexnode . --no-cache=true
 
 push:
 	docker push volentix/vdexnode

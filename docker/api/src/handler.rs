@@ -116,7 +116,7 @@ impl Handler {
         result
     }
 
-    pub fn get_connected_nodes_IP(&mut self) -> HashMap<String, String> {
+    pub fn get_connected_ips(&mut self) -> HashMap<String, String> {
         let mut result = HashMap::new();
         for (_id, node) in &(*self.eosnode.lock().unwrap().nodes.lock().unwrap()) {
             result.insert(node.ips.get(0).unwrap().clone(), node.key.clone());

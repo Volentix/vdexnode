@@ -190,10 +190,10 @@ fn connected_nodes(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, 
 }
 
 
-#[get("/getConnectedIP")]
-fn connected_nodes(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, String>> {
+#[get("/getConnectedIPs")]
+fn connected_ips(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, String>> {
     let mut handler = handler.lock().unwrap();
-    let mut connected_nodes = handler.get_connected_nodes_IP();
+    let mut connected_nodes = handler.get_connected_ips();
     connected_nodes.insert("Result".to_string(), "Success".to_string());
     Json(connected_nodes)
 }
@@ -321,6 +321,7 @@ impl Server {
         rocket::ignite()
             .manage(handler)
             .mount("/", routes![nodes_location, connected_nodes, get, put_msg, put_encrypted_msg, set, signup_keygen, signup_sign, stream, node_infos])
+            .mount("/", routes![nodes_location, connected_ips, get, put_msg, put_encrypted_msg, set, signup_keygen, signup_sign, stream, node_infos])
             .attach(cors)
             .launch();
     }

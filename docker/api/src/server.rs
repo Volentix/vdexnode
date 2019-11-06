@@ -320,8 +320,7 @@ impl Server {
         // Launch server
         rocket::ignite()
             .manage(handler)
-            .mount("/", routes![nodes_location, connected_nodes, get, put_msg, put_encrypted_msg, set, signup_keygen, signup_sign, stream, node_infos])
-            .mount("/", routes![nodes_location, connected_ips, get, put_msg, put_encrypted_msg, set, signup_keygen, signup_sign, stream, node_infos])
+            .mount("/", routes![nodes_location, connected_nodes, connected_ips, get, put_msg, put_encrypted_msg, set, signup_keygen, signup_sign, stream, node_infos])
             .attach(cors)
             .launch();
     }

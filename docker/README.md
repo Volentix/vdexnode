@@ -1,4 +1,4 @@
-# Install docker volentix node:
+# Install docker vdex node:
 
 To run the node in for development purposes, you can do it without docker containers. Follow the following instruction
 
@@ -29,8 +29,8 @@ curl http://localhost:8000/getConnectedNodes
 5. You can backup node keys from docker to local host:
 
 ```bash
-docker cp volentixnode:/volentix/node.key .
-docker cp volentixnode:/volentix/node.crt .
+docker cp vdexnode:/volentix/node.key .
+docker cp vdexnode:/volentix/node.crt .
 ```
 
 6. Run in separate terminals

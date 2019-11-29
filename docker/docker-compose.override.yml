@@ -1,0 +1,7 @@
+# To use this file, run `docker-compose up`.
+version: '3'
+
+services:
+
+  vdexnode:
+    build: vDexNode

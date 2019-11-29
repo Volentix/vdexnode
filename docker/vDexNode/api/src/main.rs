@@ -14,11 +14,13 @@ extern crate serde;
 extern crate serde_json;
 extern crate uuid;
 
+mod bitcoin;
 mod eosnode;
 mod handler;
 mod opt;
 mod server;
 
+use crate::bitcoin::Bitcoin;
 use crate::eosnode::*;
 use crate::handler::*;
 use crate::server::Server;
@@ -37,6 +39,15 @@ use structopt::StructOpt;
 
 fn main() {
     let opt = Opt::from_args();
+
+    let bitcoin = Bitcoin {
+        app: opt.bitcoin_cli.clone(),
+        rpcuser: opt.bitcoin_user.clone(),
+        rpcpassword: opt.bitcoin_password.clone(),
+        rpcconnect: opt.bitcoin_connect.clone(),
+        rpcport: opt.bitcoin_port.clone(),
+    };
+
     let shared_info = Arc::new(Mutex::new(HashMap::new()));
     let chat_events = Arc::new(Mutex::new(Vec::new()));
     let chat_events_cloned = chat_events.clone();
@@ -124,7 +135,7 @@ fn main() {
         }
     });
 
-    let handler = Handler::new(node, chat_events_cloned);
+    let handler = Handler::new(node, chat_events_cloned, bitcoin);
     Server::run(Arc::new(Mutex::new(handler)));
     stop_chat_loop.store(true, Ordering::Relaxed);
     let _ = chat_thread.join();

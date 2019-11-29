@@ -198,7 +198,6 @@ fn connected_ips(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, St
     Json(connected_nodes)
 }
 
-
 /**
  * Return nodes location on the DHT
  */
@@ -255,6 +254,81 @@ fn node_infos(handler: State<Arc<Mutex<Handler>>>) -> Json<EosNodeInfo> {
     let mut handler = handler.lock().unwrap();
     let info = handler.info();
     Json(info)
+}
+
+/// BITCOIN
+
+#[get("/getnewaddress")]
+fn getnewaddress(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, String>> {
+    let bitcoin = handler.lock().unwrap().bitcoin.clone();
+    Json(bitcoin.getaddr())
+}
+
+#[get("/dumpprivkey/<address>")]
+fn dumpprivkey(handler: State<Arc<Mutex<Handler>>>, address: &RawStr) -> Json<HashMap<String, String>> {
+    let bitcoin = handler.lock().unwrap().bitcoin.clone();
+    let address = address.url_decode().unwrap_or(String::new());
+    Json(bitcoin.dumpprivkey(address))
+}
+
+#[get("/getbalance")]
+fn getbalance(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, String>> {
+    let bitcoin = handler.lock().unwrap().bitcoin.clone();
+    Json(bitcoin.balance())
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct SignRequest {
+    pub n: u32,
+    pub keys: Vec<String>
+}
+
+#[post("/addmultisigaddress", format = "application/json", data = "<signrequest>")]
+fn addmultisigaddress(handler: State<Arc<Mutex<Handler>>>, signrequest: Json<SignRequest>) -> Json<HashMap<String, String>> {
+    let bitcoin = handler.lock().unwrap().bitcoin.clone();
+    Json(bitcoin.addmultisigaddress(signrequest.n, &signrequest.keys))
+}
+
+#[post("/createmultisig", format = "application/json", data = "<signrequest>")]
+fn createmultisig(handler: State<Arc<Mutex<Handler>>>, signrequest: Json<SignRequest>) -> Json<HashMap<String, String>> {
+    let bitcoin = handler.lock().unwrap().bitcoin.clone();
+    Json(bitcoin.createmultisig(signrequest.n, &signrequest.keys))
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct GetTransactionRequest {
+    pub txid: String,
+}
+
+#[post("/gettransaction", format = "application/json", data = "<req>")]
+fn gettransaction(handler: State<Arc<Mutex<Handler>>>, req: Json<GetTransactionRequest>) -> Json<HashMap<String, String>> {
+    let bitcoin = handler.lock().unwrap().bitcoin.clone();
+    Json(bitcoin.gettransaction(req.txid.clone()))
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct SendToRequest {
+    pub bitcoinaddress: String,
+    pub amount: String,
+}
+
+#[post("/sendtoaddress", format = "application/json", data = "<req>")]
+fn sendtoaddress(handler: State<Arc<Mutex<Handler>>>, req: Json<SendToRequest>) -> Json<HashMap<String, String>> {
+    let bitcoin = handler.lock().unwrap().bitcoin.clone();
+    Json(bitcoin.sendtoaddress(req.bitcoinaddress.clone(), req.amount.clone()))
+}
+
+
+#[derive(Serialize, Deserialize)]
+pub struct BcSignRequest {
+    pub bitcoinaddress: String,
+    pub message: String,
+}
+
+#[post("/signmessage", format = "application/json", data = "<req>")]
+fn signmessage(handler: State<Arc<Mutex<Handler>>>, req: Json<BcSignRequest>) -> Json<HashMap<String, String>> {
+    let bitcoin = handler.lock().unwrap().bitcoin.clone();
+    Json(bitcoin.signmessage(req.bitcoinaddress.clone(), req.message.clone()))
 }
 
 pub struct Server;
@@ -320,7 +394,12 @@ impl Server {
         // Launch server
         rocket::ignite()
             .manage(handler)
-            .mount("/", routes![nodes_location, connected_nodes, connected_ips, get, put_msg, put_encrypted_msg, set, signup_keygen, signup_sign, stream, node_infos])
+            .mount("/", routes![nodes_location, connected_nodes, connected_ips, get,
+                        put_msg, put_encrypted_msg, set, signup_keygen, signup_sign,
+                        stream, node_infos])
+            .mount("/bitcoin", routes![addmultisigaddress, createmultisig, getbalance,
+                        getnewaddress, dumpprivkey, gettransaction, sendtoaddress,
+                        signmessage])
             .attach(cors)
             .launch();
     }

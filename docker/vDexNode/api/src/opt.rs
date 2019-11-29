@@ -1,5 +1,6 @@
 use structopt::StructOpt;
 
+// TODO move to config file
 #[derive(Debug, StructOpt)]
 #[structopt(name = "api", about = "VDexNode API")]
 pub struct Opt {
@@ -23,4 +24,19 @@ pub struct Opt {
 
     #[structopt(short = "p", long = "port", default_value = "4222")]
     pub port: u16,
+
+    #[structopt(long = "bitcoin-cli", default_value = "bitcoin-cli")]
+    pub bitcoin_cli: String,
+
+    #[structopt(long = "bitcoin-user", default_value = "")]
+    pub bitcoin_user: String,
+
+    #[structopt(long = "bitcoin-password", default_value = "")]
+    pub bitcoin_password: String,
+
+    #[structopt(long = "bitcoin-connect", default_value = "localhost")]
+    pub bitcoin_connect: String,
+
+    #[structopt(long = "bitcoin-port", default_value = "8332")]
+    pub bitcoin_port: String,
 }

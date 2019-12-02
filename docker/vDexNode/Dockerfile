@@ -33,6 +33,15 @@ RUN set -eux; \
     rm rustup-init; \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME;
 
+# Bitcoin stuff
+RUN curl https://bitcoin.org/bin/bitcoin-core-0.19.0.1/bitcoin-0.19.0.1-x86_64-linux-gnu.tar.gz > bitcoin.tar.gz
+RUN tar xvf bitcoin.tar.gz
+RUN cp /bitcoin-0.19.0.1/bin/bitcoin-cli /usr/bin
+RUN cp -r /bitcoin-0.19.0.1/include/* /usr/include
+RUN cp -r /bitcoin-0.19.0.1/lib/* /usr/lib
+RUN cp -r /bitcoin-0.19.0.1/share/* /usr/share
+RUN rm -rf /bitcoin*
+
 #create dir for node keys
 RUN mkdir /volentix
 
@@ -50,9 +59,7 @@ RUN cd /mpt && cargo build --release --bin sign && cargo build --release --bin g
 RUN mv /api/target/release/api /usr/bin/api
 RUN mv /mpt/target/release/sign /usr/bin/sign
 RUN mv /mpt/target/release/generate_key /usr/bin/generate_key
-RUN rm -rf /api /mpt
-
-# TODO clean useless files (src directories)
+RUN rm -rf /api /mpt /opendht /restbed /restinio
 
 ENV EOSKEY ${EOSKEY}
 WORKDIR /volentix

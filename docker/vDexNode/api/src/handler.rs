@@ -1,3 +1,4 @@
+use crate::bitcoin::Bitcoin;
 use crate::eosnode::*;
 use opendht::{ InfoHash, Value };
 use reqwest;
@@ -93,14 +94,16 @@ pub struct Handler {
     eosnode: Arc<Mutex<EosNode>>,
     chat_events: Arc<Mutex<Vec<ChatEvent>>>,
     chat_readers_idx: u64,
+    pub bitcoin: Bitcoin
 }
 
 impl Handler {
-    pub fn new(eosnode: Arc<Mutex<EosNode>>, chat_events: Arc<Mutex<Vec<ChatEvent>>>) -> Handler {
+    pub fn new(eosnode: Arc<Mutex<EosNode>>, chat_events: Arc<Mutex<Vec<ChatEvent>>>, bitcoin: Bitcoin) -> Handler {
         Handler {
             eosnode,
             chat_events,
             chat_readers_idx: 0,
+            bitcoin,
         }
     }
 

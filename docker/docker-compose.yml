@@ -1,0 +1,58 @@
+# To use this file, run `docker-compose up`.
+version: '3'
+
+services:
+  # Main application
+  bitcoin-core:
+    build: bitcoin
+    container_name: bitcoin
+    volumes:
+      - bitcoin-data:/home/bitcoin/.bitcoin
+    expose:
+      - "18443"
+      - "18444"
+    ports:
+      - "18443:18443"
+      - "18444:18444"
+    command:
+      -printtoconsole
+      -regtest=1
+      -rpcbind=0.0.0.0
+      -rpcallowip=172.20.0.0/24
+      -rpcauth='admin:b499b2f7ca30a3286178926d0c62839e$$4d070a65c7b870aba1575ab5dee4cce7ee2ee64de7deab40ca422b82a35a654d'  # EDIT THIS VALUE!
+    networks:
+      volentix:
+        ipv4_address: 172.20.0.2
+
+  vdexnode:
+    image: volentix/vdexnode:latest
+    container_name: vdexnode
+    environment: # EDIT THESE VALUES!
+      - IP=95.216.0.79
+      - EOSKEY=YOUR_KEY
+      - BITCOIN_USER=admin
+      - BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
+      - BITCOIN_ENDPOINT=bitcoin
+      - BITCOIN_PORT=18443
+    expose:
+      - "4222"
+      - "8000"
+    ports:
+      - "4222:4222/udp"
+      - "8000:8000"
+    command:
+      server
+    networks:
+      volentix:
+        ipv4_address: 172.20.0.3
+
+volumes:
+  bitcoin-data:
+
+networks:
+  volentix:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/24

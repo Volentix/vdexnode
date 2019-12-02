@@ -7,7 +7,7 @@ clean:
 	docker rm -f vdexnode
 
 build:
-	docker build -t vdexnode . --no-cache=true
+	docker build -t vdexnode . # --no-cache=true
 
 push:
 	docker push volentix/vdexnode
@@ -29,12 +29,12 @@ run-server:
 run-key_gen:
 	docker run --rm -ti --network $(NETWORK_NAME) -v config:/volentix/config:z \
 	-v ${PROJECT_PATH}/client_data:/volentix/client_data:z \
-	volentix/node key_gen http://$(SERVER_NAME):8000 /volentix/client_data/$(client).key
+	vdexnode key_gen http://$(SERVER_NAME):8000 /volentix/client_data/$(client).key
 
 run-sign:
 	docker run --rm -ti --network $(NETWORK_NAME) -v config:/volentix/config:z \
 	-v ${PROJECT_PATH}/client_data:/volentix/client_data:z \
-	volentix/node sign http://$(SERVER_NAME):8000 /volentix/client_data/$(client).key '$(msg)'
+	vdexnode sign http://$(SERVER_NAME):8000 /volentix/client_data/$(client).key '$(msg)'
 
 attach-server:
 	docker exec -ti vdexnode bash

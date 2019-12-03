@@ -50,7 +50,6 @@ impl Bitcoin {
     fn exec_command(&self, cmd: &str, args: Vec<String>) -> Result<String, Box<dyn std::error::Error>> {
         let output = Command::new(&*self.app)
             .arg(format!("-rpcconnect={}", self.rpcconnect))
-            .arg("-regtest")
             .arg(format!("-rpcuser={}", self.rpcuser))
             .arg(format!("-rpcpassword={}", self.rpcpassword))
             .arg(format!("-rpcport={}", self.rpcport))

@@ -1,0 +1,92 @@
+#!/bin/bash
+
+echo "Installing Vepo"
+
+wget https://github.com/rancher/k3s/releases/download/v0.6.1/k3s
+
+chmod +x k3s
+
+sudo mv k3s /bin
+
+sudo nohup  k3s server &>/dev/null &
+
+echo "Sleeping while k3s starts up..."
+
+sleep 5
+
+curl -LO https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+
+k3s kubectl apply -f local-path-storage.yaml
+
+# sudo k3s kubectl delete -f /var/lib/rancher/k3s/server/manifests/traefik.yaml
+
+# NGINX 
+# https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04
+
+# You must update the config file with the new server address. File here:
+# /etc/nginx/sites-available/default
+
+# Replace the existing code to the following:
+# ```
+# server {
+#        listen 80 default_server;
+#        listen [::]:80 default_server;
+#
+#        server_name _;
+#        location / {
+#                proxy_pass http://localhost:33645/;
+#        }
+# }
+# ```
+
+### Linkerd
+
+curl -sL https://run.linkerd.io/install | sh
+
+export PATH=$PATH:$HOME/.linkerd2/bin
+
+# sudo chmod 755 ~/.kube
+# get the kube config
+#sudo cp /var/lib/rancher/k3s/agent/kubeconfig.yaml ~/.kube/config
+
+#sudo chmod 755 ~/.kube/config
+
+#linkerd install | k3s kubectl apply -f -
+
+#sudo k3s kubectl apply -f kube/0.traefik.yaml
+
+### Istio
+
+# sudo cp helm/istio-init.tgz /var/lib/rancher/k3s/server/static/charts/istio-init.tgz
+
+# sudo cp helm/istio.tgz /var/lib/rancher/k3s/server/static/charts/istio.tgz
+
+# k3s kubectl apply -f kube/1.istio-namespace.yaml
+
+# k3s kubectl apply -f kube/2.istio-init.yaml
+
+# sleep 5
+
+# k3s kubectl apply -f kube/3.istio-main.yaml
+
+echo "Done the Vepo install."
+
+
+
+
+
+sudo k3s kubectl delete -f /var/lib/rancher/k3s/server/manifests/traefik.yaml
+
+sudo cp helm/istio-init.tgz /var/lib/rancher/k3s/server/static/charts/istio-init.tgz
+
+sudo cp helm/istio.tgz /var/lib/rancher/k3s/server/static/charts/istio.tgz
+
+k3s kubectl apply -f kube/1.istio-namespace.yaml
+
+k3s kubectl apply -f kube/2.istio-init.yaml
+
+sleep 5
+
+k3s kubectl apply -f kube/3.istio-main.yaml
+
+echo "Done the Vepo install."

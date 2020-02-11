@@ -1,0 +1,603 @@
+commit c25e056c4f944d8b3ffecebea04c10b5ab759e8b
+Author: Dima <remasik@gmail.com>
+Date:   Thu Nov 14 10:26:15 2019 -0800
+
+    Update README.md
+
+commit 5fd2640fe8546b776aa5db62945b5be1ed206662
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Thu Nov 7 09:39:23 2019 -0500
+
+    modify README
+
+commit 52405f57d2cc8b4e76c8c7d4f95a844ae47af6a4
+Merge: 25f93c4 740877b
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Wed Nov 6 09:34:39 2019 -0500
+
+    Merge pull request #27 from AmarOk1412/fix/handlers
+    
+    server: fix routes collisions
+
+commit 740877b3fdd98bd6b4e49571e09af8c825062b02
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Wed Nov 6 09:30:24 2019 -0500
+
+    server: fix routes collisions
+
+commit 25f93c4606666604a9efb6750299e636b2867f91
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Nov 6 09:25:20 2019 -0500
+
+    corrections
+
+commit 6f2338f2bce62c8048b69d743d281fef8a423bfc
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Mon Nov 4 13:50:25 2019 -0500
+
+    Added endpoint for retreiving Ip's
+
+commit 1c3da828b0471bb316edaafd6c5b7261081cc295
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Mon Nov 4 13:46:21 2019 -0500
+
+    add IP endpoint
+
+commit b493d5afa5dfbb984bc256a69ededb058986ef06
+Merge: 5546ddb 647d74d
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Mon Nov 4 11:38:10 2019 -0500
+
+    Merge pull request #26 from Volentix/readme_update
+    
+    Update readme files
+
+commit 647d74de72865cbd13aae5df94c01a4b27edd688
+Author: Dmitry Kryukov <remasik@gmail.com>
+Date:   Mon Nov 4 08:31:25 2019 -0800
+
+    Update readme files
+
+commit 5546ddbdb8c7d0657c50dea8120ef92b48bb7ed8
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Fri Nov 1 08:51:55 2019 -0400
+
+    fix for local build
+
+commit 0c3b6a7a99ecee2ea534182f3b543e39b9235bbf
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Fri Nov 1 08:49:15 2019 -0400
+
+     add no-cache to build and make push for commiting to dockerhub
+
+commit 3d714f3fcaf92b6c872c17243867b881a1b5b884
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Fri Nov 1 08:45:59 2019 -0400
+
+    add no-cache to build and rename to vdexnode
+
+commit 1e658346e347be9b1580b098ad3226de4825ad8d
+Merge: cae70b8 e173983
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Tue Oct 29 19:26:59 2019 -0400
+
+    Merge pull request #25 from AmarOk1412/feat/stream
+    
+    api: update to latest opendht + chat endpoints
+
+commit e17398338750d4645a59e74d2f8f08d14e5a74af
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Mon Oct 28 09:31:53 2019 -0400
+
+    api: update to latest opendht + chat endpoints
+
+commit cae70b8ab061e8e53d6e5c7b902adb3f53cb154d
+Merge: cadc97f 52ec030
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Fri Oct 25 15:23:07 2019 -0400
+
+    Merge pull request #24 from AmarOk1412/feat/mpt
+    
+    Add Makefile + inject certificates into dht node
+
+commit 52ec0309540c8227041f36c104d24e8bb0f23589
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Fri Oct 25 12:11:36 2019 -0400
+
+    api: inject certificates into dhtnode
+
+commit a63c0ce1c31c8a93effc02d6f2eec27d8644aa66
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Fri Oct 25 09:32:12 2019 -0400
+
+    docker: remove Makefile from ignored files
+
+commit cadc97fae0075144a7298ad4226ce9d6952133d8
+Merge: e6602fc e459439
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Thu Oct 24 14:06:39 2019 -0400
+
+    Merge pull request #22 from AmarOk1412/feat/mpt
+    
+    [WIP]Feat/mpt
+
+commit e45943933ed222bf84b8b74dbbff3ee76f253399
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Thu Oct 24 12:12:42 2019 -0400
+
+    api: generate unique hashes for nodes MPT
+
+commit cb2dba259f6a0a718d542f6736654b387d136012
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Wed Oct 23 16:09:27 2019 -0400
+
+    api: add / endpoint to get nodes infos
+
+commit e6602fc515cb53c56d572f66c6ed8694e7aa4ece
+Merge: b3b8023 d217332
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Wed Oct 23 15:58:13 2019 -0400
+
+    Merge pull request #23 from AmarOk1412/fix/cors
+    
+    api: fix CORS and allow access to all origins
+
+commit f25ce7bebc151f0c4c8425134b42f5bed4511456
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Wed Oct 23 14:54:37 2019 -0400
+
+    api: link to MultiPartyThreshold
+    
+    Note: the big part of the following code comes from the MPT repository.
+    
+    The api has now the following routes:
+    + /get
+    + /sign
+    + /signupkeygen
+    + /signupsign
+    Communications between clients are made through the DHT indexed by the
+    TupleKey.
+    
+    Some examples are also included in the directory to use these endpoints.
+    The README.md contains all info to test this patch.
+
+commit d2173322d06751b1d98cdb4004fe9ae9d28c5566
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Wed Oct 23 15:45:36 2019 -0400
+
+    api: fix CORS and allow access to all origins
+
+commit b3b8023141f86ecc8f47180e21a5b5531a8f1bcc
+Merge: 66daa98 86435ef
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Tue Oct 22 15:05:37 2019 -0400
+
+    Merge pull request #20 from AmarOk1412/feat/mpt
+    
+    [WIP]Include MPT
+
+commit 86435ef2c594c553b94dc6ca5eec170788fc76d5
+Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+Date:   Fri Oct 18 15:01:59 2019 -0400
+
+    api: rewrite API in Rust
+    
+    In order to link to opendht directly and mpt
+
+commit 66daa980bb042b4168da61d24e3619e89664ad0b
+Author: Dima <remasik@gmail.com>
+Date:   Tue Oct 8 12:16:48 2019 -0700
+
+    Update README.md
+
+commit fc2047a6828e58eb78513468b95bcfd4fa8b10a0
+Merge: a1d9c23 49e097c
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Thu Oct 3 13:19:33 2019 -0400
+
+    Merge branch 'master' of github.com:Volentix/vDexNode
+
+commit a1d9c23315ca9226cb8e1d1a0f173d57bc5d2177
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Thu Oct 3 13:18:57 2019 -0400
+
+    added no US residents limitations
+
+commit 97197317df45f03f3c7a36bcb4754e61de02ab94
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Oct 2 12:09:43 2019 -0400
+
+    new node update
+
+commit 49e097c8c2415e52f3aa9805c56b0e4ccebc4316
+Author: Dima <remasik@gmail.com>
+Date:   Mon Sep 30 09:53:12 2019 -0700
+
+    Update README.md
+    
+    Add the instructions for updating of rolling back the version of the docker image
+
+commit 1a23f8f1c2b2a44b6631992ff1b08485d0f3f976
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Mon Sep 30 09:34:10 2019 -0400
+
+    disclaimer
+
+commit 09d58e619d504db0f3b66c1653d5b4f756dde841
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Mon Sep 30 08:49:51 2019 -0400
+
+    new version on dockerhub
+
+commit 7a79001d81ecbaf13bf76e963d0f1cdea43d1428
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Fri Sep 27 08:49:19 2019 -0400
+
+    Opendht Deps
+    Geolocation container publication
+
+commit e41fdeda9dbd0894617db332d5faf160ed27790d
+Merge: 5c9a3bf e442026
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Tue Sep 24 15:02:06 2019 -0400
+
+    Merge pull request #8 from Volentix/locations
+    
+    Locations
+
+commit e442026b8e32036f16a19df06b849d833250831e
+Author: Dmitry Kryukov <remasik@gmail.com>
+Date:   Tue Sep 24 09:18:11 2019 -0700
+
+    Add API with node locations
+
+commit a7c03717c4b58d9ef09c357f423d2c74e08d2afb
+Author: Dmitry Kryukov <remasik@gmail.com>
+Date:   Mon Sep 23 15:30:18 2019 -0700
+
+    Add node location feature.
+
+commit 5c9a3bf25595d034a95fce1a7fb35e9e69a56143
+Author: sylvain <you@example.com>
+Date:   Tue Sep 17 13:47:16 2019 -0400
+
+    specify ubuntu version
+
+commit 18dc9eb36a56ed923ab345d5a7c26f0d46adcd03
+Merge: bc7855a fcb20ae
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Thu Aug 29 14:14:55 2019 -0400
+
+    Merge pull request #7 from 4ban/patch-1
+    
+    Patch 1
+
+commit fcb20aeaaf75bbab98507febf7fec4a4f0bd0ffd
+Author: Dmitry Kryukov <remasik@gmail.com>
+Date:   Thu Aug 29 09:52:55 2019 -0700
+
+    Small fixes
+
+commit 503dd80f066a41ccc1133c24d62a6eebcfa79ecb
+Author: Dmitry Kryukov <remasik@gmail.com>
+Date:   Thu Aug 29 09:48:42 2019 -0700
+
+    Add AWS instructions
+
+commit 36b10005a809cc1544c69f256ef13956cdb7ad99
+Author: Dmitry Kryukov <remasik@gmail.com>
+Date:   Thu Aug 29 08:58:38 2019 -0700
+
+    Fix spaces
+
+commit 212e0201f20c148943b00df5c8f6e7a2d8b73715
+Author: Dmitry Kryukov <remasik@gmail.com>
+Date:   Thu Aug 29 08:57:25 2019 -0700
+
+    Update links
+
+commit bc7855a69ee5a873a1b86a4078a50888760cad5b
+Merge: 133d80b 5d3bd49
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Wed Aug 28 13:45:18 2019 -0400
+
+    Merge pull request #6 from 4ban/patch-1
+    
+    Update README.md
+
+commit 5d3bd4998d2f83cdce00a6ef49b88982327da18c
+Author: Dima <remasik@gmail.com>
+Date:   Wed Aug 28 10:33:14 2019 -0700
+
+    Update README.md
+
+commit 133d80bdd08086bf3f9edb7853da61a4f8568856
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Aug 21 15:50:28 2019 -0400
+
+    adjustments
+
+commit b8aa158789dfb418f47cd7ab018ca9c9647bec9b
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Aug 21 15:39:37 2019 -0400
+
+    adj
+
+commit 502777b391360013242871be36077d8d0beeadb0
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Aug 21 15:37:43 2019 -0400
+
+    adjustments
+
+commit f54aad34804be97ef4bcaa153f86f6d9246823b8
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Aug 21 15:34:41 2019 -0400
+
+    adjustments
+
+commit 8f4623189dd111796439db93d967163874c3eeb9
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Aug 21 15:32:33 2019 -0400
+
+    djustments
+
+commit f11d058487a40bbb80fb56d58b4fccb5cf75739e
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Aug 21 14:28:19 2019 -0400
+
+    addition
+
+commit 664e5ae24f217425b1083971192b567da7fa82fb
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Aug 21 12:16:39 2019 -0400
+
+    adj
+
+commit e9540c81d1dd147562f924789f75f7d6966e244f
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Tue Aug 20 17:54:24 2019 -0400
+
+    adj
+
+commit 8c2a7074c632c69d69184f31d62289b2ab07d670
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Tue Aug 20 17:27:50 2019 -0400
+
+    adj
+
+commit 22248faadd9657db7089a989569d29de8a96c8d4
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Tue Aug 20 17:19:03 2019 -0400
+
+    installation
+
+commit ab14fadfc4cac0770b38f06a6a734560dd3b2eac
+Author: realrhys <35825385+realrhys@users.noreply.github.com>
+Date:   Wed Aug 14 14:01:21 2019 -0400
+
+    Update CONTRIBUTING.md
+
+commit 74fb447efb456ddd7b5d34f44d8e8c1c5a0a786d
+Merge: 242562b d6e8b11
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Tue Aug 13 11:53:35 2019 -0400
+
+    Merge pull request #5 from 4ban/patch-1
+    
+    Update README.md
+
+commit d6e8b11617390318c55ac92b23f10439bdc63acf
+Author: Dmitry <remasik@gmail.com>
+Date:   Thu Jul 25 15:48:35 2019 -0700
+
+    Update README.md
+
+commit 242562bb043754855cd6a4d1a9efea6a284ed83c
+Merge: 9f29c0e ad411e1
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Wed Jul 17 06:43:48 2019 -0400
+
+    Merge pull request #4 from realrhys/master
+    
+    Remove kubernetes install scripts
+
+commit ad411e1f7cbf819ef44759cfcf07205d9360d5d5
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Mon Jul 8 12:36:42 2019 -0400
+
+    Removed the kubernetes deployment scripts
+
+commit 9f29c0e95b36d77c1f52ff984f9b72d4421cdfd9
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Fri Jul 5 09:20:13 2019 -0400
+
+    liscence
+
+commit f8c1c601e5bac9200c50a915e3fee7e960a28fce
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Wed Jun 26 13:18:26 2019 -0400
+
+    Updated the docker image used in the deployment
+
+commit a584938fd3e4a32619f2802c11f7fd8ca536cf2b
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Wed Jun 26 12:26:57 2019 -0400
+
+    instructions updated with volentix dockerhub
+
+commit 2a94bbe878478dfeae94115bab94f026c84b0b4f
+Author: LeonidVorobev <51713327+LeonidVorobev@users.noreply.github.com>
+Date:   Wed Jun 26 13:47:08 2019 +0300
+
+    Update README.md
+    
+    Update readme
+
+commit 13e358b88c62df2c0f096df5e9fb6dd1483effd6
+Author: LeonidVorobev <51713327+LeonidVorobev@users.noreply.github.com>
+Date:   Wed Jun 26 13:45:20 2019 +0300
+
+    Update Dockerfile
+    
+    Bootstrap IP via the environment
+
+commit 9e324643274a8f3678e111e2911fe65ea04e3bca
+Author: sylvain <you@example.com>
+Date:   Tue Jun 25 09:58:57 2019 -0400
+
+    restore vDexNode Readme
+
+commit 89070d53e8481f5ebdf9696ea08bb4c17e535286
+Author: sylvain <you@example.com>
+Date:   Tue Jun 25 08:05:03 2019 -0400
+
+    instructions
+
+commit bcdc3dee81a96d2842d90fedc77152ace11263bb
+Author: sylvain <you@example.com>
+Date:   Tue Jun 25 08:01:20 2019 -0400
+
+    instructions
+
+commit 681effbdd4cf7cdaa33dc0d184c9a06228242a0d
+Merge: 04e9c32 58f7532
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Tue Jun 25 07:18:41 2019 -0400
+
+    Merge pull request #2 from realrhys/master
+    
+    Updated Deployment Scripts and Documenation.
+
+commit 58f75325ccb567824a179017669e327210d8304a
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Mon Jun 24 19:56:41 2019 -0400
+
+    Made the changes required to the deployment scripts and updated the readme.
+
+commit 411602877577c6dd50891ff1af60702bbcbd0d3f
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Mon Jun 24 18:24:32 2019 -0400
+
+    Adding the rule that you cannot deploy to an existing namespace.
+
+commit d63ce071eaf5e29b5610fb9f59b76b69c775283d
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Mon Jun 24 18:11:08 2019 -0400
+
+    renamed files to template files and added deploy to the gitignore
+
+commit ecc143059f631379399807d45fb49660b1cd9ec5
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Mon Jun 24 18:06:16 2019 -0400
+
+    Adding the kubernetes scripts to this repo for deployment
+
+commit e96c2e901ec5987d12473e92a6494aeca12f1c7f
+Merge: 0872fe0 6b9990b
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Mon Jun 24 18:04:32 2019 -0400
+
+    Updating based on addition to the docs in the read me
+
+commit 0872fe0b91acd63d24624330b980fae3fd28c677
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Mon Jun 24 18:02:29 2019 -0400
+
+    Updating from the server
+
+commit 6b9990b9e3e75713c2be4fd03dc64f44a0e35f1f
+Merge: 9c5b09b 04e9c32
+Author: realrhys <35825385+realrhys@users.noreply.github.com>
+Date:   Mon Jun 24 18:01:40 2019 -0400
+
+    Merge pull request #1 from Volentix/master
+    
+    Updating.
+
+commit 04e9c324b642b7b412090be762e05cfa5b9e6a26
+Merge: 2ebefd2 9c5b09b
+Author: Sylvain Cormier <sylvaincormier@protonmail.com>
+Date:   Mon Jun 24 15:52:53 2019 -0400
+
+    Merge pull request #1 from realrhys/master
+    
+    Added CORS to server and added template docs we need.
+
+commit 9c5b09b72a3dbb18d9af85583ac181f108333f83
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Sun Jun 23 19:26:48 2019 -0400
+
+    Adding the files we require as adding the CORS stuff. We need to tighten it up over time.
+
+commit 2ebefd286f7feef4a46173accbc0ad5543297caf
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Fri Jun 21 17:09:01 2019 -0400
+
+    instructions
+
+commit 931177b6888772cb45eadcbfa13395fb4adf5b3f
+Author: Leonid Vorobev <leonid.vorobev@phenom.team>
+Date:   Fri Jun 21 14:47:49 2019 +0300
+
+    Key generation on first docker run. Adding a description of saving keys to README.md
+
+commit add31fae8f4726f8a6023ea8d80a886759e32b08
+Merge: ba9f227 196b2a8
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Thu Jun 20 11:57:44 2019 -0400
+
+    Merge branch 'master' of github.com:Volentix/vDexNode
+
+commit ba9f227371b0070c28ebd58a8209a0a71b0ecc6b
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Thu Jun 20 11:57:13 2019 -0400
+
+    instructions
+
+commit 196b2a8c498d41b620f43568d731c252f2357482
+Author: Leonid Vorobev <leonid.vorobev@phenom.team>
+Date:   Thu Jun 20 18:43:43 2019 +0300
+
+    dev_pt to master
+
+commit 8121d9219c313dab32868f0e25e3c638b4be8a47
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Tue Jun 18 13:23:33 2019 -0400
+
+    Added the standard repo files
+
+commit 2d239fc9a1ee486f67570db37d1d2881c00ad8ec
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Tue Jun 18 11:33:12 2019 -0400
+
+    merge dev_pt branch
+
+commit 5e64de7ffa4bbd63afe6edf81ed0c0e4102955bb
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Mon Jun 17 10:13:13 2019 -0400
+
+    changes to doc
+
+commit 8570057ab7253ec889587d895d1876eb7a0c54af
+Author: realrhys <rhys@volentixlabs.com>
+Date:   Mon Jun 17 09:41:46 2019 -0400
+
+    Added the required files for the repo to be compliant for the standards
+
+commit b9027c4b5851b36eb25f63231443de14b0914e75
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Tue Jun 4 11:09:06 2019 -0400
+
+    README
+
+commit 4d0261bda87c7b408c4d81bc0d2111d402bc3a08
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Tue Jun 4 11:06:57 2019 -0400
+
+    general structure
+
+commit 68830b447bd29ec083e4b0c75f383ae37fb084c4
+Author: sylvain <sylvaincormier@protonmail.com>
+Date:   Tue Jun 4 10:56:43 2019 -0400
+
+    first commit

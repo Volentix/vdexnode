@@ -26,10 +26,10 @@ services:
 
   vdexnode:
     image: volentix/vdexnode:latest
-    container_name: vdexnode
+    container_name: vdexnode6
     environment: # EDIT THESE VALUES!
-      - IP=95.216.0.79
-      - EOSKEY=EOS7SVnRXuuSePtz6dfunC6ZwbdXrRwpuY5oBKsXo7Bk7RDuZbqaj
+      - IP=144.217.34.70
+      - EOSKEY=EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9
       - BITCOIN_USER=admin
       - BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
       - BITCOIN_ENDPOINT=bitcoin

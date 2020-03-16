@@ -208,6 +208,22 @@ fn nodes_location(handler: State<Arc<Mutex<Handler>>>) -> Json<HashMap<String, V
     Json(nodes_location)
 }
 
+/**
+ * Return nodes location on the DHT
+ */
+#[get("/getCountryIP?<ip>")]
+fn country(handler: State<Arc<Mutex<Handler>>>, ip: &RawStr) -> Json<HashMap<String, String>> {
+    let mut handler = handler.lock().unwrap();
+    let ip = ip.url_decode().unwrap_or(String::new());
+    let country = handler.get_country(ip);
+    let mut result: HashMap<String, String> = HashMap::new();
+    match country {
+        Some(c) => result.insert(String::from("Country"), c),
+        None => result.insert(String::from("Err"), String::from("No country found"))
+    };
+    Json(result)
+}
+
 #[get("/room/<room>")]
 fn stream(handler: State<Arc<Mutex<Handler>>>, room: &RawStr) -> io::Result<Stream<ChatReader>> {
     let mut handler = handler.lock().unwrap();
@@ -396,7 +412,7 @@ impl Server {
             .manage(handler)
             .mount("/", routes![nodes_location, connected_nodes, connected_ips, get,
                         put_msg, put_encrypted_msg, set, signup_keygen, signup_sign,
-                        stream, node_infos])
+                        stream, node_infos, country])
             .mount("/bitcoin", routes![addmultisigaddress, createmultisig, getbalance,
                         getnewaddress, dumpprivkey, gettransaction, sendtoaddress,
                         signmessage])

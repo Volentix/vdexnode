@@ -66,6 +66,13 @@ curl http://localhost:8000/getNodesLocation
 {"c77ae2f9c593f3ea87ee1888702020e470f642f8":["CITY","LOCATION"],"1e3170ed060fb14793f3fb66e731f7658c6e5b7f":["New York City","40.7143,-74.0060"]}
 ```
 
+#### Nodes Locations
+
+```
+curl http://localhost:8000/GetCountryIp?ip=x.x.x.x
+{"Country":"..."}
+```
+
 ### Chat
 
 Once online, a vDexNode has some endpoints to chat with others

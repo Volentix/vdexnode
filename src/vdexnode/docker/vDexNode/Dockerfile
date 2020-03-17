@@ -10,13 +10,21 @@ RUN wget https://github.com/msgpack/msgpack-c/releases/download/cpp-2.1.5/msgpac
 	&& make -j8 && make install \
 	&& cd ../.. && rm -rf msgpack-2.1.5 msgpack-2.1.5.tar.gz
 
+# libasio-dev (1.10.6-3) is too old
+RUN echo "** Building a recent version of asio ***" \
+    && wget https://github.com/aberaud/asio/archive/a7d66ef4017d8f1b7f2cef1bb4ba8e23b0961571.tar.gz \
+    && tar -xvf a7d66ef4017d8f1b7f2cef1bb4ba8e23b0961571.tar.gz && cd asio-a7d66ef4017d8f1b7f2cef1bb4ba8e23b0961571/asio \
+    && ./autogen.sh && ./configure --prefix=/usr --without-boost --disable-examples --disable-tests  \
+    && make install \
+    && cd ../../ && rm -rf asio*
+
 #build opendht
 RUN git clone --recursive https://github.com/savoirfairelinux/opendht.git \
 	&& cd opendht && sed -i 's/config.dht_config.node_config.maintain_storage = false/config.dht_config.node_config.maintain_storage = true/g' ./tools/dhtnode.cpp \
 	&& sed -i 's/bool permanent = false/bool permanent = true/g' ./include/opendht/dht_proxy_client.h \
 	&& sed -i 's/bool permanent = false/bool permanent = true/g' ./include/opendht/securedht.h \
 	&& mkdir build && cd build \
-	&& cmake -DCMAKE_INSTALL_PREFIX=/usr -DOPENDHT_PYTHON=On -DOPENDHT_LTO=On -DOPENDHT_C=ON ..  \
+	&& cmake -DCMAKE_INSTALL_PREFIX=/usr -DOPENDHT_PYTHON=On -DOPENDHT_LTO=On -DOPENDHT_C=ON -DOPENDHT_PROXY_SERVER=OFF -DOPENDHT_PROXY_CLIENT=OFF ..  \
 	&& make -j && make install
 
 # Install Rust (nightly needed for Rocket)

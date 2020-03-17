@@ -159,6 +159,24 @@ impl Handler {
     }
 
     /**
+     * Get ip's country via ipinfo.io
+     * @return      country
+     */
+    pub fn get_country(&mut self, ip: String) -> Option<String> {
+        let addr = format!("https://ipinfo.io/{}/json", ip);
+        let res = reqwest::get(&*addr);
+        if !res.is_ok() {
+            return None;
+        }
+        let resp: HashMap<String, String> = res.unwrap().json().unwrap_or(HashMap::new());
+        if !resp.contains_key("country") {
+            return None;
+        }
+
+        Some(resp.get("country").unwrap().to_string())
+    }
+
+    /**
      * Insert a key on the DHT, this does a permanent put on the DHT
      * @param key       key of the hashmap
      * @param value     value of the hashmap

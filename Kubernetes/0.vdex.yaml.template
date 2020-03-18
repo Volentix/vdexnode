@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vdex
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: address-credentials
+  namespace: vdex
+type: Opaque
+data:
+  eosaddress: MTI3LjAuMC4x
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bootstrap-ip
+  namespace: vdex
+type: Opaque
+data:
+  ip: MTQ0LjIxNy4zNC43
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vdex-node
+  namespace: vdex
+  labels:
+    app: vdex-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: vdex-node
+  template:
+    metadata:
+      labels:
+        app: vdex-node
+        name: vdex-node
+    spec:
+      containers:
+      - name: vdex-node
+        image: volentix/vdexnode:latest
+        ports:
+        - containerPort: 8000
+        - containerPort: 42
+        - containerPort: 9080
+          protocol: UDP
+        env:
+          - name: EOSKEY
+            valueFrom:
+              secretKeyRef:
+                name: address-credentials
+                key: eosaddress
+          - name: IP
+            valueFrom:
+              secretKeyRef:
+                name: bootstrap-ip
+                key: ip
+        args: ["server"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vdex-service
+  namespace: vdex
+  labels:
+    name: vdex-service
+spec:
+  type: NodePort
+  ports:
+    - port: 9080
+      protocol: TCP
+      nodePort: 9080
+      name: port1
+    - port: 8000
+      protocol: TCP
+      nodePort: 8000
+      name: http
+    - port: 4222
+      protocol: UDP
+      nodePort: 4222
+      name: port3
+  selector:
+    name: vdex-node

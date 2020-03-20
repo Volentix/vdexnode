@@ -2,11 +2,13 @@
 
 echo "Running the main install script."
 
-vtx_public_address="127.0.0.1"
-namespace="vdex"
-domain_name="test.com"
-auth64="test1234"
-vtx_address_base64=$(echo -n "$vtx_public_address" | base64)
+eoskey="EOS6x3GScLxpAzCtVc6b21MvUKL9S7GT9bQLn63nZnqQA5XfJPuKG"
+bootstrap="35.203.51.175"
+bitcoin_user="admin"
+bitcoin_pass="test"
+bitcoin_endpoint="bitcoin" 
+bitcoin_port="18443"
+
 
 echo "Installing Vepo"
 
@@ -31,13 +33,17 @@ sudo chmod 777 ~/.kube/config
 
 echo "Installing vDexNode."
 
-# wget https://raw.githubusercontent.com/Volentix/vDexNetwork/master/src/vdexnode/kube/0.vdex.yaml.template => for final version for the moment we use local file
+wget https://raw.githubusercontent.com/Volentix/vDexNode/master/Kubernetes/0.vdex.yaml.template
 
 
- sed -i  's/?vdex_namespace?/'"$namespace"'/' 0.vdex.yaml.template
- sed -i  's/?vtx_address?/'"$vtx_address_base64"'/' 0.vdex.yaml.template
- sed -i  's/?domain_name?/'"$domain_name"'/' 0.vdex.yaml.template
- k3s kubectl apply -f 0.vdex.yaml.template
+ sed -i  's/eoskey/'"$eoskey"'/' 0.vdex.yaml.template
+ sed -i  's/bootstrap/'"$bootstrap"'/' 0.vdex.yaml.template
+ sed -i  's/bitcoin_user/'"$bitcoin_user"'/' 0.vdex.yaml.template
+ sed -i  's/bitcoin_pass/'"$bitcoin_pass"'/' 0.vdex.yaml.template
+ sed -i  's/bitcoin_endpoint/'"$bitcoin_endpoint"'/' 0.vdex.yaml.template
+ sed -i  's/bitcoin_port/'"$bitcoin_port"'/' 0.vdex.yaml.template
+ 
+k3s kubectl apply -f 0.vdex.yaml.template
 
 echo "Install fully complete"
 

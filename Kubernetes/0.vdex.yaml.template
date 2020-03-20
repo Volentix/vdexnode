@@ -3,24 +3,6 @@ kind: Namespace
 metadata:
   name: vdex
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: address-credentials
-  namespace: vdex
-type: Opaque
-data:
-  eosaddress: MTI3LjAuMC4x
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: bootstrap-ip
-  namespace: vdex
-type: Opaque
-data:
-  ip: MTQ0LjIxNy4zNC43
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,22 +26,23 @@ spec:
         image: volentix/vdexnode:latest
         ports:
         - containerPort: 8000
-        - containerPort: 42
-        - containerPort: 9080
+        - containerPort: 4222
           protocol: UDP
+        - containerPort: 9080
         env:
           - name: EOSKEY
-            valueFrom:
-              secretKeyRef:
-                name: address-credentials
-                key: eosaddress
+            value: "eoskey" 
           - name: IP
-            valueFrom:
-              secretKeyRef:
-                name: bootstrap-ip
-                key: ip
+            value: "bootstrap"
+          - name: BITCOIN_USER
+            value: "bitcoin_user" 
+          - name: BITCOIN_PASS
+            value: "bitcoin_pass"
+          - name: BITCOIN_ENDPOINT
+            value: "bitcoin_endpoint" 
+          - name: BITCOIN_PORT
+            value: "bitcoin_port"
         args: ["server"]
-
 ---
 apiVersion: v1
 kind: Service

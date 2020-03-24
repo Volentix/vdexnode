@@ -1,40 +1,7 @@
-version: "0.001"
+# To use this file, run `docker-compose up`.
+version: '3'
 
 services:
-  db:
-    restart: unless-stopped
-    image: "postgres"
-    container_name: "vdex_postgres"
-    environment:
-      - POSTGRES_USER=vdex
-      - POSTGRES_PASSWORD=vdex
-      - POSTGRES_DB=vdex
-    ports:
-      - "127.0.0.1:54320:5432"
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-
-  api:
-    restart: unless-stopped
-    build: .
-    depends_on:
-      - db
-    image: avral/eosdexapi
-    environment:
-      - DB_HOST=db
-    ports:
-      - 6667:8000
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-
-  db_upgrade:
-    depends_on:
-      - db
-    image: avral/eosdexapi
-    environment:
-      - DB_HOST=db
-    command: bash -c "sleep 15 && python manage.py createcachetable && python manage.py migrate"
-
   # Main application
   bitcoin-core:
     build: bitcoin
@@ -59,10 +26,10 @@ services:
 
   vdexnode:
     image: volentix/vdexnode:latest
-    container_name: vdexnode
+    container_name: vdexnode6
     environment: # EDIT THESE VALUES!
-      - IP=95.216.0.79
-      - EOSKEY=EOS7SVnRXuuSePtz6dfunC6ZwbdXrRwpuY5oBKsXo7Bk7RDuZbqaj
+      - IP=144.217.34.70 # Comment to transform into a bootstrap
+      - EOSKEY=EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9
       - BITCOIN_USER=admin
       - BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
       - BITCOIN_ENDPOINT=bitcoin

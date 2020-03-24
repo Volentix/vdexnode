@@ -1,6 +1,0 @@
-<map id="dht::TrustRequest" name="dht::TrustRequest">
-<area shape="rect" id="node2" href="$classdht_1_1EncryptedValue.html" title="dht::EncryptedValue\l\&lt; TrustRequest \&gt;" alt="" coords="47,244,187,285"/>
-<area shape="rect" id="node3" href="$classdht_1_1SignedValue.html" title="dht::SignedValue\&lt; TrustRequest \&gt;" alt="" coords="5,169,229,196"/>
-<area shape="rect" id="node4" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; TrustRequest \&gt;" alt="" coords="39,80,195,121"/>
-<area shape="rect" id="node5" href="$classdht_1_1Value_1_1SerializableBase.html" title="dht::Value::SerializableBase" alt="" coords="24,5,211,32"/>
-</map>

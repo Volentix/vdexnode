@@ -1,7 +1,0 @@
-<map id="dht::IpServiceAnnouncement" name="dht::IpServiceAnnouncement">
-<area shape="rect" id="node2" href="$classdht_1_1Value_1_1Serializable.html" title="dht::Value::Serializable\l\&lt; IpServiceAnnouncement \&gt;" alt="" coords="5,185,193,227"/>
-<area shape="rect" id="node3" href="$classdht_1_1Value_1_1SerializableBase.html" title="dht::Value::SerializableBase" alt="" coords="6,96,193,123"/>
-<area shape="rect" id="node4" href="$structdht_1_1ValueType.html" title="dht::ValueType" alt="" coords="217,193,328,219"/>
-<area shape="rect" id="node5" title="STL class. " alt="" coords="233,96,313,123"/>
-<area shape="rect" id="node6" title="STL class. " alt="" coords="209,5,336,47"/>
-</map>

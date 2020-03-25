@@ -107,7 +107,7 @@ To run the Docker container copy paste the following command in terminal:
 Don't forget to replace the `Your public key` with your real `active` EOS public key before executing the command.
 
 ```bash
-docker run -d --name vdexnode --network volentix -e "IP=144.217.34.70" -e "EOSKEY=Your_Public_Key_Here" -p 8000:8000 -p 4222:4222/udp volentix/vdexnode:latest server
+docker run -d --name vdexnode --network volentix -e "IP=198.50.136.143" -e "EOSKEY=Your_Public_Key_Here" -p 8000:8000 -p 4222:4222/udp volentix/vdexnode:latest server
 ```
 
 That's it!
@@ -170,7 +170,7 @@ Follow the screenshot with an example of updating the version from `0.0.1` to `0
 - Next step is to run the new container with new image. Don't forget to put your public key!
 
   ```bash
-   docker run -d --name vdexnode --network volentix -e "IP=144.217.34.70" -e "EOSKEY=Your_Public_Key_Here" -p 8000:8000 -p 4222:4222/udp volentix/vdexnode:latest server
+   docker run -d --name vdexnode --network volentix -e "IP=198.50.136.143" -e "EOSKEY=Your_Public_Key_Here" -p 8000:8000 -p 4222:4222/udp volentix/vdexnode:latest server
   ```
 
 - Thats it.

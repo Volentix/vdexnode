@@ -100,7 +100,7 @@ impl EosNode {
             public_addresses = self.dht.public_addresses();
             thread::sleep(ten_millis);
             idx += 1;
-            if idx == 2000 && public_addresses.len() == 0 {
+            if idx == 3000 && public_addresses.len() == 0 {
                 panic!("No public address found. Abort");
             }
         }

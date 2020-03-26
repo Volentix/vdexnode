@@ -42,7 +42,7 @@ case "$1" in
       optbtcport="--bitcoin-port ${BITCOIN_PORT}"
     fi
 
-    api --network 1 \
+    api \
         --certificate /volentix/node.crt \
         --privkey /volentix/node.key \
         ${optboot} \

@@ -28,7 +28,7 @@ services:
     image: volentix/vdexnode:latest
     container_name: vdexnode6
     environment: # EDIT THESE VALUES!
-      - IP=144.217.34.70 # Comment to transform into a bootstrap
+      - IP=198.50.136.143 # Comment to transform into a bootstrap
       - EOSKEY=EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9
       - BITCOIN_USER=admin
       - BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=

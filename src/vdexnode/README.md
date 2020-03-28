@@ -14,25 +14,24 @@ The network might not work as intended and you temporarily might not receive VTX
 Please report if you have not received your VTX but do not expect this VTX as guaranteed._**
 
 ### Prerequisites
+#### linux
 
 
-Docker software is required to simplify the vDex Node installation.
-You need the 64-bit version of one of these Ubuntu versions to install the Docker software:
 
-- Bionic 18.04 (LTS)
+- This install was tested on Bionic 18.04 (LTS)
 
 Check your Ubuntu: `Activities -> about`
+
+
+#### Docker installation
+Docker software is required to simplify the vDex Node installation.
+Follow the instruction below:
 
 Just in case, it is recommended to remove old versions of docker, if they were installed earlier
 
 ```bash
 sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
-
-### Docker installation
-
-Follow the instruction below:
-
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential apt-transport-https ca-certificates curl gnupg-agent software-properties-common
@@ -47,23 +46,23 @@ sudo usermod -aG docker $(whoami)
 reboot # or log out and back in
 ```
 
-### Docker container
+### Get the node
 
 Copy paste the following command in terminal to get the vDex Node docker image:
-
+Go to your home directory.
 ```bash
 cd ~/
 ```
-
+Clone the repository.
 ```bash
 git clone https://github.com/Volentix/vDexNode.git
 ```
-
+Go to the repository we will build the container from.
 ```bash
 cd ~/vDexNode/src/vdexnode
 ```
 
-### config
+### Configure the node 
 
 Edit values for EOSKEY, BITCOIN_USER, and BITCOIN_PASS below line 30 of docker-compose.yml. 
 * See below to see where these values come from. *
@@ -83,7 +82,7 @@ If you only have your EOSIO account name, follow the instructions below:
   1. BITCOIN_USER=admin
   2. BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
 
-You need to run the rpcauth.py against your user name to obtain BITCOIN_PASS
+* You need to run the rpcauth.py against your user name to obtain BITCOIN_PASS
 
 ```bash
 python3 rpcauth.py "yournewusername"
@@ -92,7 +91,7 @@ The output will give you:
 - BITCOIN_USER
 - BITCOIN_PASS
 
-### build and run
+### Build and run
 
 ```bash
 docker-compose build 

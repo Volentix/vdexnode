@@ -3,27 +3,6 @@
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
  
-At the end of this phase, the Volentix network will provide:
-
-1. vdex node   
-  * btc mpt
-  * eth mpt
-  * eos mpt
-2. gateaway
-  * manage deposits and withdraws
-
-    
-
-## Table of Contents
-
-- [Offer](#offer)
-- [Conditions](#selection-criteria)
-- [Install](#install)
-- [Upgrade](#upgrade)
-- [Maintainers](#maintainers)
-- [Contribute](#contribute)
-- [License](#license)
-
 ## Offer
 
 As a part of VolentixLabs R&D, you can to rent your node to the network before the launch on the main net.
@@ -33,16 +12,6 @@ VTX rewards amount to come.
 **_Disclaimer: this is a test network and the sole purpose of this network is for R&D purposes.
 The network might not work as intended and you temporarily might not receive VTX at all on a certain day or until issues are resolved.
 Please report if you have not received your VTX but do not expect this VTX as guaranteed._**
-
-## Selection criteria
-
-1. Geolocation (No residents or servers from the United States)
-2. Your machine is always on without interruptions
-3. You have an EOS account for your public key
-4. 10000+ VTX on the balance
-5. Computer architecture, ressources and bandwidth.
-
-## Install
 
 ### Prerequisites
 
@@ -94,25 +63,14 @@ git clone https://github.com/Volentix/vDexNode.git
 cd ~/vDexNode/src/vdexnode
 ```
 
-Launch the docker network
-
-```bash
-docker network create volentix
-```
 ### config
 
 Edit from line 30 of docker-compose.yml. 
 See below to see where these values come from. 
 
-- EOSKEY=EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9
-- BITCOIN_USER=admin
-- BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
-
-
-#### EOSIO active key
-
+##### EOSIO active key
+EOSKEY=Your EOSIO active key
 You need to get your `active` EOS public key (The key you got from Verto app) which is associated with your EOSIO account name
-
 If you only have your EOSIO account name, follow the instructions below:
 
 - Go to EOS block explorer: https://eosflare.io/
@@ -122,7 +80,12 @@ If you only have your EOSIO account name, follow the instructions below:
 
 <img width="1414" alt="Screen Shot 2019-08-28 at 10 12 41 AM" src="https://user-images.githubusercontent.com/2269864/63877425-77876380-c97c-11e9-88e3-cd0a43d4cca5.png">
 
-### Bitcoin Auth
+
+##### Bitcoin 
+  1. BITCOIN_USER=admin
+  2. BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
+
+###### Bitcoin Auth
 run the rpcauth.py script
 
 ```bash
@@ -132,8 +95,7 @@ The output will give you:
 - BITCOIN_USER
 - BITCOIN_PASS
 
-
-
+### build and run
 
 ```bash
 docker-compose build 

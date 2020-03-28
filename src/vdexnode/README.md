@@ -65,19 +65,17 @@ cd ~/vDexNode/src/vdexnode
 
 ### config
 
-Edit from line 30 of docker-compose.yml. 
-See below to see where these values come from. 
+Edit values for EOSKEY, BITCOIN_USER, and BITCOIN_PASS below line 30 of docker-compose.yml. 
+* See below to see where these values come from. *
 
 ##### EOSIO active key
 EOSKEY=Your EOSIO active key
 You need to get your `active` EOS public key (The key you got from Verto app) which is associated with your EOSIO account name
 If you only have your EOSIO account name, follow the instructions below:
-
 - Go to EOS block explorer: https://eosflare.io/
 - Insert EOS account name in the search field (12 characters)
 - Go to permissions tab
 - Copy your `active` EOS public key
-
 <img width="1414" alt="Screen Shot 2019-08-28 at 10 12 41 AM" src="https://user-images.githubusercontent.com/2269864/63877425-77876380-c97c-11e9-88e3-cd0a43d4cca5.png">
 
 
@@ -85,8 +83,7 @@ If you only have your EOSIO account name, follow the instructions below:
   1. BITCOIN_USER=admin
   2. BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
 
-###### Bitcoin Auth
-run the rpcauth.py script
+You need to run the rpcauth.py against your user name to obtain BITCOIN_PASS
 
 ```bash
 python3 rpcauth.py "yournewusername"

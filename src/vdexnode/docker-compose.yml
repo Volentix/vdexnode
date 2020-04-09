@@ -4,7 +4,7 @@ version: '3'
 services:
   # Main application
   bitcoin-core:
-    build: volentix/vdexnode_bitcoin-core:latest
+    image: volentix/vdexnode_bitcoin-core:latest
     container_name: bitcoin
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
@@ -19,7 +19,7 @@ services:
       -regtest=1
       -rpcbind=0.0.0.0
       -rpcallowip=172.20.0.0/24
-      -rpcauth='admin:b499b2f7ca30a3286178926d0c62839e$$4d070a65c7b870aba1575ab5dee4cce7ee2ee64de7deab40ca422b82a35a654d'  # EDIT THIS VALUE!
+      -rpcauth='sylvain:61ec18acbeb8975bada6286075456714$f5995cc314abd21db9b2ba60a26d38f10946def4325f1c6a7d768f681c706c52'  # EDIT THIS VALUE!
     networks:
       volentix:
         ipv4_address: 172.20.0.2
@@ -30,8 +30,8 @@ services:
     environment: # EDIT THESE VALUES!
       - IP=198.50.136.143 # Comment to transform into a bootstrap
       - EOSKEY=EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9
-      - BITCOIN_USER=admin
-      - BITCOIN_PASS=VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
+      - BITCOIN_USER=sylvain
+      - BITCOIN_PASS=VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4=
       - BITCOIN_ENDPOINT=bitcoin
       - BITCOIN_PORT=18443
     expose:

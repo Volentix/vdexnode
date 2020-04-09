@@ -4,7 +4,7 @@ version: '3'
 services:
   # Main application
   bitcoin-core:
-    build: bitcoin
+    build: volentix/vdexnode_bitcoin-core:latest
     container_name: bitcoin
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
@@ -26,7 +26,7 @@ services:
 
   vdexnode:
     image: volentix/vdexnode:latest
-    container_name: vdexnode6
+    container_name: vdexnode
     environment: # EDIT THESE VALUES!
       - IP=198.50.136.143 # Comment to transform into a bootstrap
       - EOSKEY=EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9

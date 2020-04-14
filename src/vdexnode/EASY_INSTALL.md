@@ -38,6 +38,8 @@ reboot # or log out and back in
 Edit values for EOSKEY, BITCOIN_USER, and BITCOIN_PASS below line 30 of docker-compose.yml. 
 * See below to see where these values come from. *
 
+
+
 ##### EOSIO active key
 EOSKEY=Your EOSIO active key
 You need to get your `active` EOS public key (The key you got from Verto app) which is associated with your EOSIO account name
@@ -47,6 +49,10 @@ If you only have your EOSIO account name, follow the instructions below:
 - Go to permissions tab
 - Copy your `active` EOS public key
 <img width="1414" alt="Screen Shot 2019-08-28 at 10 12 41 AM" src="https://user-images.githubusercontent.com/2269864/63877425-77876380-c97c-11e9-88e3-cd0a43d4cca5.png">
+
+#### navigate to install directory 
+
+cd ~/vDexnode/src/vdexnode
 
 
 ##### Bitcoin 
@@ -65,6 +71,9 @@ BITCOIN_USER = "yournewusername"
 - line35
 BITCOIN_PASS = ex: VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
 
+### get vdexnode from dockerhub
+
+docker pull volentix/vdexnode:latest
 
 
 ### run

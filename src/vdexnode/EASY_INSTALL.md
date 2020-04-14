@@ -58,7 +58,7 @@ If you only have your EOSIO account name, follow the instructions below:
 
 
 ```bash
-cd ~/vDexnode/src/vdexnode
+cd ~/vDexNode/src/vdexnode
 ```
 
 ##### Bitcoin 

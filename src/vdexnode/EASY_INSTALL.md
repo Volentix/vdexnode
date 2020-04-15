@@ -27,7 +27,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose
 sudo usermod -aG docker $(whoami)
 reboot # or log out and back in
 ```
@@ -35,8 +35,14 @@ reboot # or log out and back in
 
 ### Configure the node 
 
-Edit values for EOSKEY, BITCOIN_USER, and BITCOIN_PASS below line 30 of docker-compose.yml. 
+```bash
+git clone https://github.com/Volentix/vDexNode.git
+```
+
+Edit values for EOSKEY, BITCOIN_USER, and BITCOIN_PASS below line 30 of `docker-compose.yml`. 
 * See below to see where these values come from. *
+
+
 
 ##### EOSIO active key
 EOSKEY=Your EOSIO active key
@@ -48,6 +54,12 @@ If you only have your EOSIO account name, follow the instructions below:
 - Copy your `active` EOS public key
 <img width="1414" alt="Screen Shot 2019-08-28 at 10 12 41 AM" src="https://user-images.githubusercontent.com/2269864/63877425-77876380-c97c-11e9-88e3-cd0a43d4cca5.png">
 
+#### navigate to install directory 
+
+
+```bash
+cd ~/vDexNode/src/vdexnode
+```
 
 ##### Bitcoin 
   1. BITCOIN_USER=admin
@@ -65,13 +77,24 @@ BITCOIN_USER = "yournewusername"
 - line35
 BITCOIN_PASS = ex: VY4o23magpJekugpJtXA66xzOUSlm21MozwB_DR0jI8=
 
+### get vdexnode from dockerhub
 
+```bash
+docker pull volentix/vdexnode:latest
+```
 
 ### run
 
+To start all services in detached mode:
 ```bash
-docker-compose up 
+docker-compose up -d
 ```
+
+To attach yourself to the logs:
+```bash
+docker-compose logs -f -t
+```
+
 
 That's it!
 

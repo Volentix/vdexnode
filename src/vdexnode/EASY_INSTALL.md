@@ -85,9 +85,16 @@ docker pull volentix/vdexnode:latest
 
 ### run
 
+To start all services in detached mode:
 ```bash
-docker-compose up 
+docker-compose up -d
 ```
+
+To attach yourself to the logs:
+```bash
+docker-compose logs -f -t
+```
+
 
 That's it!
 

@@ -19,7 +19,8 @@ chmod +x k3s
 
 sudo mv k3s /bin
 
-sudo nohup  k3s server --kube-apiserver-arg service-node-port-range=4000-10000  &>/dev/null &
+#sudo nohup  k3s server --kube-apiserver-arg service-node-port-range=4000-10000  &>/dev/null &
+sudo nohup  k3s server  --kubelet-arg eviction-hard= eviction-minimum-reclaim=  --docker --kube-apiserver-arg service-node-port-range=4000-10000  &>/dev/null &
 
 echo "Sleeping while k3s starts up..."
 sleep 15
@@ -45,6 +46,7 @@ wget https://raw.githubusercontent.com/Volentix/vDexNode/master/Kubernetes/0.vde
  sed -i  's/bitcoin_port/'"$bitcoin_port"'/' 0.vdex.yaml.template
  
 k3s kubectl apply -f 0.vdex.yaml.template
+
 
 echo "Install fully complete"
 

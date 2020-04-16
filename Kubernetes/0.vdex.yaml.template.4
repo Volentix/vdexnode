@@ -31,17 +31,17 @@ spec:
         - containerPort: 9080
         env:
           - name: EOSKEY
-            value: "EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9" 
+            value: "eoskey" 
           - name: IP
-            value: "198.50.136.143"
+            value: "bootstrap"
           - name: BITCOIN_USER
-            value: "sylvain" 
+            value: "bitcoin_user" 
           - name: BITCOIN_PASS
-            value: "VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4="
+            value: "bitcoin_pass"
           - name: BITCOIN_ENDPOINT
-            value: "bitcoin" 
+            value: "bitcoin_endpoint" 
           - name: BITCOIN_PORT
-            value: "18443"
+            value: "bitcoin_port"
         args: ["server"]
 ---
 apiVersion: v1

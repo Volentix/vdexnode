@@ -2,11 +2,12 @@
 
 echo "Running the main install script."
 
-eoskey="EOS6x3GScLxpAzCtVc6b21MvUKL9S7GT9bQLn63nZnqQA5XfJPuKG"
-bootstrap="35.203.51.175"
-bitcoin_user="admin"
-bitcoin_pass="test"
-bitcoin_endpoint="bitcoin" 
+
+eoskey="EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9"
+bootstrap="198.50.136.143"
+bitcoin_user="sylvain"
+bitcoin_pass="VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4="
+bitcoin_endpoint="bitcoin"
 bitcoin_port="18443"
 
 

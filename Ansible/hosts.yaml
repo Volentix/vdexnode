@@ -1,0 +1,8 @@
+---
+all:
+  hosts:
+    stone-mn9:
+      ansible_host: 45.76.227.66
+      ansible_user: root
+      account: nodes2master
+      key: EOS7PgeCZPFgu2ZsYiVuxaB3xf3ydBvGKnD5MTuVcFxNSbvPfsnHj

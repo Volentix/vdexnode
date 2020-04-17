@@ -1,0 +1,110 @@
+---
+- hosts: all
+  tasks: 
+  - name: 'Update apt repo and cache on all Ubuntu boxes'
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+  - name: 'Upgrade all packages on servers'
+    apt: upgrade=dist force_apt_get=yes
+
+  - name: 'add docker apt-key'
+    apt_key: 
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present 
+  
+  - name: 'add docker apt repository'
+    apt_repository: 
+      repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'
+      state: present
+      filename: gpg 
+      update_cache: yes
+        
+  - name: 'Install Base and Docker Packages'
+    apt:
+      pkg:
+      - build-essential 
+      - apt-transport-https 
+      - ca-certificates 
+      - curl 
+      - gnupg-agent 
+      - software-properties-common
+      - docker-ce 
+      - docker-ce-cli 
+      - containerd.io 
+      - python-apt
+      - python3-pip
+      force_apt_get: yes
+
+  - name: 'Pip install of Docker'  
+    pip:
+      name:
+        - docker
+        - docker-compose
+        - requests>=2.20.1
+
+  - name: 'Downloading vDexNode Software'
+    git:
+      repo: https://github.com/Volentix/vDexNode.git
+      dest: /root/vDexNode
+      force: yes
+      depth: 1
+      recursive: no
+
+  - name: 'Generate Bitcoin Password'
+    command: '/root/vDexNode/src/vdexnode/rpcauth.py {{account}}'
+    register: command_result
+
+  # Replace fixes cases where there could be a $ in the rpcauth and docker-compose does not like  
+  - set_fact: rpcauth={{command_result.stdout.split('\n')[1].split('=')[1].replace('$','$$')}}
+  - set_fact: password={{command_result.stdout.split('\n')[3]}}
+
+  - name: 'Replace RPC Auth'
+    replace:
+      path: /root/vDexNode/src/vdexnode/docker-compose.yml
+      regexp: '(.*)sylvain:61ec18acbeb8975bada6286075456714\$f5995cc314abd21db9b2ba60a26d38f10946def4325f1c6a7d768f681c706c52(.*)'
+      replace: '\1{{rpcauth}}\2'
+
+  # \g<1> fixes cases where the password could start with a number and confuse the replace group
+  - name: 'Replace Bitcoin Password'
+    replace:
+      path: /root/vDexNode/src/vdexnode/docker-compose.yml
+      regexp: '(.*)VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4=(.*)'
+      replace: '\g<1>{{password}}\2'
+
+  - name: 'Replace Account Name'
+    replace:
+      path: /root/vDexNode/src/vdexnode/docker-compose.yml
+      regexp: '(.*)BITCOIN_USER=sylvain(.*)'
+      replace: '\1BITCOIN_USER={{account}}\2'
+
+  - name: 'Replace EOS Key'
+    replace:
+      path: /root/vDexNode/src/vdexnode/docker-compose.yml
+      regexp: '(.*)EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9(.*)'
+      replace: '\1{{key}}\2'
+
+  - name: 'Pull the vDexNode Docker Image'
+    docker_image:
+      name: volentix/vdexnode:latest
+      source: pull
+
+  - name: 'Bring the nodes up!' 
+    docker_compose:
+      project_src: /root/vDexNode/src/vdexnode/
+      state: present
+
+  - name: 'Check for your node is up'
+    uri:
+      url: http://localhost:8000/
+      method: GET
+      return_content: yes
+      status_code: 200
+      validate_certs: no
+      headers:
+        content-type: 'aplication/json'
+      body_format: json
+    register: _result
+
+  - name: 'Show Result'
+    debug: 
+      msg: '{{_result.json}}'

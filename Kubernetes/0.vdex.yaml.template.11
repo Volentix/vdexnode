@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vdex
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vdex-node
+  namespace: vdex
+  labels:
+    app: vdex-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: vdex-node
+  template:
+    metadata:
+      labels:
+        app: vdex-node
+        name: vdex-node
+    spec:
+      containers:
+      - name: vdex-node
+        image: volentix/vdexnode:latest
+        ports:
+        - containerPort: 8000
+        - containerPort: 4222
+          protocol: UDP
+        - containerPort: 9080
+        env:
+          - name: EOSKEY
+            value: "EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9" 
+          - name: IP
+            value: "198.50.136.143"
+          - name: BITCOIN_USER
+            value: "sylvain" 
+          - name: BITCOIN_PASS
+            value: "VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4="
+          - name: BITCOIN_ENDPOINT
+            value: "bitcoin" 
+          - name: BITCOIN_PORT
+            value: "18443"
+        args: ["server"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vdex-service
+  namespace: vdex
+  labels:
+    name: vdex-service
+spec:
+  type: NodePort
+  ports:
+    - port: 9080
+      protocol: TCP
+      nodePort: 9080
+      name: port1
+    - port: 8000
+      protocol: TCP
+      nodePort: 8000
+      name: http
+    - port: 4222
+      protocol: UDP
+      nodePort: 4222
+      name: port3
+  selector:
+    name: vdex-node

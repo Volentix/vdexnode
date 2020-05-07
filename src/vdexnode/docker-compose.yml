@@ -2,6 +2,34 @@
 version: '3'
 
 services:
+  # Eosio node
+  eosio_nodeos:
+    build: eosio
+    container_name: nodeos
+    volumes:
+      - eosio-blocks:/eosio/blocks
+      - eosio-data:/eosio/data
+    ports:
+      - "8888:8888"
+      - "9876:9876"
+    networks:
+      volentix:
+        ipv4_address: 172.20.0.5
+
+  # Ethereum node
+  ethereum_parity:
+    build: ethereum
+    container_name: parity
+    volumes:
+      - ethereum-data:/ethereum/data
+    ports:
+      - "30304:30304"
+      - "8546:8546"
+      - "8547:8547"
+    networks:
+      volentix:
+        ipv4_address: 172.20.0.4
+
   # Main application
   bitcoin-core:
     image: volentix/vdexnode_bitcoin-core:latest
@@ -48,6 +76,9 @@ services:
 
 volumes:
   bitcoin-data:
+  ethereum-data:
+  eosio-blocks:
+  eosio-data:
 
 networks:
   volentix:

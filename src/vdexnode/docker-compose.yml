@@ -7,7 +7,6 @@ services:
     build: eosio
     container_name: nodeos
     volumes:
-      - eosio-blocks:/eosio/blocks
       - eosio-data:/eosio/data
     ports:
       - "8888:8888"
@@ -15,6 +14,7 @@ services:
     networks:
       volentix:
         ipv4_address: 172.20.0.5
+    stop_signal: SIGINT
 
   # Ethereum node
   ethereum_parity:
@@ -30,12 +30,12 @@ services:
       volentix:
         ipv4_address: 172.20.0.4
 
-  # Main application
+  # Bitcoind node
   bitcoin-core:
-    image: volentix/vdexnode_bitcoin-core:latest
+    build: bitcoin
     container_name: bitcoin
     volumes:
-      - bitcoin-data:/home/bitcoin/.bitcoin
+      - bitcoin-data:/bitcoin/data
     expose:
       - "18443"
       - "18444"
@@ -44,7 +44,6 @@ services:
       - "18444:18444"
     command:
       -printtoconsole
-      -regtest=1
       -rpcbind=0.0.0.0
       -rpcallowip=172.20.0.0/24
       -rpcauth='sylvain:61ec18acbeb8975bada6286075456714$f5995cc314abd21db9b2ba60a26d38f10946def4325f1c6a7d768f681c706c52'  # EDIT THIS VALUE!
@@ -76,9 +75,20 @@ services:
 
 volumes:
   bitcoin-data:
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/maxpetriev/bitcoin # EDIT THESE VALUE!
   ethereum-data:
-  eosio-blocks:
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/maxpetriev/ethereum # EDIT THESE VALUE!
   eosio-data:
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/maxpetriev/eos # EDIT THESE VALUE!
 
 networks:
   volentix:

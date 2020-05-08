@@ -18,7 +18,7 @@ WORKDIR "/eosio"
 RUN mv docker-entrypoint.sh /usr/local/bin/ \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
-VOLUME ["/eosio/blocks"]
+
 VOLUME ["/eosio/data"]
 
 ENTRYPOINT ["docker-entrypoint.sh"]

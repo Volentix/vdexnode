@@ -19,6 +19,6 @@ RUN mv /parity /ethereum/ \
     && mv docker-entrypoint.sh /usr/local/bin/ \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
-VOLUME ["/ethereum/data"]
+EXPOSE 30304 8546 8547
 
 ENTRYPOINT ["docker-entrypoint.sh"]

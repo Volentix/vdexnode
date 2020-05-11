@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bitcoind -datadir=/bitcoin/data $@
+exec bitcoind -datadir=/bitcoin/data $@

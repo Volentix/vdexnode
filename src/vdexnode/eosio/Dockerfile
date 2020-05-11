@@ -11,14 +11,14 @@ RUN mkdir -p /eosio \
     && mkdir /eosio/blocks \
     && mkdir -p /eosio/data
 
-COPY .  /eosio
-
 WORKDIR "/eosio"
+
+
+EXPOSE 9876 8080 8888
+
+COPY .  /eosio
 
 RUN mv docker-entrypoint.sh /usr/local/bin/ \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
-
-
-VOLUME ["/eosio/data"]
 
 ENTRYPOINT ["docker-entrypoint.sh"]

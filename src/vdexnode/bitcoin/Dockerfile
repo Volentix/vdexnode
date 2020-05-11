@@ -17,8 +17,6 @@ RUN mkdir -p /bitcoin \
 ADD docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
-VOLUME ["/bitcoin/data"]
-
 EXPOSE 8332 8333 18332 18333 18443 18444
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

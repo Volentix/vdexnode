@@ -1,5 +1,5 @@
 # To use this file, run `docker-compose up`.
-version: '3'
+version: '3.8'
 
 services:
   # Eosio node
@@ -7,13 +7,18 @@ services:
     build: eosio
     container_name: nodeos
     volumes:
-      - eosio-data:/eosio/data
+    volumes:
+     - type: bind
+       source: /Users/maxpetriev/eos # EDIT THIS VALUE!
+       target: /eosio/data
     ports:
       - "8888:8888"
       - "9876:9876"
+      - "8080:8080"
     networks:
       volentix:
         ipv4_address: 172.20.0.5
+    stop_grace_period: 10m
     stop_signal: SIGINT
 
   # Ethereum node
@@ -21,7 +26,10 @@ services:
     build: ethereum
     container_name: parity
     volumes:
-      - ethereum-data:/ethereum/data
+    volumes:
+     - type: bind
+       source: /Users/maxpetriev/ethereum # EDIT THIS VALUE!
+       target: /ethereum/data
     ports:
       - "30304:30304"
       - "8546:8546"
@@ -35,10 +43,9 @@ services:
     build: bitcoin
     container_name: bitcoin
     volumes:
-      - bitcoin-data:/bitcoin/data
-    expose:
-      - "18443"
-      - "18444"
+     - type: bind
+       source: /Users/maxpetriev/bitcoin # EDIT THIS VALUE!
+       target: /bitcoin/data
     ports:
       - "18443:18443"
       - "18444:18444"
@@ -72,23 +79,6 @@ services:
     networks:
       volentix:
         ipv4_address: 172.20.0.3
-
-volumes:
-  bitcoin-data:
-    driver_opts:
-      o: bind
-      type: none
-      device: /Users/maxpetriev/bitcoin # EDIT THESE VALUE!
-  ethereum-data:
-    driver_opts:
-      o: bind
-      type: none
-      device: /Users/maxpetriev/ethereum # EDIT THESE VALUE!
-  eosio-data:
-    driver_opts:
-      o: bind
-      type: none
-      device: /Users/maxpetriev/eos # EDIT THESE VALUE!
 
 networks:
   volentix:

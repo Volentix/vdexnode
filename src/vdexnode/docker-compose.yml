@@ -7,7 +7,6 @@ services:
     build: eosio
     container_name: nodeos
     volumes:
-    volumes:
      - type: bind
        source: /Users/maxpetriev/eos # EDIT THIS VALUE!
        target: /eosio/data
@@ -20,12 +19,30 @@ services:
         ipv4_address: 172.20.0.5
     stop_grace_period: 10m
     stop_signal: SIGINT
+    command:
+      nodeos
 
+  # Eosio keosd
+  eosio_keosd:
+    build: eosio
+    container_name: keosd
+    volumes:
+     - type: bind
+       source: /Users/maxpetriev/eos/wallet # EDIT THIS VALUE!
+       target: /eosio/wallet
+    ports:
+      - "8901:8901"
+    networks:
+      volentix:
+        ipv4_address: 172.20.0.7
+    stop_grace_period: 10m
+    stop_signal: SIGINT
+    command:
+      keosd
   # Ethereum node
   ethereum_parity:
     build: ethereum
     container_name: parity
-    volumes:
     volumes:
      - type: bind
        source: /Users/maxpetriev/ethereum # EDIT THIS VALUE!
@@ -79,6 +96,13 @@ services:
     networks:
       volentix:
         ipv4_address: 172.20.0.3
+
+  vdexgateway:
+    build: gateway
+    container_name: gateway
+    networks:
+      volentix:
+        ipv4_address: 172.20.0.6
 
 networks:
   volentix:

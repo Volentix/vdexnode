@@ -9,7 +9,8 @@ RUN apt-get update \
 
 RUN mkdir -p /eosio \
     && mkdir /eosio/blocks \
-    && mkdir -p /eosio/data
+    && mkdir -p /eosio/data \
+    && mkdir -p /eosio/wallet
 
 WORKDIR "/eosio"
 

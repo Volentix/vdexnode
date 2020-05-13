@@ -74,3 +74,6 @@ doc/Doxyfile
 # build dir
 build
 deploy/
+
+.idea
+.venv

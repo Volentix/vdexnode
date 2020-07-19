@@ -13,37 +13,6 @@ VTX rewards amount to come.
 The network might not work as intended and you temporarily might not receive VTX at all on a certain day or until issues are resolved.
 Please report if you have not received your VTX but do not expect this VTX as guaranteed._**
 
-### Prerequisites
-#### linux
-
-- This install was tested on Bionic 18.04 (LTS)
-
-Check your Ubuntu: `Activities -> about`
-
-
-#### Docker installation
-Docker software is required to simplify the vDex Node installation.
-Follow the instruction below:
-
-Just in case, it is recommended to remove old versions of docker, if they were installed earlier
-
-```bash
-sudo apt-get remove docker docker-engine docker.io containerd runc
-```
-```bash
-sudo apt-get update
-sudo apt-get install build-essential apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-sudo usermod -aG docker $(whoami)
-reboot # or log out and back in
-```
-
 ### Get the node
 
 Copy paste the following command in terminal to get the vDex Node docker image:
@@ -67,7 +36,7 @@ cd ~/vDexNode/Kubernetes
 cd ~/vDexNode/Ansible
 ```
 
-### Node infos
+### General node usage
 
 #### Current node
 
@@ -179,46 +148,6 @@ You can attach a terminal to your vdexnode by running `docker exec -ti vdexnode 
 
 Then, you can use `bitcoin-cli` directly if you want: `bitcoin-cli -rpcuser="YOUR_USERNAME" -rpcpassword="YOUR_PASSWORD" -rpcport=18443 -rpcconnect="bitcoin" getnewaddress`.
 
-
-### Update 
-
-To update your node to a new version, Do the following:
-
-1. Stop the current docker container
-2. Delete the current docker container
-3. Git pull changes
-4. Compile new image
-5. Start the new docker container
-
-Follow the screenshot with an example of updating the version from `0.0.1` to `0.0.2`.
-<img width="1419" alt="update" src="https://user-images.githubusercontent.com/2269864/65898339-319c3180-e366-11e9-8f9d-55efbe64772b.png">
-
-- Command `docker ps` returns you your running containers, as you see in the list there is only one container named `vdexnode`.
-
-  ```bash
-  docker ps
-  ```
-
-- Next command `docker stop vdexnode` stops the container
-
-  ```bash
-  docker stop vdexnode
-  ```
-
-- Next command `docker rm vdexnode` removes the container
-
-  ```bash
-  docker rm vdexnode
-  ```
- List images 
-
-  ```bash
-  docker images
-  ```
-Remove images
-  ```bash
-  docker rmi imageid
-  ```
 
 ### Support
 

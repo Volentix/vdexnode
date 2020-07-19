@@ -24,7 +24,7 @@ Clone the repository.
 ```bash
 git clone https://github.com/Volentix/vDexNode.git
 ```
-Go to the repository we will build the container from and foloow the instructions in the README.
+Choose one of these directories and follow the instructions in the README.
 
 ```bash
 cd ~/vDexNode/src/vdexnode

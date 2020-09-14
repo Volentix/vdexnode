@@ -32,14 +32,14 @@ EXPOSE 4222/udp
 
 COPY ./config/ /volentix/config/
 COPY ./api /api
-COPY ./mpt /mpt
+#COPY ./mpt /mpt
 RUN cd /api && cargo build --release
-RUN cd /mpt && cargo build --release --bin sign && cargo build --release --bin generate_key
+# RUN cd /mpt && cargo build --release --bin sign && cargo build --release --bin generate_key
 COPY /entrypoint.sh /entrypoint.sh
 RUN chmod 700 /entrypoint.sh
 RUN mv /api/target/release/api /usr/bin/api
-RUN mv /mpt/target/release/sign /usr/bin/sign
-RUN mv /mpt/target/release/generate_key /usr/bin/generate_key
+# RUN mv /mpt/target/release/sign /usr/bin/sign
+# RUN mv /mpt/target/release/generate_key /usr/bin/generate_key
 RUN rm -rf /api /mpt /opendht /restbed /restinio
 
 ENV EOSKEY ${EOSKEY}

@@ -106,7 +106,7 @@ services:
   
   openethereum:
     image: openethereum/openethereum:latest
-    command: --chain ropsten --jsonrpc-interface all --unsafe-expose 
+    command: --chain ropsten --jsonrpc-interface all  
     ports:
         - "8180:8180"
         - "8545:8545"
@@ -121,17 +121,17 @@ services:
         - openethereum
     volumes:
         - ./:/root
-    # environment:
-    #     - eth_token_contract=${ETH_TOKEN_CONTRACT}
-    #     - eth_pool_address= ${ETH_POOL_ADDRESS}
-    #     - eos_token-contact=${EOS_TOKEN_CONTRACT}
-    #     - eos_pool_account=${EOS_POOL_ACCOUNT}
-    #     - eos_account=${EOS_ACCOUNT}
-    #     - custodian_account=${CUSTODIAN_ACCOUNT}
-        #   - node_ip_address=${NODE_IP_ADDRESS}  
+    environment:
+      - ETH_TOKEN_CONTRACT=0x71c5a83193399b15417ffda7f9406cd72f311d8a
+      - ETH_POOL_ADDRESS=0x7d5592066fae5cc14a62477eeb5074036610415c
+      - EOS_TOKEN_CONTRACT=vtx222222222
+      - EOS_POOL_ACCOUNT=vtx222222222
+      - EOS_ACCOUNT=v11111111111
+      - CUSTODIAN_ACCOUNT=vltxtknaudit
+      
     entrypoint: "bash -c \"\ 
     echo '************************' && \
-    node -r /root/oracle/.env /root/oracle/oracle.js && \
+    node /root/oracle/oracle.js && \
     echo '************************' \
     \""
 

@@ -35,7 +35,7 @@ async function eth_balance(){
             try{
                 if((check.highestBlock - check.currentBlock) > 0  || check.currentBlock == 0 || check.highestBlock == 0){
                     console.log('Openethereum not yet synced: ', check.highestBlock - check.currentBlock, ' blocks to go');  
-                    console.log('Meantime, Chainlink')
+                    console.log('Meantime, Infura')
                     // web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten-rpc.linkpool.io/"));
                     web3 = new Web3("https://ropsten.infura.io/v3/c3436ae558954d85ae242a2ea517475c");
                 }

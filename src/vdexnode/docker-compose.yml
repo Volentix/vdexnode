@@ -56,30 +56,30 @@ services:
   #       ipv4_address: 172.20.0.4
 
   # Bitcoind node
-  # bitcoin-core:
-  #   build: bitcoin
-  #   container_name: bitcoin
-  #   volumes:
-  #    - type: bind
-  #      source: /Users/maxpetriev/bitcoin # EDIT THIS VALUE!
-  #      target: /bitcoin/data
-  #   ports:
-  #     - "18443:18443"
-  #     - "18444:18444"
-  #   command:
-  #     -printtoconsole
-  #     -rpcbind=0.0.0.0
-  #     -rpcallowip=172.20.0.0/24
-  #     -rpcauth='sylvain:61ec18acbeb8975bada6286075456714$f5995cc314abd21db9b2ba60a26d38f10946def4325f1c6a7d768f681c706c52'  # EDIT THIS VALUE!
-  #   networks:
-  #     volentix:
-  #       ipv4_address: 172.20.0.2
+  bitcoin-core:
+    build: bitcoin
+    container_name: bitcoin
+    volumes:
+     - type: bind
+       source: /Users/maxpetriev/bitcoin # EDIT THIS VALUE!
+       target: /bitcoin/data
+    ports:
+      - "18443:18443"
+      - "18444:18444"
+    command:
+      -printtoconsole
+      -rpcbind=0.0.0.0
+      -rpcallowip=172.20.0.0/24
+      -rpcauth='sylvain:61ec18acbeb8975bada6286075456714$f5995cc314abd21db9b2ba60a26d38f10946def4325f1c6a7d768f681c706c52'  # EDIT THIS VALUE!
+    networks:
+      volentix:
+        ipv4_address: 172.20.0.2
 
   vdexnode:
-    image: volentix/vdexnode:latest
+    image: volentix/vdexnode
     container_name: vdexnode
     environment: # EDIT THESE VALUES!
-      - IP=198.50.136.143 # Comment to transform into a bootstrap
+      # - IP= # Comment to transform into a bootstrap
       - EOSKEY=EOS6PdTCWZgWMh4s5EDxYK3aL6DPC2ksDusTQpxE38QVmUzYLjLt9
       - BITCOIN_USER=sylvain
       - BITCOIN_PASS=VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4=
@@ -103,6 +103,37 @@ services:
     networks:
       volentix:
         ipv4_address: 172.20.0.6
+  
+  openethereum:
+    image: openethereum/openethereum:latest
+    command: --chain ropsten --jsonrpc-interface all --unsafe-expose 
+    ports:
+        - "8180:8180"
+        - "8545:8545"
+        - "8546:8546"
+        - "30303:30303"
+        - "30303:30303/udp"
+
+  bridge:
+    image: volentix/etheosoracle:0.0.1
+    user: root
+    depends_on:
+        - openethereum
+    volumes:
+        - ./:/root
+    # environment:
+    #     - eth_token_contract=${ETH_TOKEN_CONTRACT}
+    #     - eth_pool_address= ${ETH_POOL_ADDRESS}
+    #     - eos_token-contact=${EOS_TOKEN_CONTRACT}
+    #     - eos_pool_account=${EOS_POOL_ACCOUNT}
+    #     - eos_account=${EOS_ACCOUNT}
+    #     - custodian_account=${CUSTODIAN_ACCOUNT}
+        #   - node_ip_address=${NODE_IP_ADDRESS}  
+    entrypoint: "bash -c \"\ 
+    echo '************************' && \
+    node -r /root/oracle/.env /root/oracle/oracle.js && \
+    echo '************************' \
+    \""
 
 networks:
   volentix:

@@ -45,6 +45,13 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo usermod -aG docker $(whoami)
 reboot # or log out and back in
 ```
+     
+
+Run this command to download the current stable release of Docker Compose:
+
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
 
 ### Get the node
 

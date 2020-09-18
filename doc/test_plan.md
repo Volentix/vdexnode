@@ -54,7 +54,7 @@ Preparation
 
 **Docker network**\
 
-1.  eos wallet
+1.  Eos wallet
 
 2.  Openethereum
 
@@ -73,4 +73,29 @@ Tests
 
     2.  Less than 8 nodes
 
-    3.  Register nodes unregister nodes
+    3.  Register and unregister nodes
+
+    4.  reward selection and funds transfer
+
+2.  **Authority tests**
+
+    1.  Open, unlocks eos wallet and signs executes oracle balance
+        submisssion to EOS.
+
+    2.  Register and unregister nodes
+
+    3.  reward selection and funds transfer
+
+Postulate
+=========
+
+1.  A default active private key can be used to send to oracle
+    initially.
+
+2.  Reverse proxy\
+    A Nginx HTTPS reverse proxy is an intermediary proxy service which
+    takes a client request, passes it on to one or more servers, and
+    subsequently delivers the server's response back to the client. In
+    our case for key management keosd has to be launched as daemon
+    behind reverse proxy(nginx) nginx will be used to enable password
+    based authentication.

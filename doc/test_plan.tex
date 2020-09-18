@@ -72,7 +72,7 @@
 	 \end{enumerate}
    \textbf{Docker network}\\
   \begin{enumerate}
-  	\item eos wallet
+  	\item Eos wallet
   	\item Openethereum
   	\item Bridging oracle
   	\item Bitcoin node
@@ -85,8 +85,23 @@
 							\begin{enumerate}
 								\item uptime\textit{}
 								\item Less than 8 nodes 
-								\item Register nodes unregister nodes	
+								\item Register and unregister nodes
+								\item reward selection and funds transfer	
 							\end{enumerate}
+						\item \textbf{Authority tests}
+							\begin{enumerate}
+							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS.
+							\item Register and unregister nodes
+							\item reward selection and funds transfer	
+						\end{enumerate}
 				\end{enumerate}
-			
+\section{Postulate}
+\begin{enumerate}
+	\item A default active private key can be used to send to oracle initially.
+	\item Reverse proxy \\
+	A Nginx HTTPS reverse proxy is an intermediary proxy service which takes a client request, passes it on to one or more servers, and subsequently delivers the server's response back to the client. 
+	In our case for key management keosd has to be launched as daemon behind reverse proxy(nginx)
+	nginx will be used to enable password based authentication.
+\end{enumerate}
+
 \end{document}

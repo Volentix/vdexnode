@@ -58,7 +58,9 @@ Conditions
 
 3.  Sources must register to the Volentix node network.
 
-4.  Volentix nodes should be extended with new functionality of being
+4.  Users must be able to pick the work/rewards they do
+
+5.  Volentix nodes should be extended with new functionality of being
     able to update without having to null registrations.
 
-5.  Nodes must have 10000 VTX staked
+6.  Nodes must have 10000 VTX staked

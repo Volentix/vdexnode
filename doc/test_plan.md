@@ -35,7 +35,7 @@ Preparation
 
 7.  Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten
 
-8.  Deploy custodian on v22222222222
+8.  Deploy custodian on v22222222222 + ressources
 
 9.  set v22222222222 permissions for volentixtsys
 
@@ -43,42 +43,34 @@ Preparation
 
 11. Clear v22222222222 *balances* buffer
 
-12. register nodes to v22222222222\
+12. Make vltxstakenow, vistribution, and v22222222222 use volentixvote
+    registration
+
+13. Put condition for 10000 VTX
+
+14. Ensure uptime is respected
+
+15. prevent issuing on the Ethereum side if there are less than 8 nodes
 
 **Docker network**\
 
 1.  eos wallet
 
-2.  open ethereum
+2.  Openethereum
 
-3.  oracle
+3.  Bridging oracle
+
+4.  Bitcoin node
+
+5.  Vdex node
 
 Tests
 =====
 
-1.  **Persistency test**IN PROGRESS\
+1.  **Persistency test**
 
     1.  uptime
 
-    2.  Message to network less than 8 nodes with pesistency
+    2.  Less than 8 nodes
 
-    3.  Iterate through 16 nodes and shut 8 down
-
-    4.  Manage if provider is not available.
-
-    5.  Test values from providers
-
-2.  **Out of ressouces test**\
-
-    1.  CPU DONE
-
-    2.  Memory
-
-    3.  BW
-
-Considerations
-==============
-
-1.  
-
-centering ![](vltxnode.png "fig:"){#fig:whitebackground-ecosystem02}
+    3.  Register nodes unregister nodes

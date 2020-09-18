@@ -60,48 +60,33 @@
   		  \item Deploy vtxdistribut contract to vistribution + ressources
   		  \item Deploy volentixstak  contract to vltxstakenow + ressources
  		  \item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten 
-		  \item Deploy custodian on v22222222222 
+		  \item Deploy custodian on v22222222222 + ressources
 		  \item set v22222222222 permissions for volentixtsys
 		  \item Initialize v22222222222 \textit{currentbal}
 		  \item Clear v22222222222 \textit{balances} buffer
-		    \item register nodes to v22222222222\\
+		  \item Make vltxstakenow, vistribution, and v22222222222 use volentixvote registration
+		  \item Put condition for 10000 VTX
+		  \item Ensure uptime is respected 
+		  \item prevent issuing on the Ethereum side if there are less than 8 nodes
+		   
 	 \end{enumerate}
    \textbf{Docker network}\\
   \begin{enumerate}
   	\item eos wallet
-  	\item open ethereum
-  	\item oracle
+  	\item Openethereum
+  	\item Bridging oracle
+  	\item Bitcoin node
+  	\item Vdex node
   \end{enumerate}
 
 \section{Tests}
-
 					\begin{enumerate}
-						\item \textbf{Persistency test}IN PROGRESS\\
+						\item \textbf{Persistency test}
 							\begin{enumerate}
 								\item uptime\textit{}
-								\item Message to network less than 8 nodes with pesistency
-								\item Iterate through 16 nodes and shut 8 down
-								\item Manage if provider is not available.
-								\item Test values from providers
+								\item Less than 8 nodes 
+								\item Register nodes unregister nodes	
 							\end{enumerate}
-						\item \textbf{Out of ressouces test}\\
-						\begin{enumerate}
-							\item CPU DONE
-							\item Memory
-							\item BW
-						\end{enumerate}  
 				\end{enumerate}
-			\section{Considerations}
-				\begin{enumerate}
-				\item 
-			\end{enumerate}  
 			
-\begin{figure}
-centering
-	\includegraphics[scale=0.2]{vltxnode.png}
-\caption{}
-\label{fig:whitebackground-ecosystem02}
-\end{figure}
-
-
 \end{document}

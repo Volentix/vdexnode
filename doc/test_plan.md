@@ -1,7 +1,7 @@
 Preparation
 ===========
 
-**Main accounts on Jungle testnet 2**
+**Main accounts on Jungle testnet 2** \* DONE
 
 1.  vltxstakenow\
     *The staking contract*
@@ -35,7 +35,7 @@ Preparation
 
 7.  Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten
 
-8.  Deploy custodian on v22222222222 + ressources
+8.  Deploy custodian on v22222222222 + ressources \* DONE
 
 9.  set v22222222222 permissions for volentixtsys
 
@@ -52,7 +52,7 @@ Preparation
 
 15. prevent issuing on the Ethereum side if there are less than 8 nodes
 
-**Docker network**\
+**Docker network** \* DONE
 
 1.  Eos wallet
 
@@ -75,8 +75,6 @@ Tests
 
     3.  Register and unregister nodes
 
-    4.  reward selection and funds transfer
-
 2.  **Authority tests**
 
     1.  Open, unlocks eos wallet and signs executes oracle balance
@@ -85,6 +83,10 @@ Tests
     2.  Register and unregister nodes
 
     3.  reward selection and funds transfer
+
+3.  **Accuracy tests**
+
+    1.  reward selection and funds transfer
 
 Postulate
 =========

@@ -36,7 +36,7 @@
 
 \section{Preparation}
 
-\textbf{Main accounts on Jungle testnet 2}
+\textbf{Main accounts on Jungle testnet 2}  * {\color{green} DONE}
 	
   \begin{enumerate}
   \item  vltxstakenow\\
@@ -49,7 +49,7 @@
   \textit{  Voting contract}
     \item volentixsale \\
 		Pool
-  
+ 
 \end{enumerate}
  \textbf{Other preparatory actions}
   		\begin{enumerate}
@@ -60,48 +60,51 @@
   		  \item Deploy vtxdistribut contract to vistribution + ressources
   		  \item Deploy volentixstak  contract to vltxstakenow + ressources
  		  \item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten 
-		  \item Deploy custodian on v22222222222 
+		  \item Deploy custodian on v22222222222 + ressources  * {\color{green} DONE}
 		  \item set v22222222222 permissions for volentixtsys
 		  \item Initialize v22222222222 \textit{currentbal}
 		  \item Clear v22222222222 \textit{balances} buffer
-		    \item register nodes to v22222222222\\
+		  \item Make vltxstakenow, vistribution, and v22222222222 use volentixvote registration
+		  \item Put condition for 10000 VTX
+		  \item Ensure uptime is respected 
+		  \item prevent issuing on the Ethereum side if there are less than 8 nodes
+		   
 	 \end{enumerate}
-   \textbf{Docker network}\\
+   \textbf{Docker network}  * {\color{green} DONE}
   \begin{enumerate}
-  	\item eos wallet
-  	\item open ethereum
-  	\item oracle
+  	\item Eos wallet
+  	\item Openethereum
+  	\item Bridging oracle
+  	\item Bitcoin node
+  	\item Vdex node
   \end{enumerate}
 
 \section{Tests}
-
 					\begin{enumerate}
-						\item \textbf{Persistency test}IN PROGRESS\\
+						\item \textbf{Persistency test}
 							\begin{enumerate}
 								\item uptime\textit{}
-								\item Message to network less than 8 nodes with pesistency
-								\item Iterate through 16 nodes and shut 8 down
-								\item Manage if provider is not available.
-								\item Test values from providers
+								\item Less than 8 nodes 
+								\item Register and unregister nodes
 							\end{enumerate}
-						\item \textbf{Out of ressouces test}\\
-						\begin{enumerate}
-							\item CPU DONE
-							\item Memory
-							\item BW
-						\end{enumerate}  
+						\item \textbf{Authority tests}
+							\begin{enumerate}
+							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS.
+							\item Register and unregister nodes
+							\item reward selection and funds transfer	
+						\end{enumerate}
+											\item \textbf{Accuracy tests}
+													\begin{enumerate}
+															\item reward selection and funds transfer	
+													\end{enumerate}
 				\end{enumerate}
-			\section{Considerations}
-				\begin{enumerate}
-				\item 
-			\end{enumerate}  
-			
-\begin{figure}
-centering
-	\includegraphics[scale=0.2]{vltxnode.png}
-\caption{}
-\label{fig:whitebackground-ecosystem02}
-\end{figure}
-
+\section{Postulate}
+\begin{enumerate}
+	\item A default active private key can be used to send to oracle initially.
+	\item Reverse proxy \\
+	A Nginx HTTPS reverse proxy is an intermediary proxy service which takes a client request, passes it on to one or more servers, and subsequently delivers the server's response back to the client. 
+	In our case for key management keosd has to be launched as daemon behind reverse proxy(nginx)
+	nginx will be used to enable password based authentication.
+\end{enumerate}
 
 \end{document}

@@ -10,11 +10,11 @@
 
 #define SYMBOL_PRE_DIGIT 8
 #define TOKEN_SYMBOL "VTX"
-#define TOKEN_ACC name("volentixgsys")
+#define TOKEN_ACC name("volentixtsys")
 #define MIN_STAKE_AMOUNT asset(100000000000, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT))
 #define MAX_STAKE_AMOUNT asset(1000000000000000, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT))
 #define STAKE_PERIOD 30 * 24 * 60 * 60
-#define VOTING_CONTRACT name("vdexdposvote")
+#define VOTING_CONTRACT name("vltxstakenow")
 
 using namespace eosio;
 using std::string;
@@ -38,8 +38,8 @@ public:
    [[eosio::action]] 
    void unstake(name owner);
 
-   [[eosio::action]] 
-   void mockunstake(name owner, uint64_t now);
+   // [[eosio::action]] 
+   // void mockunstake(name owner, uint64_t now);
 
    [[eosio::action]]
    void initglobal();
@@ -115,7 +115,7 @@ private:
    asset calculate_subsidy(asset quantity, uint16_t periods_num) 
    {
       check_quantity(quantity);
-      check(periods_num <= 10, "max allowed perions num is 10 stake periods");
+      check(periods_num <= 10, "max allowed periods num is 10 stake periods");
       double subsidy_part = ( 1 + periods_num / 10.0 ) / 100;
       asset subsidy = asset(0, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
       subsidy.amount = quantity.amount * subsidy_part;

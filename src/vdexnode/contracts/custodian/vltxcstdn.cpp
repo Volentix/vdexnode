@@ -1,5 +1,5 @@
 #include "vltxcstdn.hpp"
-
+#include "../volentixstak/volentixstak.hpp"
 #include<string>
 
 using namespace eosio;
@@ -26,8 +26,11 @@ void vltxcstdn::clearblnc()
 void vltxcstdn::updtblnc(name account, uint64_t balance, uint64_t timestamp)
 {
    require_auth(account);
+   auto staked = volentixstak::get_staked_amount(staking_contract, account);
+   const double balance_tokens = staked.amount / vtx_precision;
+   check(balance_tokens > 10000, "need at least 10000 VTX staked to be an oracle");
    //make sure the node is registered
-   checknode(account);
+   // checknode(account);
    //insert data point
    etherium_balances balances(get_self(), get_self().value);
    auto itr = balances.begin();   

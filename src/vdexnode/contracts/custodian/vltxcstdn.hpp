@@ -13,13 +13,15 @@
 #include <eosio/singleton.hpp>
 
 #define SYMBOL_PRE_DIGIT 8
-#define TOKEN_SYMBOL "WVTX"
-#define TOKEN_ACC name("vtx222222222")
+
+#define TOKEN_ACC name("volentixtsys")
 
 using namespace eosio;
 using std::string;
 class[[eosio::contract("vltxcstdn")]] vltxcstdn : public contract
 {
+int64_t vtx_precision = 100000000;
+name staking_contract = ""_n;    
 public:
    using contract::contract;
 

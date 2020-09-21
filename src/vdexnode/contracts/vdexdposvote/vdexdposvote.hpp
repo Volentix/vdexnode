@@ -10,22 +10,16 @@ class [[eosio::contract("vdexdposvote")]] vdexdposvote : public contract {
 public:
     using contract::contract;
 
-    name vtx_account = "volentixgsys"_n;
+    name vtx_account = "volentixtsys"_n;
     std::string vtx_symbol_code = "VTX";
     int64_t vtx_precision = 100000000;
-    name staking_contract = "volentixstak"_n; 
+    name staking_contract = "vltxstakenow"_n; 
 
     // job ids:
     //   1 - daily reward
-    //   2 - btc mpt
-    //   3 - eth mpt
-    //   4 - eos mpt
-    //   5 - gateaway
-    //   6 - db
-    //   7 - ccxt
-    //   8 - loopring
+    //   2 - ETH/VTXoracle
+    
     const uint32_t job_id_bounds[2] = {1,8};
-
 
     vdexdposvote(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
                                                                       _producers(receiver, receiver.value),

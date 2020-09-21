@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 
-#define VOTING_CONTRACT name("vdexdposvote")
+#define VOTING_CONTRACT name("volentixvote")
 
 using std::string;
 using namespace eosio;
@@ -17,9 +17,9 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
     public:
         using contract::contract;
         const name pool_account = name("vtxtestpool1");
-        const name treasury = name("vtxdistribut");
-        const name vtxsys_contract = name("volentixgsys");
-        const name voting_contract = name("vdexdposvote");
+        const name treasury = name("vistribution");
+        const name vtxsys_contract = name("volentixtsys");
+        const name voting_contract = name("volentixvote");
         const symbol vtx_symbol = symbol(symbol_code("VTX"), 8);
         const uint32_t one_day = 24 * 60 * 60;
         const uint32_t daily_reward_id = 0;

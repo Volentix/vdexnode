@@ -73,11 +73,11 @@ void volentixstak::unstake(name owner){
    unstake_unlocked(owner, now);
 }
 
-// For debug purposes
-void volentixstak::mockunstake(name owner, uint64_t now){
-   require_auth(get_self());
-   unstake_unlocked(owner, now);
-}
+// // For debug purposes
+// void volentixstak::mockunstake(name owner, uint64_t now){
+//    require_auth(get_self());
+//    unstake_unlocked(owner, now);
+// }
 
 void volentixstak::addblacklist(name account)
 {

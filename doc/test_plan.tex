@@ -53,24 +53,31 @@
 \end{enumerate}
  \textbf{Other preparatory actions}
   		\begin{enumerate}
-  		  \item Deploy main token on \textit{volentixtsys}
-  		  \item Create 2.1 million TVTX
-  		  \item Create volentixsale testnet account and isssue balance of EOS volentixsale
-  		  \item Deploy vdexdposvote contract to volentixvote + ressources
-  		  \item Deploy vtxdistribut contract to vistribution + ressources
-  		  \item Deploy volentixstak  contract to vltxstakenow + ressources
- 		  \item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten 
+  			\item compile Volentixgsys.cpp * {\color{green} DONE}\\ 
+  			\url{https://github.com/Volentix/volentix_contracts/blob/master/volentixgsys/src/volentixgsys.cpp} 
+  		  \item Deploy main token on \textit{volentixtsys} * {\color{green} DONE}
+  		  \item Create 2.1 million TVTX * {\color{green} DONE}
+  		  \item Create volentixsale testnet account and issue balance of EOS volentixsale (128153044.02514328 VTX) * {\color{green} DONE}
+  		   \item Create registering node account on eosio testnet and issue 1000000 VTX ex: quaremachina
+  		  \item Deploy vdexdposvote contract to volentixvote + ressources * {\color{green} DONE}
+  		  \item Deploy vtxdistribut contract to vistribution + ressources * {\color{green} DONE}
+  		  \item Deploy volentixstak  contract to vltxstakenow + ressources * {\color{green} DONE}
+ 		  \item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten  * {\color{green} DONE}
 		  \item Deploy custodian on v22222222222 + ressources  * {\color{green} DONE}
-		  \item set v22222222222 permissions for volentixtsys
+		  \item set v22222222222 permissions for volentixtsys * {\color{green} DONE}
 		  \item Initialize v22222222222 \textit{currentbal}
 		  \item Clear v22222222222 \textit{balances} buffer
+		  \item Init vltxstakenow
+		  \item Edit docker compose\\
+		  Initial default values		
 		  \item Make vltxstakenow, vistribution, and v22222222222 use volentixvote registration
-		  \item Put condition for 10000 VTX
+		  \item Registration requires choosing which containers to run 
+		  \item Put condition for 10000 VTX staked in vltxstakenow
 		  \item Ensure uptime is respected 
 		  \item prevent issuing on the Ethereum side if there are less than 8 nodes
 		   
 	 \end{enumerate}
-   \textbf{Docker network}  * {\color{green} DONE}
+   \textbf{Docker network}	  * {\color{green} DONE}
   \begin{enumerate}
   	\item Eos wallet
   	\item Openethereum
@@ -81,9 +88,13 @@
 
 \section{Tests}
 					\begin{enumerate}
+						\item \textbf{Staking test}
+						\begin{enumerate}
+							\item v22222222222 stakes 10000 VTX
+						\end{enumerate}
 						\item \textbf{Persistency test}
 							\begin{enumerate}
-								\item uptime\textit{}
+								\item Uptime\textit{}
 								\item Less than 8 nodes 
 								\item Register and unregister nodes
 							\end{enumerate}
@@ -91,7 +102,7 @@
 							\begin{enumerate}
 							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS.
 							\item Register and unregister nodes
-							\item reward selection and funds transfer	
+							\item Reward selection and funds transfer	
 						\end{enumerate}
 											\item \textbf{Accuracy tests}
 													\begin{enumerate}

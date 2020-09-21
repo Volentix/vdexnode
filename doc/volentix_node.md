@@ -1,3 +1,16 @@
+---
+abstract: |
+  The Volentix token, VTX was originally created on the main EOSIO
+  chain. The Volentix network is a network of voting nodes which run
+  software to support the volentix ecosystem: Staking, Proposals and
+  Wrapping of VTX on EOS/Ethereum.
+author:
+- |
+  Sylvain Cormier\
+  `sylvain@volentixlabs.com`
+title: Volentix network v0.0.1
+---
+
 Introduction 
 ============
 

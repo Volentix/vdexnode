@@ -15,13 +15,15 @@ const eos_token_contract = process.env.EOS_TOKEN_CONTRACT
 const eos_pool_account = process.env.EOS_POOL_ACCOUNT 
 const eos_account = process.env.EOS_ACCOUNT 
 const custodian_account = process.env.CUSTODIAN_ACCOUNT 
+const distribution_account = process.env.EOS_DISTRIBUTION_ACCOUNT
 const defaultPrivateKey = '5JoNVLWQ4Wq7hZRgHu6vyjbqUpU4enHPn7sMMsnwtcJEzWrhaHY'
 const node_ip_address = process.env.NODE_IP_ADDRESS;
 
 let web3;
 let contract;
 let check; 
-// let url = 'http://' + node_ip_address + ':8545'; 
+let up_node_url = 'http://127.0.0.1:8000';
+
 
 async function main(){
     eth_balance();
@@ -60,6 +62,9 @@ async function eth_balance(){
                 eos_vtx_balance = await eos_vtx_balance;
                 console.log('ETH balance', from_wei);
                 console.log('EOS balance', eos_vtx_balance);
+                if(i%10){
+                     register_up(); 
+                }
         }catch(err){
             console.log('provider not available. wait........');
         }
@@ -98,6 +103,52 @@ function send_balance_EOS(balance){
         console.log(err);
     }
 }
+
+function register_up(){
+    var rpc;
+    try{
+        // getJSON(up_node_url,  function(err, data) {
+    
+        //     if (err != null) {
+        //         console.error(err);
+        //     } else {
+        
+        //     var text = `Date: ${data.date}
+        //     Time: ${data.time}
+        //     Unix time: ${data.milliseconds_since_epoch}` 
+        // console.log(text);
+        // }
+
+        const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
+        rpc = new JsonRpc('https://jungle2.cryptolions.io:443', { fetch }); 
+        const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
+        const timestamp = Date.now(); // Unix timestamp in milliseconds
+        (async () => {
+            const result = await api.transact({
+            actions: [{
+                account: distribution_account,
+                name: 'uptime',
+                authorization: [{
+                actor: eos_account,
+                permission: 'active',
+                }],
+                data: {
+                account: eos_account,    
+                job_ids: [1,2]
+                },
+            }]
+            }, {
+            blocksBehind: 3,
+            expireSeconds: 30,
+            });
+            console.dir(result);
+        })();
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }

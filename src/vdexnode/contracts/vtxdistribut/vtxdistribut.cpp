@@ -95,8 +95,10 @@ void vtxdistribut::getreward(name node) {
   }
 }
 
-// TODO: remove
 void vtxdistribut::uptime(name account, const std::vector<uint32_t> &job_ids) {
+  for (auto & id : job_ids) {
+    calcrewards(id);
+  }  
   vtxdistribut::getreward(account);
 }
 

@@ -27,7 +27,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
 
         vtxdistribut(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
             rewards(receiver, receiver.value), usblacklist(receiver, receiver.value), 
-            rewardhistory(receiver, receiver.value), inituptime(receiver, receiver.value) {}
+            rewardhistory(receiver, receiver.value), inituptime(receiver, receiver.value), uptimes(receiver, receiver.value) {}
          	
         
         [[eosio::action]]
@@ -87,6 +87,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
 
 
         typedef eosio::multi_index<"uptimes"_n, vdexnodes_uptime> uptime_index;
+        uptime_index uptimes;    
 
         struct [[eosio::table]] blacklist {
             name account;

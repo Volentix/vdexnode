@@ -3,43 +3,43 @@ version: '3.3'
 
 services:
   # Eosio node
-  eosio_nodeos:
-    build: eosio
-    container_name: nodeos
-    volumes:
-     - type: bind
-       source: /eosio # EDIT THIS VALUE!
-       target: /eosio/data
-    ports:
-      - "8888:8888"
-      - "9876:9876"
-      - "8080:8080"
-    networks:
-      volentix:
-        ipv4_address: 172.20.0.5
-    stop_grace_period: 10m
-    stop_signal: SIGINT
-    command:
-      nodeos
+  # eosio_nodeos:
+  #   build: eosio
+  #   container_name: nodeos
+  #   volumes:
+  #    - type: bind
+  #      source: /eosio # EDIT THIS VALUE!
+  #      target: /eosio/data
+  #   ports:
+  #     - "8888:8888"
+  #     - "9876:9876"
+  #     - "8080:8080"
+  #   networks:
+  #     volentix:
+  #       ipv4_address: 172.20.0.5
+  #   stop_grace_period: 10m
+  #   stop_signal: SIGINT
+  #   command:
+  #     nodeos
 
-  # Eosio keosd
-  eosio_keosd:
-    build: eosio
-    container_name: keosd
-    volumes:
-     - type: bind
-       source: /home/vnode # EDIT THIS VALUE!
-       target: /eosio/wallet
-    ports:
-      - "8901:8901"
-    networks:
-      volentix:
-        ipv4_address: 172.20.0.7
-    stop_grace_period: 10m
-    stop_signal: SIGINT
-    command:
-      keosd
-  # # Ethereum node
+  # # Eosio keosd
+  # eosio_keosd:
+  #   build: eosio
+  #   container_name: keosd
+  #   volumes:
+  #    - type: bind
+  #      source: /home/vnode # EDIT THIS VALUE!
+  #      target: /eosio/wallet
+  #   ports:
+  #     - "8901:8901"
+  #   networks:
+  #     volentix:
+  #       ipv4_address: 172.20.0.7
+  #   stop_grace_period: 10m
+  #   stop_signal: SIGINT
+  #   command:
+  #     keosd
+  # # # Ethereum node
   # ethereum_parity:
   #   build: ethereum
   #   container_name: parity
@@ -56,24 +56,24 @@ services:
   #       ipv4_address: 172.20.0.4
 
   # Bitcoind node
-  bitcoin-core:
-    build: bitcoin
-    container_name: bitcoin
-    volumes:
-     - type: bind
-       source: /Users/maxpetriev/bitcoin # EDIT THIS VALUE!
-       target: /bitcoin/data
-    ports:
-      - "18443:18443"
-      - "18444:18444"
-    command:
-      -printtoconsole
-      -rpcbind=0.0.0.0
-      -rpcallowip=172.20.0.0/24
-      -rpcauth='sylvain:61ec18acbeb8975bada6286075456714$f5995cc314abd21db9b2ba60a26d38f10946def4325f1c6a7d768f681c706c52'  # EDIT THIS VALUE!
-    networks:
-      volentix:
-        ipv4_address: 172.20.0.2
+  # bitcoin-core:
+  #   build: bitcoin
+  #   container_name: bitcoin
+  #   volumes:
+  #    - type: bind
+  #      source: /Users/maxpetriev/bitcoin # EDIT THIS VALUE!
+  #      target: /bitcoin/data
+  #   ports:
+  #     - "18443:18443"
+  #     - "18444:18444"
+  #   command:
+  #     -printtoconsole
+  #     -rpcbind=0.0.0.0
+  #     -rpcallowip=172.20.0.0/24
+  #     -rpcauth='sylvain:61ec18acbeb8975bada6286075456714$f5995cc314abd21db9b2ba60a26d38f10946def4325f1c6a7d768f681c706c52'  # EDIT THIS VALUE!
+  #   networks:
+  #     volentix:
+  #       ipv4_address: 172.20.0.2
 
   vdexnode:
     image: volentix/vdexnode
@@ -93,16 +93,16 @@ services:
       - "8000:8000"
     command:
       server
-    networks:
-      volentix:
-        ipv4_address: 172.20.0.3
+    # networks:
+    #   volentix:
+    #     ipv4_address: 172.20.0.3
 
-  vdexgateway:
-    build: gateway
-    container_name: gateway
-    networks:
-      volentix:
-        ipv4_address: 172.20.0.6
+  # vdexgateway:
+  #   build: gateway
+  #   container_name: gateway
+  #   networks:
+  #     volentix:
+  #       ipv4_address: 172.20.0.6
   
   openethereum:
     image: openethereum/openethereum:latest
@@ -138,7 +138,7 @@ services:
 networks:
   volentix:
     driver: bridge
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.20.0.0/24
+    # ipam:
+    #   driver: default
+    #   config:
+    #   - subnet: 172.20.0.0/24

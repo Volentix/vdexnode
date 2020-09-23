@@ -95,7 +95,8 @@ void vtxdistribut::getreward(name node) {
   }
 }
 
-void vtxdistribut::uptime(name account, const std::vector<uint32_t> &job_ids) {
+void vtxdistribut::uptime(name account, const std::vector<uint32_t> &job_ids, bool up) {
+  check(up == true, 'Node needs to be up for rewards to work');
   for (auto & id : job_ids) {
     calcrewards(id);
   }  

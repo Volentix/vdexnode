@@ -119,6 +119,7 @@ services:
     user: root
     depends_on:
         - openethereum
+        - vdexnode
     volumes:
         - ./:/root
     environment:

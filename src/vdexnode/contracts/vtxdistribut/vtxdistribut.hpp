@@ -37,7 +37,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         void paycampaign(string campaign);       
         
         [[eosio::action]]
-        void uptime(name account, const std::vector<uint32_t> &job_ids);
+        void uptime(name account, const std::vector<uint32_t> &job_ids, bool up);
         
         [[eosio::action]]
         void addblacklist(name account, string ip);

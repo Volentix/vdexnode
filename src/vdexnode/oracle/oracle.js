@@ -16,14 +16,14 @@ const eos_pool_account = process.env.EOS_POOL_ACCOUNT
 const eos_account = process.env.EOS_ACCOUNT 
 const custodian_account = process.env.CUSTODIAN_ACCOUNT 
 const distribution_account = process.env.EOS_DISTRIBUTION_ACCOUNT
-const defaultPrivateKey = '5JoNVLWQ4Wq7hZRgHu6vyjbqUpU4enHPn7sMMsnwtcJEzWrhaHY'
+var defaultPrivateKey = '5JoNVLWQ4Wq7hZRgHu6vyjbqUpU4enHPn7sMMsnwtcJEzWrhaHY'
 const node_ip_address = process.env.NODE_IP_ADDRESS;
 
 let web3;
 let contract;
 let check; 
-let up_node_url = 'http://127.0.0.1:8000';
-
+let up_node_url = 'http://vdexnode:8000';
+var result; 
 
 async function main(){
     eth_balance();
@@ -62,63 +62,113 @@ async function eth_balance(){
                 eos_vtx_balance = await eos_vtx_balance;
                 console.log('ETH balance', from_wei);
                 console.log('EOS balance', eos_vtx_balance);
-                if(i%10){
-                     register_up(); 
-                }
+                // if(i%10){
+                // register_up(new_vtx_balance); 
+                // }
         }catch(err){
             console.log('provider not available. wait........');
         }
     }
 }
 
-function send_balance_EOS(balance){
+async function send_balance_EOS(balance){
+    console.log('******************send blance*********************\n');
     var rpc;
+    const response = await fetch(up_node_url);
+    const myJson = await response.json(); //extract JSON from the http response
+    console.log('***************************************\n'); 
+    console.log("Node is up", myJson);
+    console.log('***************************************\n');
+     
     try{
+        console.count('******************send blance*********************');
         const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
         rpc = new JsonRpc('https://jungle2.cryptolions.io:443', { fetch }); 
         const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
         const timestamp = Date.now(); // Unix timestamp in milliseconds
-        (async () => {
-            const result = await api.transact({
-            actions: [{
-                account: custodian_account,
-                name: 'updtblnc',
-                authorization: [{
-                actor: eos_account,
-                permission: 'active',
-                }],
-                data: {
-                account: eos_account,    
-                balance: balance,
-                timestamp: timestamp,
-                },
-            }]
-            }, {
-            blocksBehind: 3,
-            expireSeconds: 30,
-            });
-            console.dir(result);
-        })();
+        // (async () => {
+        //     const result = await api.transact({
+        //     actions: [{
+        //         account: custodian_account,
+        //         name: 'updtblnc',
+        //         authorization: [{
+        //         actor: eos_account,
+        //         permission: 'active',
+        //         }],
+        //         data: {
+        //         account: eos_account,    
+        //         balance: balance,
+        //         timestamp: timestamp,
+        //         },
+        //     }]
+        //     }, {
+        //     blocksBehind: 3,
+        //     expireSeconds: 30,
+        //     });
+        //     console.dir(result);
+        // })();
+        if(myJson > 0){
+        //     console.log('*************Send up**************\n');
+        //     var jobs = new Int32Array();
+        //     jobs[0] = 1;
+        //     jobs[1] = 2;
+        //     (async () => {
+        //         const result = await api.transact({
+        //         actions: [{
+        //             account: 'distributvtx',
+        //             name: 'uptime',
+        //             authorization: [{
+        //             actor: eos_account,
+        //             permission: 'active',
+        //             }],
+        //             data: {
+        //                 job_ids:jobs
+        //             },
+        //         }]
+        //         }, {
+        //         blocksBehind: 3,
+        //         expireSeconds: 30,
+        //         });
+        //         console.dir(result);
+        //     })();
+        }else{
+            // var jobs = new Int32Array();
+            // jobs[0] = 1;
+            // jobs[1] = 2;
+            // sleep(3000);
+            // (async () => {
+            //     const result = await api.transact({
+            //     actions: [{
+            //         account: 'distributvtx',
+            //         name: 'paycore',
+            //         authorization: [{
+            //         actor: eos_account,
+            //         permission: 'active',
+            //         }],
+            //         data: {
+            //             job_ids:jobs
+            //         },
+            //     }]
+            //     }, {
+            //     blocksBehind: 3,
+            //     expireSeconds: 30,
+            //     });
+            //     console.dir(result);
+            // })();
+
+        }
     }catch(err){
         console.log(err);
     }
 }
 
-function register_up(){
+function register_up(balance){
+   
     var rpc;
     try{
-        // getJSON(up_node_url,  function(err, data) {
-    
-        //     if (err != null) {
-        //         console.error(err);
-        //     } else {
-        
-        //     var text = `Date: ${data.date}
-        //     Time: ${data.time}
-        //     Unix time: ${data.milliseconds_since_epoch}` 
-        // console.log(text);
-        // }
-
+        console.log('*****************UP*********************');
+        console.log(distribution_account);
+        console.log(eos_account);
         const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
         rpc = new JsonRpc('https://jungle2.cryptolions.io:443', { fetch }); 
         const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
@@ -134,7 +184,7 @@ function register_up(){
                 }],
                 data: {
                 account: eos_account,    
-                job_ids: [1,2]
+                test: ''
                 },
             }]
             }, {
@@ -143,6 +193,7 @@ function register_up(){
             });
             console.dir(result);
         })();
+    
     }catch(err){
         console.log(err);
     }

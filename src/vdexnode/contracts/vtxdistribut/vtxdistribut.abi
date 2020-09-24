@@ -42,12 +42,20 @@
             ]
         },
         {
-            "name": "getreward",
+            "name": "dht_info",
             "base": "",
             "fields": [
                 {
-                    "name": "node",
-                    "type": "name"
+                    "name": "primary",
+                    "type": "uint64"
+                },
+                {
+                    "name": "id",
+                    "type": "string"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "uint32"
                 }
             ]
         },
@@ -201,6 +209,10 @@
                 {
                     "name": "job_ids",
                     "type": "uint32[]"
+                },
+                {
+                    "name": "node_id",
+                    "type": "string"
                 }
             ]
         },
@@ -221,6 +233,10 @@
                     "type": "uint32"
                 },
                 {
+                    "name": "up",
+                    "type": "bool"
+                },
+                {
                     "name": "last_timestamp",
                     "type": "uint32"
                 }
@@ -236,11 +252,6 @@
         {
             "name": "calcrewards",
             "type": "calcrewards",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "getreward",
-            "type": "getreward",
             "ricardian_contract": ""
         },
         {
@@ -280,6 +291,13 @@
         }
     ],
     "tables": [
+        {
+            "name": "dht",
+            "type": "dht_info",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
         {
             "name": "inituptime",
             "type": "init_uptime",

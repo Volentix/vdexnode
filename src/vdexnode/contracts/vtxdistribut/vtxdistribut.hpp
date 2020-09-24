@@ -5,6 +5,7 @@
 #include <eosio/symbol.hpp>
 #include <eosio/contract.hpp>
 #include <eosio/name.hpp>
+#include <eosio/singleton.hpp>
 #include <vector>
 #include <string>
 
@@ -27,7 +28,8 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
 
         vtxdistribut(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
             rewards(receiver, receiver.value), usblacklist(receiver, receiver.value), 
-            rewardhistory(receiver, receiver.value), inituptime(receiver, receiver.value), uptimes(receiver, receiver.value) {}
+            rewardhistory(receiver, receiver.value), inituptime(receiver, receiver.value), uptimes(receiver, receiver.value),
+            dht(receiver, receiver.value) {}
          	
         
         [[eosio::action]]
@@ -37,7 +39,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         void paycampaign(string campaign);       
         
         [[eosio::action]]
-        void uptime(name account, const std::vector<uint32_t> &job_ids, bool up);
+        void uptime(name account, const std::vector<uint32_t> &job_ids, string node_id);
         
         [[eosio::action]]
         void addblacklist(name account, string ip);
@@ -54,7 +56,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         [[eosio::action]]
         void calcrewards(uint32_t job_id);
 
-        [[eosio::action]]
+        // [[eosio::action]]
         void getreward(name node);
 
         struct [[eosio::table]] reward_info {
@@ -77,15 +79,24 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         void setrewardrule(const reward_info& rule);
 
     private:
+        
+        struct [[eosio::table]] dht_info
+        {   uint64_t primary;
+            string id;
+            uint32_t timestamp;
+            uint64_t primary_key() const { return primary;}
+        };
+        typedef eosio::multi_index<"dht"_n, dht_info> dht_index;
+        dht_index dht;
+       
        struct [[eosio::table]] vdexnodes_uptime {
             uint32_t job_id;
             uint32_t period_num;
             uint32_t count;
+            bool up;
             uint32_t last_timestamp;
             uint32_t primary_key() const { return job_id;}
         };
-
-
         typedef eosio::multi_index<"uptimes"_n, vdexnodes_uptime> uptime_index;
         uptime_index uptimes;    
 

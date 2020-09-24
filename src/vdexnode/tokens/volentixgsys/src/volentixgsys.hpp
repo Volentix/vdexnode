@@ -16,7 +16,7 @@ class [[eosio::contract]] volentixgsys : public contract {
         volentixgsys(name receiver, name code,  datastream<const char*> ds): contract(receiver, code, ds) {}
 
         const name treasury = name("vtxtestpool1");
-        const name vtxvote_contract = name("vdexdposvote");
+        const name vtxvote_contract = name("volentixvote");
 
         [[eosio::action]]
         void create( name   issuer,

@@ -15,7 +15,8 @@ unlock = {
     "v55555555555":"PW5K3XtMxZdJKmrsUwJn81ABAfsshESLMnbgw8nsgRUGUMFC9Ycvw",
     "v44444444444":"PW5HvM7R1eKQYutEzoHhVqw8idovYynrocszdFZEFXDWjweSKqL5p",
     "v33333333333":"PW5KjRkj1vuSDUYqGLirLfiAR14TGJCiggm2u81FcmvFTE4sJor8k",
-    "v44444444444":"PW5K24xVDGzFSJFWahgoi58rMbWh4sE19dG9ERyczmmC1LciYKwAT",
+    "v22222222222":"PW5K24xVDGzFSJFWahgoi58rMbWh4sE19dG9ERyczmmC1LciYKwAT",
+    "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
 }
 #node_url=https://eos.greymass.com:443

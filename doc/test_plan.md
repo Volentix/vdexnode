@@ -1,11 +1,3 @@
----
-author:
-- |
-  The Volentix team\
-  `sylvain@volentixlabs.com`
-title: Volentix network test plan
----
-
 Preparation
 ===========
 
@@ -33,13 +25,13 @@ Preparation
 
 2.  Deploy main token on *volentixtsys* \* DONE
 
-3.  Create 2.1 million TVTX \* DONE
+3.  Create 2.1 billion TVTX \* DONE
 
 4.  Create volentixsale testnet account and issue balance of EOS
-    volentixsale (128153044.02514328 VTX) \* DONE
+    volentixsale (128153044.02514328 TVTX) \* DONE
 
-5.  Create registering node account on eosio testnet and issue 1000000
-    VTX ex: quaremachina
+5.  Create registering node account on eosio testnet and issue
+    v11111111111 1000000 TVTX
 
 6.  Deploy vdexdposvote contract to volentixvote + ressources \* DONE
 
@@ -53,25 +45,28 @@ Preparation
 
 11. set v22222222222 permissions for volentixtsys \* DONE
 
-12. Initialize v22222222222 *currentbal*
+12. set v22222222222 permissions for volentixtsys \* DONE
 
-13. Clear v22222222222 *balances* buffer
+13. Put condition for 10000 VTX staked in vltxstakenow \* DONE
 
-14. Init vltxstakenow
+14. Put condition for 10000 VTX staked in vltxcustodian \* DONE
 
-15. Edit docker compose\
+15. Integrate oracle functionality to volentixnode
+
+16. Reward per container selection.\* DONE
+
+17. Uptime validation DONE
+
+18. Initialize v22222222222 *currentbal*
+
+19. Clear v22222222222 *balances* buffer
+
+20. Init vltxstakenow \* DONE
+
+21. Edit docker compose\
     Initial default values
 
-16. Make vltxstakenow, vistribution, and v22222222222 use volentixvote
-    registration
-
-17. Registration requires choosing which containers to run
-
-18. Put condition for 10000 VTX staked in vltxstakenow
-
-19. Ensure uptime is respected
-
-20. prevent issuing on the Ethereum side if there are less than 8 nodes
+22. prevent issuing on the Ethereum side if there are less than 8 nodes
 
 **Docker network** \* DONE
 
@@ -90,7 +85,7 @@ Tests
 
 1.  **Staking test**
 
-    1.  v22222222222 stakes 10000 VTX
+    1.  v22222222222 stakes 10000 TVTX
 
 2.  **Persistency test**
 

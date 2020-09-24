@@ -1,6 +1,0 @@
----
-- hosts: all
-  gather_facts: false
-  tasks: 
-  - name: 'Test if login and remote python is available with ping'
-    ping:

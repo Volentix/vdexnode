@@ -14,7 +14,7 @@ log = "0.4.1"
 opendht = { git = "https://github.com/savoirfairelinux/opendht/" }
 rocket = "0.4.2"
 rocket_contrib = "0.4.2"
-rocket_cors = { git = "https://github.com/lawliet89/rocket_cors", branch = "master" }
+rocket_cors = "0.5.2"
 reqwest = "0.9.5"
 rmp-serde = "0.14.0"
 rust-crypto = "^0.2"

@@ -2,43 +2,67 @@
 version: '3.3'
 
 services:
-  # Eosio node
-  eosio_nodeos:
+  nodeos:
     build: eosio
     container_name: nodeos
-    volumes:
-     - type: bind
-       source: /eosio # EDIT THIS VALUE!
-       target: /eosio/data
+    command: nodeos -e -p eosio --plugin eosio::producer_plugin --plugin eosio::history_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --plugin eosio::http_plugin --http-server-address=0.0.0.0:8888 --access-control-allow-origin=* --contracts-console --http-validate-host=false --filter-on="*"
+    stop_grace_period: 3m0s
+    # volumes:
+    #   - ./:/eosio.cdt/contract
+    #   - ./config.ini:/root/.local/share/eosio/nodeos/config/config.ini
     ports:
-      - "8888:8888"
-      - "9876:9876"
-      - "8080:8080"
-    # networks:
-    #   volentix:
-    #     ipv4_address: 172.20.0.5
-    stop_grace_period: 10m
-    stop_signal: SIGINT
-    command:
-      nodeos
+      - '8888:8888'
+      - '9830:9876'
+    depends_on:
+      - keosd
 
-  # # Eosio keosd
-  eosio_keosd:
+  keosd:
     build: eosio
     container_name: keosd
+    command: keosd --http-server-address=0.0.0.0:8901 --http-validate-host 0 --verbose-http-errors --unlock-timeout=9999999
     volumes:
-     - type: bind
-       source: /home/vnode # EDIT THIS VALUE!
-       target: /eosio/wallet
+      - ./default.wallet:/root/eosio-wallet/default.wallet
+    expose:
+      - 8901
     ports:
-      - "8901:8901"
-    # networks:
-    #   volentix:
-    #     ipv4_address: 172.20.0.7
-    stop_grace_period: 10m
-    stop_signal: SIGINT
-    command:
-      keosd
+      - '8901:8901'
+  # # Eosio node
+  # eosio_nodeos:
+  #   build: eosio
+  #   container_name: nodeos
+  #   volumes:
+  #    - type: bind
+  #      source: /eosio # EDIT THIS VALUE!
+  #      target: /eosio/data
+  #   ports:
+  #     - "8888:8888"
+  #     - "9876:9876"
+  #     - "8080:8080"
+  #   # networks:
+  #   #   volentix:
+  #   #     ipv4_address: 172.20.0.5
+  #   stop_grace_period: 10m
+  #   stop_signal: SIGINT
+  #   command:
+  #     nodeos
+
+  # # Eosio keosd
+  # eosio_keosd:
+  #   build: eosio
+  #   container_name: keosd
+  #   volumes:
+  #    - type: bind
+  #      source: /home/vnode # EDIT THIS VALUE!
+  #      target: /eosio/wallet
+  #   ports:
+  #     - "8901:8901"
+  #   networks:
+  #     volentix:
+  #       ipv4_address: 172.20.0.7
+  #   stop_grace_period: 10m
+  #   stop_signal: SIGINT
+  #   command:
+  #     keosd
   # # # Ethereum node
   # ethereum_parity:
   #   build: ethereum

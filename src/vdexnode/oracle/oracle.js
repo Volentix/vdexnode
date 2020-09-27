@@ -83,9 +83,11 @@ async function send_balance_EOS(balance){
     try{
         console.count('******************send blance*********************');
         const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
-        rpc = new JsonRpc('https://jungle2.cryptolions.io:443', { fetch }); 
+        rpc = new JsonRpc('https://eosio_nodeos:8888', { fetch }); 
         const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
         const timestamp = Date.now(); // Unix timestamp in milliseconds
+        info = await rpc.get_info();
+        console.log(info.chain_id);
         // (async () => {
         //     const result = await api.transact({
         //     actions: [{

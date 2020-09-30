@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
 import subprocess
 
 unlock = {
-    "distributvtx":"PW5JZANXxtN8t3mrDtKhmGs9tmTH5sbwHM3J3HPMqJZhdf4DrEB9v",
+    # "distributvtx":"PW5JZANXxtN8t3mrDtKhmGs9tmTH5sbwHM3J3HPMqJZhdf4DrEB9v",
     "quaremachina":"PW5J8pUqvutkxRVZCJ1qgBNCUCmwocZc7DRHr6QnTbGKDtNJsJdRa",
     "volentixwvtx":"PW5JMHyTZSaVoD21oFJgUk7DsWwj3o5hknsYJdvSN9DKxxojwxbuz",
     "volentixvote":"PW5JsJXVbGQojLqtt14dsX8zy8RALfYFBnrsMwubhhsCHASqp87Ny",
@@ -18,13 +19,12 @@ unlock = {
     "v22222222222":"PW5K24xVDGzFSJFWahgoi58rMbWh4sE19dG9ERyczmmC1LciYKwAT",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
+    "vtxcustodian":"PW5JQP5pZo2NHYtvsVrzgJEfATcmAKhcXgM12uAbP6eE4D1MnGhh5",
+    "volentixstak":"PW5KVt9eoBscguyX7tHBK5U88S71hYRc5QfzpGD9KgPAtRpJzfbnB"
 }
-#node_url=https://eos.greymass.com:443
-# node_url='https://jungle2.cryptolions.io:443'
+
 retries=300
 sleep_timeout=1
-
-
 
 def unlock_wallets():
     for i in unlock:
@@ -34,8 +34,5 @@ def open_wallets():
     for i in unlock:
         subprocess.Popen(["cleos", "wallet", "open", "-n", i])
 
-for i in unlock:
-    print(i)
-    print(str(unlock[i]))
-# open_wallets()        
 unlock_wallets()
+

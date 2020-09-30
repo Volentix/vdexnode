@@ -14,7 +14,7 @@
 #define MIN_STAKE_AMOUNT asset(100000000000, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT))
 #define MAX_STAKE_AMOUNT asset(1000000000000000, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT))
 #define STAKE_PERIOD 30 * 24 * 60 * 60
-#define VOTING_CONTRACT name("vltxstakenow")
+#define VOTING_CONTRACT name("volentixvote")
 
 using namespace eosio;
 using std::string;
@@ -29,7 +29,7 @@ public:
                                                                       _blacklist(receiver, receiver.value) {}
 
 
-   [[eosio::on_notify("volentixgsys::transfer")]] 
+   [[eosio::on_notify("volentixtsys::transfer")]] 
    void onTransfer(name from,
                    name to,
                    asset quantity,

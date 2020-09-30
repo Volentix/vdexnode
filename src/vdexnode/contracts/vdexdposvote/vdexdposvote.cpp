@@ -74,11 +74,12 @@ void vdexdposvote::voteproducer(const name voter_name, const std::vector <name> 
     require_auth(voter_name);
 
     check(producers.size() <= 21 , "You must vote for not more than 21 producers");
-
+   
     //get_token_balance(voter_name); 
+    name staking_contract = "volentixstak"_n; 
     auto staked = volentixstak::get_staked_amount(staking_contract,voter_name);
     const double balance_tokens = staked.amount / vtx_precision;
-    check(balance_tokens > 10000, "need at least 10000 VTX staked for vote");
+    check(balance_tokens < 10000, "need at least 10000 VTX staked for vote");
     
     uint64_t now = current_time_point().sec_since_epoch();
 

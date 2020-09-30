@@ -10,10 +10,11 @@ void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
    if (from == get_self() || to != get_self() || from == TOKEN_ACC) {
         return;
   }
+   
 
    // TODO: handle wrong memo
    uint16_t periods_num = stoi(memo);
-   check_blacklist(from);
+   // check_blacklist(from);
    _stake(from, quantity, periods_num);
 }
 

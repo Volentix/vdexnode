@@ -52,20 +52,6 @@
             "fields": []
         },
         {
-            "name": "mockunstake",
-            "base": "",
-            "fields": [
-                {
-                    "name": "owner",
-                    "type": "name"
-                },
-                {
-                    "name": "now",
-                    "type": "uint64"
-                }
-            ]
-        },
-        {
             "name": "rmblacklist",
             "base": "",
             "fields": [
@@ -137,11 +123,6 @@
         {
             "name": "initglobal",
             "type": "initglobal",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "mockunstake",
-            "type": "mockunstake",
             "ricardian_contract": ""
         },
         {

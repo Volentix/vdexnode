@@ -3,42 +3,67 @@ version: '3.3'
 
 services:
   # Eosio node
-  eosio_nodeos:
-    build: eosio
-    container_name: nodeos
-    volumes:
-     - type: bind
-       source: /eosio # EDIT THIS VALUE!
-       target: /eosio/data
-    ports:
-      - "8888:8888"
-      - "9876:9876"
-      - "8080:8080"
-    # networks:
-    #   volentix:
-    #     ipv4_address: 172.20.0.5
-    stop_grace_period: 10m
-    stop_signal: SIGINT
-    command:
-      nodeos
+  # eosio_nodeos:
+  #   build: eosio
+  #   container_name: nodeos
+  #   volumes:
+  #   #  - type: bind
+  #   #    source: /eosio # EDIT THIS VALUE!
+  #   #    target: /eosio/data
+  #   #    volumes:
+  #   - ./:/root
+  #   ports:
+  #     - "8888:8888"
+  #     - "9876:9876"
+  #     - "8080:8080"
+  #   # depends_on:
+  #   #   - eosio_keosd
+  #   stop_grace_period: 10m
+  #   stop_signal: SIGINT
+  #   # entrypoint: "bash -c \"\ 
+  #   # echo '************************' && \
+  #   # cp -r /root/test/eosio-wallet  /root && \ 
+  #   # apt update && \
+  #   # apt install -y software-properties-common && \
+  #   # apt update && \
+  #   # apt install -y python3.8 && \
+  #   # python3 /root/scripts/unlock_wallets.py && \
+  #   # /usr/bin/cleos wallet list && \ 
+  #   # sh /root/eosio/docker-entrypoint.sh && \
+  #   # echo '************************' \
+  #   # \""
+
+  #   command:
+  #     nodeos
 
   # # Eosio keosd
-  eosio_keosd:
-    build: eosio
-    container_name: keosd
-    volumes:
-     - type: bind
-       source: /home/vnode # EDIT THIS VALUE!
-       target: /eosio/wallet
-    ports:
-      - "8901:8901"
-    # networks:
-    #   volentix:
-    #     ipv4_address: 172.20.0.7
-    stop_grace_period: 10m
-    stop_signal: SIGINT
-    command:
-      keosd
+  # eosio_keosd:
+  #   build: eosio
+  #   container_name: keosd
+  #   volumes:
+  #     - ./:/eosio
+  #   ports:
+  #     - "8901:8901"
+  #   stop_grace_period: 10m
+  #   stop_signal: SIGINT
+  #   entrypoint: "bash -c \"\ 
+  #   echo '************************' && \
+  #   /usr/bin/keosd  --http-server-address 8901 && \
+  #   echo '************************' \
+  #   \""
+  #   command:
+  #     keosd
+  #     # entrypoint: "bash -c \"\ 
+      # echo '************************' && \
+      # cp -r /root/test/eosio-wallet/*  /eosio/wallet && \
+      # chmod -R 777 /eosio/wallet && \
+      # echo 'Copied wallet' && \
+      # echo 'Installed python' && \
+      # /usr/bin/keosd  --wallet-dir /eosio/wallet  --http-server-address 8901 && \
+      # echo 'Started keosd' && \
+      # pyhton3 /root/scripts/unlock_wallets.py && \
+      # echo '************************' \
+      # \""
   # # # Ethereum node
   # ethereum_parity:
   #   build: ethereum
@@ -81,10 +106,10 @@ services:
     environment: # EDIT THESE VALUES!
       # - IP= # Comment to transform into a bootstrap
       - EOSKEY=EOS8jvrLP2sDq6q7QiMGEAHewG3w1pgeAjjJt1Susr9jxfXcwmfVX
-      - BITCOIN_USER=sylvain
-      - BITCOIN_PASS=VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4=
-      - BITCOIN_ENDPOINT=bitcoin
-      - BITCOIN_PORT=18443
+      # - BITCOIN_USER=sylvain
+      # - BITCOIN_PASS=VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4=
+      # - BITCOIN_ENDPOINT=bitcoin
+      # - BITCOIN_PORT=18443
     expose:
       - "4222"
       - "8000"
@@ -93,9 +118,9 @@ services:
       - "8000:8000"
     command:
       server
-    # networks:
-    #   volentix:
-    #     ipv4_address: 172.20.0.3
+    networks:
+      volentix:
+        ipv4_address: 172.20.0.3
 
   # vdexgateway:
   #   build: gateway
@@ -104,42 +129,45 @@ services:
   #     volentix:
   #       ipv4_address: 172.20.0.6
   
-  openethereum:
-    image: openethereum/openethereum:latest
-    command: --chain ropsten --jsonrpc-interface all  
-    ports:
-        - "8180:8180"
-        - "8545:8545"
-        - "8546:8546"
-        - "30303:30303"
-        - "30303:30303/udp"
+  # openethereum:
+  #   image: openethereum/openethereum:latest
+  #   command: --chain ropsten --jsonrpc-interface all  
+  #   ports:
+  #       - "8180:8180"
+  #       - "8545:8545"
+  #       - "8546:8546"
+  #       - "30303:30303"
+  #       - "30303:30303/udp"
 
-  bridge:
-    image: volentix/etheosoracle:0.0.1
-    user: root
-    depends_on:
-        - openethereum
-        - vdexnode
-    volumes:
-        - ./:/root
-    environment:
-      - ETH_TOKEN_CONTRACT=0x71c5a83193399b15417ffda7f9406cd72f311d8a
-      - ETH_POOL_ADDRESS=0x7d5592066fae5cc14a62477eeb5074036610415c
-      - EOS_TOKEN_CONTRACT=vtx222222222
-      - EOS_POOL_ACCOUNT=vtx222222222
-      - EOS_ACCOUNT=v11111111111
-      - CUSTODIAN_ACCOUNT=vltxtknaudit
+  # bridge:
+  #   image: volentix/etheosoracle:0.0.1
+  #   user: root
+  #   depends_on:
+  #       - openethereum
+  #       - vdexnode
       
-    entrypoint: "bash -c \"\ 
-    echo '************************' && \
-    node /root/oracle/oracle.js && \
-    echo '************************' \
-    \""
-
+  #   volumes:
+  #       - ./:/root
+  #   environment:
+  #     - ETH_TOKEN_CONTRACT=0x71c5a83193399b15417ffda7f9406cd72f311d8a
+  #     - ETH_POOL_ADDRESS=0x7d5592066fae5cc14a62477eeb5074036610415c
+  #     - EOS_TOKEN_CONTRACT=vtx222222222
+  #     - EOS_POOL_ACCOUNT=vtx222222222
+  #     - EOS_ACCOUNT=v11111111111
+  #     - CUSTODIAN_ACCOUNT=vltxtknaudit
+    
+    
+  #   entrypoint: "bash -c \"\ 
+  #   echo '@@@@@@@@@@@@@@@@@@@@@@@@@@@' && \
+  #   node /root/oracle/oracle.js && \
+  #   echo '@@@@@@@@@@@@@@@@@@@@@@@@@@@' \
+  #   \""
+    
+ 
 networks:
   volentix:
     driver: bridge
-    # ipam:
-    #   driver: default
-    #   config:
-    #   - subnet: 172.20.0.0/24
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/24

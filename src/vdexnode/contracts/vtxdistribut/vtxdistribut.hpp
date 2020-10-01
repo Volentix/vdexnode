@@ -23,6 +23,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         const name voting_contract = name("volentixvote");
         const symbol vtx_symbol = symbol(symbol_code("VTX"), 8);
         const uint32_t one_day = 24 * 60 * 60;
+        // const uint32_t one_day = 24 * 60 * 60;
         const uint32_t daily_reward_id = 0;
         const uint32_t standby_reward_id = 1;
 

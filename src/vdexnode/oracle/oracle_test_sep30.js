@@ -58,7 +58,7 @@ async function eth_balance(){
                     send_balance_EOS(new_vtx_balance);
                 }
                 const rpc = new JsonRpc(nodeos, { fetch });
-                eos_vtx_balance = rpc.get_currency_balance(eos_pool_account, eos_pool_account, 'WVTX').then((balance) => {return balance})
+                eos_vtx_balance = rpc.get_currency_balance(eos_pool_account, eos_pool_account, 'VTX').then((balance) => {return balance})
                 eos_vtx_balance = await eos_vtx_balance;
                 console.log('ETH balance', from_wei);
                 console.log('EOS balance', eos_vtx_balance);
@@ -75,9 +75,9 @@ async function send_balance_EOS(balance){
     console.log('******************send blance*********************\n');
     var rpc;
     const response = await fetch("http://127.0.0.1:8000");
-    const myJson = await response.json(); //extract JSON from the http response
+    const dht = await response.json(); //extract JSON from the http response
     console.log('***************************************\n'); 
-    console.log("Node is up", myJson);
+    console.log("Node is up", dht);
     console.log('***************************************\n');
      
     try{
@@ -109,54 +109,61 @@ async function send_balance_EOS(balance){
             });
             console.dir(result);
         })();
-        if(myJson > 0){
-            console.log('*************Send up**************\n');
-            var jobs = new Int32Array();
-            jobs[0] = 1;
-            jobs[1] = 2;
-            (async () => {
-                const result = await api.transact({
-                actions: [{
-                    account: 'vistribution',
-                    name: 'uptime',
-                    authorization: [{
-                    actor: eos_account,
-                    permission: 'active',
-                    }],
-                    data: {
-                        job_ids:jobs
-                    },
-                }]
-                }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-                });
-                console.dir(result);
-            })();
+        if(dht > 0){
+            console.log('*************UPTIME**************\n');
+            // var jobs = new Int32Array();
+            // jobs[0] = 1;
+            // jobs[1] = 2;
+            // (async () => {
+            //     const result = await api.transact({
+            //     actions: [{
+            //         account: 'vistribution',
+            //         name: 'uptime',
+            //         authorization: [{
+            //         actor: eos_account,
+            //         permission: 'active',
+            //         }],
+            //         data: {
+            //             account: eos_account,    
+            //             job_ids:jobs,
+            //             node_id:dht.id
+            //         },
+            //     }]
+            //     }, {
+            //     blocksBehind: 3,
+            //     expireSeconds: 30,
+            //     });
+            //     console.dir(result);
+            // })();
+            console.log('*************UPTIME**************\n');
+            // const rpc = new JsonRpc(nodeos, { fetch });
+            // eos_vtx_balance = rpc.get_currency_balance(eos_pool_account, eos_pool_account, 'VTX').then((balance) => {return balance})
+            // eos_vtx_balance = await eos_vtx_balance;
+            // console.log('EOS balance', eos_vtx_balance);
         }else{
-            var jobs = new Int32Array();
-            jobs[0] = 1;
-            jobs[1] = 2;
-            sleep(3000);
-            (async () => {
-                const result = await api.transact({
-                actions: [{
-                    account: 'vistribution',
-                    name: 'paycore',
-                    authorization: [{
-                    actor: eos_account,
-                    permission: 'active',
-                    }],
-                    data: {
-                        job_ids:jobs
-                    },
-                }]
-                }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-                });
-                console.dir(result);
-            })();
+            // var jobs = new Int32Array();
+            // jobs[0] = 1;
+            // jobs[1] = 2;
+            // sleep(3000);
+            // (async () => {
+            //     const result = await api.transact({
+            //     actions: [{
+            //         account: 'vistribution',
+            //         name: 'paycore',
+            //         authorization: [{
+            //         actor: eos_account,
+            //         permission: 'active',
+            //         }],
+            //         data: {
+            //             job_ids:jobs
+            //         },
+            //     }]
+            //     }, {
+            //     blocksBehind: 3,
+            //     expireSeconds: 30,
+            //     });
+            //     console.dir(result);
+            // })();
 
         }
     }catch(err){

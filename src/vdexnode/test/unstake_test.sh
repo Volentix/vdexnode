@@ -1,21 +1,9 @@
-# apt-get update && apt-get install -y  git wget nodejs npm 
-#eosio_2.0.7-1-ubuntu-16.04_amd64
-#wget https://github.com/EOSIO/eos/releases/download/v2.0.7/eosio_2.0.7-1-ubuntu-18.04_amd64.deb \
-#apt install -y ./eosio_2.0.7-1-ubuntu-18.04_amd64.deb \
-#rm ./eosio_2.0.7-1-ubuntu-18.04_amd64.deb \
-#rm -rf /var/lib/apt/lists/*
-# apt install -y software-properties-common 
-# set -o errexit      # make your script exit when a command fails.
-# set -o nounset      # exit when your script tries to use undeclared variables.
-# apt update 
-# apt install -y python3.8 
-# cp -r /home/vltxnode/test/eosio-wallet  /root  
+#change line 17 volentixstak.hpp to #define STAKE_PERIOD 1
 killall nodeos
 killall keosd
 docker-compose down
 docker stop $(docker ps -a -q)
 docker rm -f $(docker ps -a -q)
-# docker rmi -f $(docker images -a -q)
 python3 ../scripts/unlock_wallets.py
 cd ../vDexNode && docker build . -t volentix/vdexnode
 cd ../ && docker-compose up -d&
@@ -52,7 +40,6 @@ cleos create account  eosio volentixsale EOS8UDRf4xaFz7qRXTnSE8W5AeVDHcAHe5iMwoz
 cleos create account  eosio volentixwvtx EOS66pRhPmw3nxMU7Xc3uAF2XVg5VqyNCyXi19EUk8Zo6E7X3NrcU EOS8g7iLbA3sLC5Ltr6zYaa9ULJYppn5csPNCp8x84u73XNpjDSST
 cleos create account  eosio vtxcustodian EOS7PZNPBFKcLdsRc4MqhU59atQ6tbdnxJiUahZ7TFuJk3RGELHkK EOS5qzuqCSuLqGpnXGWaaSzPr7wvcbXRZPkp7EPs95M8AfcNALWkQ
 cleos create account  eosio volentixstak EOS8RxnWpo8rMJRALZed4krEHLKwC9h4fbSBeM5PF3YgW5xxd64kP EOS62LpFVm6KucNfGDxpybQanjN51ga7WUxHthKAuAvHEQDyneBfp
-# cleos create account  eosio vltxstakenow EOS6c9WQnuT2WT6sPhZqRnqEVZSbf1kCKarpCo6eZpfMG5Z2dtm2R EOS8UDRf4xaFz7qRXTnSE8W5AeVDHcAHe5iMwozTJTLEqSuz6ca6z
 echo "|____________________________________________________________________________________________________________________________________________|"
 eosio-cpp -o ../tokens/volentixgsys/volentixgsys.wasm ../tokens/volentixgsys/volentixgsys.cpp --abigen
 eosio-cpp -o ../contracts/volentixstak/volentixstak.wasm ../contracts/volentixstak/volentixstak.cpp --abigen
@@ -81,60 +68,19 @@ echo "|_________________________________________________________________________
 cleos push action volentixstak initglobal '{}' -p volentixstak@active
 cleos push action volentixtsys transfer '{"from":"v11111111111", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v11111111111@active
 cleos push action volentixtsys transfer '{"from":"v22222222222", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v22222222222@active
-# # cleos get abi volentixstak
-cleos get table volentixstak volentixstak globalamount
-# cleos get table volentixstak volentixstak accountstake
-cleos get table volentixstak v11111111111 accountstake
-# echo "|____________________________________________________________________________________________________________________________________________|"
-WORD="$ID"
-MATCH="to_change"
-# echo "|____________________________________________________________________________________________________________________________________________|"
-PAYLOAD='{"producer":"v11111111111","producer_name":"v11111111111","url":"https://ca.linkedin.com/in/sylvain-cormier-0592805?challengeId=AQGxyq1T82aaFgAAAXTZnJr9dxcc_QYJcrXQPqU8IJoUmXhDNY2IWtRDXf5R3CRTPrGPshqGewv4F4Gml-X20cQX-XuVkxaw9Q&submissionId=7d9297ca-7d3d-3916-7ed9-4b6721432015","key":"EOS6p2vZXiRpzz7FKhMtxFpKVKNZfnNb27coTJgSUZE4KzeSDdoCZ","node_id":to_change,"job_ids":[1,2]}'
-PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
-cleos push action volentixvote regproducer $PAYLOAD -p v11111111111@active
-PAYLOAD='{"producer":"v22222222222","producer_name":"v22222222222","url":"https://www.facebook.com/weirdal/","key":"EOS5ygr9wmVQbUmQBCLMebHx5hCkjs1vLEnUzYVp6nDiTFvP2uVfM","node_id":"1a2b3bc4d5e6f7g8h9i1j0k1l1m1n2o1p3q","job_ids":[1]}'
-cleos push action volentixvote regproducer $PAYLOAD -p v22222222222@active
-cleos get table volentixvote volentixvote producers
-cleos push action volentixvote activateprod '{"producer":"v11111111111"}' -p v11111111111@active
-cleos push action vistribution initup '{"account":"v11111111111"}' -p v11111111111@active
-# if [ -z "$PAYLOAD" ]; then killall nodeos; fi
-# if [ -z "$PAYLOAD" ]; then docker-compose down; fi
-# if [ -z "$PAYLOAD" ]; then exit 1; fi
-cleos push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"100","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
-cleos push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"100","reward_amount":"60.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
-cleos get table vistribution vistribution rewards
-docker run -id -p 8545:8545 -p 8546:8546 -p 30303:30303 -p 30303:30303/udp openethereum/openethereum:v3.0.0 --jsonrpc-interface all& 
-cd ../oracle
-rm -rf node_modules
-rm package.json
-npm install --save web3 --unsafe-perm=true --allow-root
-npm install --save eosjs@20.0.0 --unsafe-perm=true --allow-root
-npm install --save node-fetch --unsafe-perm=true --allow-root
-npm install --save dotenv --unsafe-perm=true --allow-root
-npm install --save web3-eth --unsafe-perm=true --allow-root
-# npm install --save find-config --unsafe-perm=true --allow-root
 
-cleos push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active
-cleos push action volentixvote voteproducer  '{"voter_name": "v11111111111", "producers":["v22222222222"]}' -p v11111111111@active 
-cleos push action
-node oracle_test_sep30.js&
-# cleos get table vtxcu
-
-cleos get table vtxcustodian vtxcustodian currentbal
-
-sleep 60
-
-
-# killall node
-cleos get currency balance volentixtsys vltxstakenow
+echo 'volentixstak'
+cleos get currency balance volentixtsys volentixstak
+echo 'v11111111111'
 cleos get currency balance volentixtsys v11111111111
-# exit 0
-# # sudo apt install -y software-properties-common 
-# # sudo apt update 
-# # sudo apt install -y python3.8 
-# # cleos wallet list 
-# killall nodeos
-# killall keosd
-# docker-compose down
-# sleep 10
-# exit 0 
+cleos get table volentixstak v11111111111 accountstake
+echo 'sleeping'
+sleep 30
+echo 'unstake'
+cleos push action volentixstak unstake '{"owner":"v11111111111"}' -p v11111111111@active
+echo 'volentixstak'
+cleos get currency balance volentixtsys volentixstak
+echo 'v11111111111'
+cleos get currency balance volentixtsys v11111111111
+cleos get table volentixstak v11111111111 accountstake
+exit 0

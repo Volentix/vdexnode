@@ -55,7 +55,7 @@ async function eth_balance(){
                 new_vtx_balance = new_vtx_balance.slice(0, -10);
                 console.log('Raw balance sent to custodian', new_vtx_balance);
                 if(new_vtx_balance > 0){
-                    send_balance_EOS(new_vtx_balance);   
+                    send_balance_EOS(new_vtx_balance);
                 }
                 const rpc = new JsonRpc(nodeos, { fetch });
                 eos_vtx_balance = rpc.get_currency_balance(eos_pool_account, eos_pool_account, 'WVTX').then((balance) => {return balance})

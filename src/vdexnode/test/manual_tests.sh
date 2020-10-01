@@ -52,11 +52,11 @@ cleos create account  eosio x33333333333 EOS7at2brDFGf5miZeF8XHjFb78tETcfeCXyB78
 cleos create account  eosio volentixvote EOS8hhR7YSY7EkYoeiWjj4ea3jsyFWXdDdCgYsXJEXfHRf4ftF5a9 EOS8Qw3NxLPmNKtbskEyAPHvJLFv7qJ21EqVcvRebrA36z6WWjHir
 cleos create account  eosio vistribution EOS8chNCZjo58Xa77uectUrND6AKNNsGFsY47xFLUXNryZqQ4Ect5 EOS5LSp5V1cbHgWmZoUHyKibG8xwmpyKZinyfpjVpQujHw3ZWrB9q
 cleos create account  eosio volentixtsys EOS78pFtmUPnyshkTuDgsDC7UpVWfmDuJr3WMrSKtbEk9ajHknPGL EOS7Rk7gd2bNRyU3yFUPYX3eSsmgCqSKo4FXcWpgotDjKHqJ84ERD
-# cleos create account  eosio vltxstakenow EOS6c9WQnuT2WT6sPhZqRnqEVZSbf1kCKarpCo6eZpfMG5Z2dtm2R EOS8UDRf4xaFz7qRXTnSE8W5AeVDHcAHe5iMwozTJTLEqSuz6ca6z
 cleos create account  eosio volentixsale EOS8UDRf4xaFz7qRXTnSE8W5AeVDHcAHe5iMwozTJTLEqSuz6ca6z EOS7WB1Aiw45csnC5HdpzUSLtLsVmnugpbeBUM6E9Yj2LdXB95orz
 cleos create account  eosio volentixwvtx EOS66pRhPmw3nxMU7Xc3uAF2XVg5VqyNCyXi19EUk8Zo6E7X3NrcU EOS8g7iLbA3sLC5Ltr6zYaa9ULJYppn5csPNCp8x84u73XNpjDSST
 cleos create account  eosio vtxcustodian EOS7PZNPBFKcLdsRc4MqhU59atQ6tbdnxJiUahZ7TFuJk3RGELHkK EOS5qzuqCSuLqGpnXGWaaSzPr7wvcbXRZPkp7EPs95M8AfcNALWkQ
 cleos create account  eosio volentixstak EOS8RxnWpo8rMJRALZed4krEHLKwC9h4fbSBeM5PF3YgW5xxd64kP EOS62LpFVm6KucNfGDxpybQanjN51ga7WUxHthKAuAvHEQDyneBfp
+# cleos create account  eosio vltxstakenow EOS6c9WQnuT2WT6sPhZqRnqEVZSbf1kCKarpCo6eZpfMG5Z2dtm2R EOS8UDRf4xaFz7qRXTnSE8W5AeVDHcAHe5iMwozTJTLEqSuz6ca6z
 echo "|____________________________________________________________________________________________________________________________________________|"
 eosio-cpp -o ../tokens/volentixgsys/volentixgsys.wasm ../tokens/volentixgsys/volentixgsys.cpp --abigen
 eosio-cpp -o ../contracts/volentixstak/volentixstak.wasm ../contracts/volentixstak/volentixstak.cpp --abigen
@@ -78,11 +78,13 @@ cleos set account permission vtxcustodian active volentixtsys --add-code
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos push action volentixtsys create '{"issuer": "volentixtsys", "maximum_supply": "2100000000.00000000 VTX"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "v11111111111", "quantity": "100000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
-cleos get currency stats volentixtsys VTX
+cleos push action volentixtsys issue '{"to": "v22222222222", "quantity": "100000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "volentixsale", "quantity": " 128153044.02514328 VTX", "memo": "ETH ethereum"}' -p volentixtsys@active
+cleos get currency stats volentixtsys VTX
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos push action volentixstak initglobal '{}' -p volentixstak@active
-cleos push action volentixtsys transfer '{"from":"v11111111111", "to":"volentixstak", "quantity":"11000.00000000 VTX", "memo":"1"}' -p v11111111111@active
+cleos push action volentixtsys transfer '{"from":"v11111111111", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v11111111111@active
+cleos push action volentixtsys transfer '{"from":"v22222222222", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v22222222222@active
 # # cleos get abi volentixstak
 cleos get table volentixstak volentixstak globalamount
 # cleos get table volentixstak volentixstak accountstake
@@ -96,15 +98,16 @@ cleos get table volentixstak v11111111111 accountstake
 WORD="$ID"
 MATCH="to_change"
 # QUOTE="'"
+
 # echo "|____________________________________________________________________________________________________________________________________________|"
 PAYLOAD='{"producer":"v11111111111","producer_name":"v11111111111","url":"https://ca.linkedin.com/in/sylvain-cormier-0592805?challengeId=AQGxyq1T82aaFgAAAXTZnJr9dxcc_QYJcrXQPqU8IJoUmXhDNY2IWtRDXf5R3CRTPrGPshqGewv4F4Gml-X20cQX-XuVkxaw9Q&submissionId=7d9297ca-7d3d-3916-7ed9-4b6721432015","key":"EOS6p2vZXiRpzz7FKhMtxFpKVKNZfnNb27coTJgSUZE4KzeSDdoCZ","node_id":to_change,"job_ids":[1,2]}'
-# echo "|____________________________________________________________________________________________________________________________________________|"
 PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
 cleos push action volentixvote regproducer $PAYLOAD -p v11111111111@active
+PAYLOAD='{"producer":"v22222222222","producer_name":"v22222222222","url":"https://www.facebook.com/weirdal/","key":"EOS5ygr9wmVQbUmQBCLMebHx5hCkjs1vLEnUzYVp6nDiTFvP2uVfM","node_id":"1a2b3bc4d5e6f7g8h9i1j0k1l1m1n2o1p3q","job_ids":[1]}'
+cleos push action volentixvote regproducer $PAYLOAD -p v22222222222@active
 cleos get table volentixvote volentixvote producers
 cleos push action volentixvote activateprod '{"producer":"v11111111111"}' -p v11111111111@active
 cleos push action vistribution initup '{"account":"v11111111111"}' -p v11111111111@active
-# PAYLOAD='{"reward_id":"1","reward_period":"100","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}'
 # if [ -z "$PAYLOAD" ]; then killall nodeos; fi
 # if [ -z "$PAYLOAD" ]; then docker-compose down; fi
 # if [ -z "$PAYLOAD" ]; then exit 1; fi
@@ -132,6 +135,8 @@ npm install --save web3-eth --unsafe-perm=true --allow-root
 # yarn find-config
 
 cleos push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active
+cleos push action volentixvote voteproducer  '{"voter_name": "v11111111111", "producers":["v22222222222"]}' -p v11111111111@active 
+cleos push action
 node oracle_test_sep30.js&
 # cleos get table vtxcustodian vtxcustodian currentbal
 

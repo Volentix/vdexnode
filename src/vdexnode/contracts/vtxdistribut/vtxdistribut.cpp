@@ -1,10 +1,6 @@
 #include "vtxdistribut.hpp"
 #include "../vdexdposvote/vdexdposvote.hpp"
 
-
-void vtxdistribut::paycore() {}
-void vtxdistribut::paycampaign(string campaign) {}
-
 void vtxdistribut::setrewardrule(const reward_info& rule)
 {
   require_auth( treasury );
@@ -95,30 +91,25 @@ void vtxdistribut::getreward(name node) {
   }
 }
 
-void vtxdistribut::uptime(name account, const std::vector<uint32_t> &job_ids, string node_id) {
-  check(!node_id.empty(), "Node needs to be up for rewards to work");
+void vtxdistribut::uptime(name account, const std::vector<uint32_t> &job_ids, string node_id) { 
+ 
+  //check(!node_id.empty() || node_id == null, "Node needs to be up for rewards to work");
   dht_index dht_table(get_self(), get_self().value);
-  auto itr = dht_table.begin();
   uint64_t size = 0;
-  while (itr != dht_table.end()) {
-    if(itr->id == node_id){
-      continue;
-    }else{
-      dht_table.emplace(get_self(), [&] ( auto& row ) {
-      row.id = node_id;
-      row.timestamp = current_time_point().sec_since_epoch();
+  calcrewards(1);
+  calcrewards(2);
+  auto itr = dht_table.find(account.value);
+ 
+  if(itr == dht_table.end()){
+      
+       dht_table.emplace(get_self(), [&] ( auto& row ) {
+       row.account = account;
+       row.id = node_id;
+       row.timestamp = current_time_point().sec_since_epoch();
       });
-    }
-    size++;  
-  } 
-  if(size > 100){
-      dht_table.erase(dht_table.begin());   
-  }
-  while (itr != dht_table.end())
-  for (auto & id : job_ids) {
-    calcrewards(id);
   }
   getreward(account);
+  
 }
 
 

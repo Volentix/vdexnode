@@ -83,78 +83,80 @@ async function send_balance_EOS(balance){
     try{
         console.count('******************send blance*********************');
         const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
-        rpc = new JsonRpc('https://jungle2.cryptolions.io:443', { fetch }); 
+        rpc = new JsonRpc('https://eosio_nodeos:8888', { fetch }); 
         const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
         const timestamp = Date.now(); // Unix timestamp in milliseconds
-        // (async () => {
-        //     const result = await api.transact({
-        //     actions: [{
-        //         account: custodian_account,
-        //         name: 'updtblnc',
-        //         authorization: [{
-        //         actor: eos_account,
-        //         permission: 'active',
-        //         }],
-        //         data: {
-        //         account: eos_account,    
-        //         balance: balance,
-        //         timestamp: timestamp,
-        //         },
-        //     }]
-        //     }, {
-        //     blocksBehind: 3,
-        //     expireSeconds: 30,
-        //     });
-        //     console.dir(result);
-        // })();
+        info = await rpc.get_info();
+        console.log(info.chain_id);
+        (async () => {
+            const result = await api.transact({
+            actions: [{
+                account: custodian_account,
+                name: 'updtblnc',
+                authorization: [{
+                actor: eos_account,
+                permission: 'active',
+                }],
+                data: {
+                account: eos_account,    
+                balance: balance,
+                timestamp: timestamp,
+                },
+            }]
+            }, {
+            blocksBehind: 3,
+            expireSeconds: 30,
+            });
+            console.dir(result);
+        })();
         if(myJson > 0){
-        //     console.log('*************Send up**************\n');
-        //     var jobs = new Int32Array();
-        //     jobs[0] = 1;
-        //     jobs[1] = 2;
-        //     (async () => {
-        //         const result = await api.transact({
-        //         actions: [{
-        //             account: 'distributvtx',
-        //             name: 'uptime',
-        //             authorization: [{
-        //             actor: eos_account,
-        //             permission: 'active',
-        //             }],
-        //             data: {
-        //                 job_ids:jobs
-        //             },
-        //         }]
-        //         }, {
-        //         blocksBehind: 3,
-        //         expireSeconds: 30,
-        //         });
-        //         console.dir(result);
-        //     })();
+            console.log('*************Send up**************\n');
+            var jobs = new Int32Array();
+            jobs[0] = 1;
+            jobs[1] = 2;
+            (async () => {
+                const result = await api.transact({
+                actions: [{
+                    account: 'distributvtx',
+                    name: 'uptime',
+                    authorization: [{
+                    actor: eos_account,
+                    permission: 'active',
+                    }],
+                    data: {
+                        job_ids:jobs
+                    },
+                }]
+                }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+                });
+                console.dir(result);
+            })();
         }else{
-            // var jobs = new Int32Array();
-            // jobs[0] = 1;
-            // jobs[1] = 2;
-            // sleep(3000);
-            // (async () => {
-            //     const result = await api.transact({
-            //     actions: [{
-            //         account: 'distributvtx',
-            //         name: 'paycore',
-            //         authorization: [{
-            //         actor: eos_account,
-            //         permission: 'active',
-            //         }],
-            //         data: {
-            //             job_ids:jobs
-            //         },
-            //     }]
-            //     }, {
-            //     blocksBehind: 3,
-            //     expireSeconds: 30,
-            //     });
-            //     console.dir(result);
-            // })();
+            var jobs = new Int32Array();
+            jobs[0] = 1;
+            jobs[1] = 2;
+            sleep(3000);
+            (async () => {
+                const result = await api.transact({
+                actions: [{
+                    account: 'distributvtx',
+                    name: 'paycore',
+                    authorization: [{
+                    actor: eos_account,
+                    permission: 'active',
+                    }],
+                    data: {
+                        job_ids:jobs
+                    },
+                }]
+                }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+                });
+                console.dir(result);
+            })();
 
         }
     }catch(err){

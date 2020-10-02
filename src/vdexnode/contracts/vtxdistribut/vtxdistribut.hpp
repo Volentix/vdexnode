@@ -22,7 +22,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         const name vtxsys_contract = name("volentixtsys");
         const name voting_contract = name("volentixvote");
         const symbol vtx_symbol = symbol(symbol_code("VTX"), 8);
-        const uint32_t one_day = 24 * 60 * 60;
+        // const uint32_t one_day = 24 * 60 * 60;
         const uint32_t daily_reward_id = 0;
         const uint32_t standby_reward_id = 1;
 
@@ -31,13 +31,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
             rewardhistory(receiver, receiver.value), inituptime(receiver, receiver.value), uptimes(receiver, receiver.value),
             dht(receiver, receiver.value) {}
          	
-        
-        [[eosio::action]]
-        void paycore();
-
-        [[eosio::action]]
-        void paycampaign(string campaign);       
-        
+    
         [[eosio::action]]
         void uptime(name account, const std::vector<uint32_t> &job_ids, string node_id);
         
@@ -81,10 +75,11 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
     private:
         
         struct [[eosio::table]] dht_info
-        {   uint64_t primary;
+        {   uint64_t key;
+            name account;
             string id;
             uint32_t timestamp;
-            uint64_t primary_key() const { return primary;}
+            uint64_t primary_key() const { return key;}
         };
         typedef eosio::multi_index<"dht"_n, dht_info> dht_index;
         dht_index dht;

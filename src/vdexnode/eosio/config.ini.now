@@ -1,0 +1,31 @@
+# enabled plugins
+plugin = eosio::chain_api_plugin
+plugin = eosio::http_plugin
+plugin = eosio::producer_plugin
+plugin = eosio::producer_api_plugin
+plugin = eosio::wallet_plugin
+plugin = eosio::wallet_api_plugin
+# chain plugin
+chain-state-db-size-mb = 65536
+reversible-blocks-db-size-mb = 65536
+contracts-console = true
+
+# producer_plugin
+
+producer-name = eosio
+enable-stale-production = true
+max-transaction-time = 150000
+subjective-cpu-leeway-us = 150000
+
+
+# http_plugin
+http-max-response-time-ms = 1000
+access-control-allow-origin = *
+http-validate-host = false
+http-server-address = 0.0.0.0:8888
+verbose-http-errors = true
+
+# history_plugin
+filter-on = *
+
+

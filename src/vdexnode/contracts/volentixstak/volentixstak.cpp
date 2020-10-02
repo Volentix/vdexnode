@@ -10,10 +10,11 @@ void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
    if (from == get_self() || to != get_self() || from == TOKEN_ACC) {
         return;
   }
+   
 
    // TODO: handle wrong memo
    uint16_t periods_num = stoi(memo);
-   check_blacklist(from);
+   // check_blacklist(from);
    _stake(from, quantity, periods_num);
 }
 
@@ -41,7 +42,6 @@ void volentixstak::unstake_unlocked(name account, uint64_t timestamp)
    asset to_transfer = asset(0, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
    account_stake stake_table(get_self(), account.value);
    auto itr = stake_table.begin();
-
    while (itr != stake_table.end()) {
       // if stake unlock timestamp is bigger just skip 
       if (timestamp < itr->unlock_timestamp) {

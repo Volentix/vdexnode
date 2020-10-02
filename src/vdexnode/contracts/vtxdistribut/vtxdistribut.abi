@@ -46,8 +46,12 @@
             "base": "",
             "fields": [
                 {
-                    "name": "primary",
+                    "name": "key",
                     "type": "uint64"
+                },
+                {
+                    "name": "account",
+                    "type": "name"
                 },
                 {
                     "name": "id",
@@ -100,21 +104,6 @@
                     "type": "string"
                 }
             ]
-        },
-        {
-            "name": "paycampaign",
-            "base": "",
-            "fields": [
-                {
-                    "name": "campaign",
-                    "type": "string"
-                }
-            ]
-        },
-        {
-            "name": "paycore",
-            "base": "",
-            "fields": []
         },
         {
             "name": "reward_history",
@@ -257,16 +246,6 @@
         {
             "name": "initup",
             "type": "initup",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "paycampaign",
-            "type": "paycampaign",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "paycore",
-            "type": "paycore",
             "ricardian_contract": ""
         },
         {

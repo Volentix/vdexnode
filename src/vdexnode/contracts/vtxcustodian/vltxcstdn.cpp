@@ -24,13 +24,7 @@ void vltxcstdn::clearblnc()
    
 }//add contract name and precision here instead of hardcode?
 
-#define TWO63 0x8000000000000000u 
-#define TWO64f (TWO63*2.0)
 
-double map(uint64_t u) {
-  double y = (double) u; 
-  return y/(0x8000000000000000u * 2.0);
-}
 
 
 void vltxcstdn::updtblnc(name account, uint64_t balance, uint64_t timestamp)

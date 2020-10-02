@@ -36,50 +36,22 @@
 
 \section{Preparation}
 
-\textbf{Main accounts on Jungle testnet 2}  * {\color{green} DONE}
-	
-  \begin{enumerate}
-  \item  vltxstakenow\\
-\textit{  The staking contract}
-  \item volentixtsys \\
-  \textit{  The main token contract, emulation of volentixgsys}
-  \item vistribution\\
-  \textit{Distribution contract}
-  \item volentixvote \\
-  \textit{  Voting contract}
-    \item volentixsale \\
-		Pool
- 
-\end{enumerate}
+\textbf{Local network}  * {\color{green} ONGOING}
+
+
  \textbf{Other preparatory actions}
   		\begin{enumerate}
-  			\item compile Volentixgsys.cpp * {\color{green} DONE}\\ 
-  			\url{https://github.com/Volentix/volentix_contracts/blob/master/volentixgsys/src/volentixgsys.cpp} 
-  		  \item Deploy main token on \textit{volentixtsys} * {\color{green} DONE}
-  		  \item Create 2.1 billion TVTX * {\color{green} DONE}
-  		  \item Create volentixsale testnet account and issue balance of EOS volentixsale (128153044.02514328 TVTX) * {\color{green} DONE}
-  		   \item Create registering node account on eosio testnet and issue  v11111111111 1000000 TVTX 
-  		  \item Deploy vdexdposvote contract to volentixvote + ressources * {\color{green} DONE}
-  		  \item Deploy vtxdistribut contract to vistribution + ressources * {\color{green} DONE}
-  		  \item Deploy volentixstak  contract to vltxstakenow + ressources * {\color{green} DONE}
+
+  		    \item Wallets reside on normal host ~/eosio-wallet path
+		   \item Bash scripts run as root
+		   	\item Open another terminal for nodeos output(tty 2)
+  			\url{https://github.com/Volentix/vdexnode/tree/master/src/vdexnode/test} 
  		  \item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten  * {\color{green} DONE}
-		  \item Deploy custodian on v22222222222 + ressources  * {\color{green} DONE}
-		  \item set v22222222222 permissions for volentixtsys * {\color{green} DONE}
-		  \item set v22222222222 permissions for volentixtsys * {\color{green} DONE}
-		  \item Put condition for 10000 VTX staked in vltxstakenow * {\color{green} DONE}
-		  \item Put condition for 10000 VTX staked in vltxcustodian  * {\color{green} DONE}
-		   \item Integrate oracle functionality to volentixnode
-		   \item Reward per container selection.* {\color{yellow} DONE}
-		   \item Uptime validation {\color{yellow} DONE}
-		  \item Initialize v22222222222 \textit{currentbal}
-		  \item Clear v22222222222 \textit{balances} buffer
-		  \item Init vltxstakenow * {\color{green} DONE}
-		  \item Edit docker compose\\
-		  Initial default values	 
-		  \item prevent issuing on the Ethereum side if there are less than 8 nodes
+ 		  \item Create reward pool {\color{red} TODO}
+		  \item prevent issuing on the Ethereum side if there are less than 8 nodes {\color{red} TODO}
 		   
 	 \end{enumerate}
-   \textbf{Docker network}	  * {\color{green} DONE}
+   \textbf{Docker network}	  * {\color{yellow} ONGOING}
   \begin{enumerate}
   	\item Eos wallet
   	\item Openethereum
@@ -87,37 +59,52 @@
   	\item Bitcoin node
   	\item Vdex node
   \end{enumerate}
+   \textbf{Test network}	  * {\color{yellow} ONGOING}\\
+   Running nodeos binary and feeding the output to second terminal enables "caveman"
+   debugging on the chain. 
+   
 
 \section{Tests}
 					\begin{enumerate}
 						\item \textbf{Staking test}
 						\begin{enumerate}
-							\item v22222222222 stakes 10000 TVTX
+							\item v11111111111 stakes 10000 TVTX  {\color{green} DONE}
 						\end{enumerate}
-						\item \textbf{Persistency test}
+						\item \textbf{Persistency test}  
 							\begin{enumerate}
-								\item Uptime\textit{}
-								\item Less than 8 nodes 
-								\item Register and unregister nodes
+								\item Uptime\textit{} {\color{blue} REGRESSION}
+								\item Less than 8 nodes {\color{blue} REGRESSION}
+								\item Register and unregister nodes  {\color{green} DONE}
 							\end{enumerate}
 						\item \textbf{Authority tests}
 							\begin{enumerate}
-							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS.
-							\item Register and unregister nodes
-							\item Reward selection and funds transfer	
+							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS. {\color{green} DONE}
+							\item Register and unregister nodes  {\color{green} DONE}
+							\item Reward test	{\color{yellow} ONGOING}
+								\begin{enumerate}
+										\item Test job selection {\color{green} DONE}	
+										\item Test reward calculation {\color{yellow} ONGOING }	
+										\item Test transfer {\color{red} TODO}
+
+								\end{enumerate}
+								\item Oracle test	* {\color{blue} REGRESSION }
+							\begin{enumerate}
+								\item Decouple eth-vtx oracle and uptime {\color{blue} REGRESSION }
+								\item Load tests  {\color{red} TODO}
+							\end{enumerate}
 						\end{enumerate}
-											\item \textbf{Accuracy tests}
-													\begin{enumerate}
-															\item reward selection and funds transfer	
-													\end{enumerate}
 				\end{enumerate}
-\section{Postulate}
-\begin{enumerate}
-	\item A default active private key can be used to send to oracle initially.
+\section{Postulates}
+\begin{enumerate} 
 	\item Reverse proxy \\
 	A Nginx HTTPS reverse proxy is an intermediary proxy service which takes a client request, passes it on to one or more servers, and subsequently delivers the server's response back to the client. 
 	In our case for key management keosd has to be launched as daemon behind reverse proxy(nginx)
 	nginx will be used to enable password based authentication.
+\end{enumerate}
+
+\section{Conclusions}
+\begin{enumerate}
+	\item Oracle sending uptime does not observe micro service architecture 	{\color{red} TODO} 
 \end{enumerate}
 
 \end{document}

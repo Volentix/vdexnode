@@ -9,19 +9,34 @@
 # set -o nounset      # exit when your script tries to use undeclared variables.
 # apt update 
 # apt install -y python3.8 
-# cp -r /home/vltxnode/test/eosio-wallet  /root  
+
 killall nodeos
 killall keosd
 docker-compose down
 docker stop $(docker ps -a -q)
+sleep 5
 docker rm -f $(docker ps -a -q)
 # docker rmi -f $(docker images -a -q)
+# cp -r ~/eosio-wallet/  /root
 python3 ../scripts/unlock_wallets.py
-cd ../vDexNode && docker build . -t volentix/vdexnode
-cd ../ && docker-compose up -d&
+cleos wallet list
+# cd ../vDexNode && docker build . -t volentix/vdexnode
+docker network create --driver=bridge --subnet=172.20.0.0/24 vdexnode_volentix
+cd ../ && docker-compose up -d > /dev/pts/0& 
+sleep 2
+# networks:
+#   volentix:
+#     driver: bridge
+#     ipam:
+#       driver: default
+#       config:
+#       - subnet: 172.20.0.0/24
+
+
+sudo docker network inspect bridge
 
 exec nodeos -e -p eosio --disable-replay-opts --delete-all-blocks --contracts-console --chain-state-history  --verbose-http-errors 2> /dev/pts/2& 
-sleep 4
+
 ID=$(curl -s http://127.0.0.1:8000/ | jq '.id')
 if [ -z "$ID" ]; then killall nodeos; fi
 if [ -z "$ID" ]; then docker-compose down; fi
@@ -33,10 +48,6 @@ sleep 3
 EOS_KEY=$(curl -s http://127.0.0.1:8000/ | jq '.key')
 sleep 3
 NODE_KEY=$(curl -s http://127.0.0.1:8000/ | jq '.public_key')
-echo "|____________________________________________________________________________________________________________________________________________|"
-
-cleos wallet list 
-echo " _____________________________________________________________________________________________________________________________________________"
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos create account  eosio v11111111111 EOS8EhYUFqg6aBBJBGQ6YHDaGgpwKvmN6f2xugvHMFAZJpUAkAdap EOS6p2vZXiRpzz7FKhMtxFpKVKNZfnNb27coTJgSUZE4KzeSDdoCZ
 cleos create account  eosio v22222222222 EOS5CJHrUAfrgHqiqcKTQmTwo88B5i8GCw9mzrGke9Tg2aPWjUND4 EOS5ygr9wmVQbUmQBCLMebHx5hCkjs1vLEnUzYVp6nDiTFvP2uVfM
@@ -53,36 +64,51 @@ cleos create account  eosio volentixsale EOS8UDRf4xaFz7qRXTnSE8W5AeVDHcAHe5iMwoz
 cleos create account  eosio volentixwvtx EOS66pRhPmw3nxMU7Xc3uAF2XVg5VqyNCyXi19EUk8Zo6E7X3NrcU EOS8g7iLbA3sLC5Ltr6zYaa9ULJYppn5csPNCp8x84u73XNpjDSST
 cleos create account  eosio vtxcustodian EOS7PZNPBFKcLdsRc4MqhU59atQ6tbdnxJiUahZ7TFuJk3RGELHkK EOS5qzuqCSuLqGpnXGWaaSzPr7wvcbXRZPkp7EPs95M8AfcNALWkQ
 cleos create account  eosio volentixstak EOS8RxnWpo8rMJRALZed4krEHLKwC9h4fbSBeM5PF3YgW5xxd64kP EOS62LpFVm6KucNfGDxpybQanjN51ga7WUxHthKAuAvHEQDyneBfp
+cleos create account  eosio vtxtestpool1 EOS7njdfzQnpGaYhBbSKnJeBuL2B9hzkYzg1bwCZYM5pSuQjwsh1W EOS8GumsZzQMuXyovNeGda4dUfqUFmjKRrmFycWLKFgLqN8xpapZv
 echo "|____________________________________________________________________________________________________________________________________________|"
 eosio-cpp -o ../tokens/volentixgsys/volentixgsys.wasm ../tokens/volentixgsys/volentixgsys.cpp --abigen
 eosio-cpp -o ../contracts/volentixstak/volentixstak.wasm ../contracts/volentixstak/volentixstak.cpp --abigen
 eosio-cpp -I ../contracts/volentixstak/volentixstak.hpp -o ../contracts/vtxcustodian/vltxcstdn.wasm ../contracts/vtxcustodian/vltxcstdn.cpp --abigen
-eosio-cpp -I ../contracts/volentixstak/volentixstak.hpp -o ../contracts/vdexdposvote/vdexdposvote.wasm ../contracts/vdexdposvote/vdexdposvote.cpp --abigen
+eosio-cpp -I ../contracts/volentixstak/volentixstak.hpp -o ../contracts/volentixvote/volentixvote.wasm ../contracts/volentixvote/volentixvote.cpp --abigen
+eosio-cpp -I ../contracts/volentixstak/volentixstak.hpp -o ../contracts/volentixpool/volentixpool.wasm ../contracts/volentixpool/volentixpool.cpp --abigen
 echo "build distribution contract"
 eosio-cpp -I ../contracts/volentixstak/volentixstak.hpp -o ../contracts/vtxdistribut/vtxdistribut.wasm ../contracts/vtxdistribut/vtxdistribut.cpp --abigen
+
+# while [ condition ]
+# do
+#    echo "run nodeos for now "
+# done
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos set contract volentixtsys ../tokens/volentixgsys/ volentixgsys.wasm volentixgsys.abi -p volentixtsys@active
 cleos set contract volentixstak ../contracts/volentixstak/ volentixstak.wasm volentixstak.abi -p volentixstak@active
 cleos set contract vtxcustodian ../contracts/vtxcustodian/ vltxcstdn.wasm vltxcstdn.abi -p vtxcustodian@active
 cleos set contract vistribution ../contracts/vtxdistribut/ vtxdistribut.wasm vtxdistribut.abi -p vistribution@active
-cleos set contract volentixvote ../contracts/vdexdposvote/ vdexdposvote.wasm vdexdposvote.abi -p volentixvote@active
+cleos set contract volentixvote ../contracts/volentixvote/ volentixvote.wasm volentixvote.abi -p volentixvote@active
+
+cleos set contract vtxtestpool1 ../contracts/volentixpool/ volentixpool.wasm volentixpool.abi -p vtxtestpool1@active
+
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos set account permission volentixstak active volentixstak --add-code
-cleos set account permission volentixtsys active volentixtsys --add-code
 cleos set account permission volentixtsys active volentixtsys --add-code
 cleos set account permission v11111111111 active volentixtsys --add-code
 cleos set account permission volentixvote active volentixvote --add-code
 cleos set account permission vtxcustodian active volentixtsys --add-code
+# cleos set account permission vtxtestpool1 active volentixtsys --add-code -p vtxtestpool1@active
+cleos get account volentixtsys
+
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos push action volentixtsys create '{"issuer": "volentixtsys", "maximum_supply": "2100000000.00000000 VTX"}' -p volentixtsys@active
-cleos push action volentixtsys issue '{"to": "v11111111111", "quantity": "100000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
-cleos push action volentixtsys issue '{"to": "v22222222222", "quantity": "100000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
+cleos push action volentixtsys issue '{"to": "v11111111111", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
+cleos push action volentixtsys issue '{"to": "v22222222222", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
+cleos push action volentixtsys issue '{"to": "v33333333333", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "volentixsale", "quantity": " 128153044.02514328 VTX", "memo": "ETH ethereum"}' -p volentixtsys@active
+cleos push action volentixtsys issue '{"to": "vtxtestpool1", "quantity": "10000.00000000 VTX", "memo": "rewards pool"}' -p volentixtsys@active
 cleos get currency stats volentixtsys VTX
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos push action volentixstak initglobal '{}' -p volentixstak@active
 cleos push action volentixtsys transfer '{"from":"v11111111111", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v11111111111@active
 cleos push action volentixtsys transfer '{"from":"v22222222222", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v22222222222@active
+cleos push action volentixtsys transfer '{"from":"v33333333333", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v33333333333@active
 WORD="$ID"
 MATCH="to_change"
 # echo "|____________________________________________________________________________________________________________________________________________|"
@@ -91,17 +117,26 @@ PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
 cleos push action volentixvote regproducer $PAYLOAD -p v11111111111@active
 PAYLOAD='{"producer":"v22222222222","producer_name":"v22222222222","url":"https://www.facebook.com/weirdal/","key":"EOS5ygr9wmVQbUmQBCLMebHx5hCkjs1vLEnUzYVp6nDiTFvP2uVfM","node_id":"1a2b3bc4d5e6f7g8h9i1j0k1l1m1n2o1p3q","job_ids":[1]}'
 cleos push action volentixvote regproducer $PAYLOAD -p v22222222222@active
-
+PAYLOAD='{"producer":"v33333333333","producer_name":"v33333333333","url":"https://www.investopedia.com/terms/s/satoshi-nakamoto.asp","key":"EOS5EYGEkiKUXRQ21eCcKgjv1uhtyVsx88njnR6urPYHGEZbkKmk1","node_id":"1a2b3bc4d5e6f7g8h9i1j0k1l1m1n2o1p3q","job_ids":[1,2]}'
+PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
+cleos push action volentixvote regproducer $PAYLOAD -p v33333333333@active
 cleos push action volentixvote activateprod '{"producer":"v11111111111"}' -p v11111111111@active
+cleos push action volentixvote activateprod '{"producer":"v222222222222"}'-p v22222222222@active
+cleos push action volentixvote activateprod '{"producer":"v333333333333"}'-p v33333333333@active
+
 cleos push action vistribution initup '{"account":"v11111111111"}' -p v11111111111@active
-cleos push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"1","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
-cleos push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"1","reward_amount":"60.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
+cleos push action vistribution initup '{"account":"v22222222222"}' -p v22222222222@active
+cleos push action vistribution initup '{"account":"v33333333333"}' -p v33333333333@active
+cleos push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"1","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"4","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
+cleos push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"1","reward_amount":"60.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"4","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
 # cleos get table vistribution vistribution rewards
+
 cleos get table volentixvote volentixvote producers
 cleos push action volentixvote voteproducer  '{"voter_name": "v11111111111", "producers":["v22222222222"]}' -p v11111111111@active 
 cleos push action volentixvote voteproducer  '{"voter_name": "v22222222222", "producers":["v11111111111"]}' -p v22222222222@active 
-sleep 10
-docker run -id -p 8545:8545 -p 8546:8546 -p 30303:30303 -p 30303:30303/udp openethereum/openethereum:v3.0.0 --jsonrpc-interface all 2> /dev/pts/0& 
+cleos push action volentixvote voteproducer  '{"voter_name": "v33333333333", "producers":["v11111111111"]}' -p v33333333333@active 
+sleep 3
+# docker run -id -p 8545:8545 -p 8546:8546 -p 30303:30303 -p 30303:30303/udp openethereum/openethereum:v3.0.0 --jsonrpc-interface all -d 2> /dev/pts/0& 
 # cd ../oracle
 # rm -rf node_modules
 # rm package.json
@@ -112,40 +147,45 @@ docker run -id -p 8545:8545 -p 8546:8546 -p 30303:30303 -p 30303:30303/udp opene
 # npm install --save web3-eth --unsafe-perm=true --allow-root
 # npm install --save find-config --unsafe-perm=true --allow-root
 # node oracle_test_sep30.js 2> /dev/pts/0&
-cleos push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active
+# cleos push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active
 # cleos push action volentixvote voteproducer  '{"voter_name": "v11111111111", "producers":["v22222222222"]}' -p v11111111111@active 
-
+# cleos push action vistribution initup '{"account":"v11111111111"}' -p v11111111111@active
 MATCH="to_change"
 # node oracle_test_sep30.js 2> /dev/pts/0& 
-echo "sleeping"
+echo "let period go by"
 sleep 10
 echo "Uptime_____________________________________"
-PAYLOAD='{"account":"v11111111111","job_ids":[1,2],"node_id":to_change}'
+PAYLOAD='{"account":"v11111111111","job_ids":[1,2],"node_id":to_change,"memo":"1"}'
 PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
-# echo $PAYLOAD
+echo "$PAYLOAD"
 cleos push action vistribution uptime $PAYLOAD -p v11111111111@active
-# sleep 20
+sleep 3
 # PAYLOAD='{"account":"v11111111111","job_ids":[1],"node_id":"11111111111"}'
-# cleos push action vistribution uptime $PAYLOAD -p v11111111111@active
-# cleos push action vistribution initup '{"account":"v11111111111"}' -p v11111111111@active
+PAYLOAD='{"account":"v22222222222","job_ids":[1],"node_id":to_change,"memo":"2"}'
+PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
+echo "$PAYLOAD"
+cleos push action vistribution uptime $PAYLOAD -p v22222222222@active
 echo "v11111111111 balance_____________________"
 cleos get currency balance volentixtsys v11111111111
 echo "v22222222222 balance_____________________"
 cleos get currency balance volentixtsys v22222222222
-echo "uptimes__________________________________"
-cleos get table vistribution vistribution uptimes
-echo "reward history___________________________"
-cleos get table vistribution vistribution rewardhistor
-echo "producers________________________________"
-cleos get table volentixvote volentixvote producers
-echo "voters___________________________________"
-cleos get table volentixvote volentixvote voters
-echo "dht___________________________________"
-cleos get table vistribution vistribution dht
+
+# echo "v33333333333 balance_____________________"
+# cleos get currency balance volentixtsys v33333333333
+# echo "uptimes__________________________________"
+# cleos get table vistribution vistribution uptimes
+# echo "reward history___________________________"
+# cleos get table vistribution vistribution rewardhistor
+# echo "producers________________________________"
+# cleos get table volentixvote volentixvote producers
+# echo "voters___________________________________"
+# cleos get table volentixvote volentixvote voters
+# echo "dht___________________________________"
+# cleos get table vistribution vistribution dht
 echo "inituptime___________________________________" 
 cleos get table vistribution vistribution inituptime
-echo "nodereward___________________________________"
-cleos get table vistribution vistribution nodereward
+# echo "nodereward___________________________________"
+# cleos get table vistribution vistribution nodereward
 killall nodeos
 exit 1
 

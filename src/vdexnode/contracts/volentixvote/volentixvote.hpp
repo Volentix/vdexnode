@@ -6,7 +6,7 @@
 
 using namespace eosio;
 
-class [[eosio::contract("vdexdposvote")]] vdexdposvote : public contract {
+class [[eosio::contract("volentixvote")]] volentixvote : public contract {
 public:
     using contract::contract;
 
@@ -21,7 +21,7 @@ public:
     
     const uint32_t job_id_bounds[2] = {1,8};
 
-    vdexdposvote(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
+    volentixvote(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
                                                                       _producers(receiver, receiver.value),
                                                                       _voters(receiver, receiver.value) {}
 
@@ -44,7 +44,7 @@ public:
     [[eosio::action]]
     void voteproducer(const name voter_name, const std::vector <name> &producers);
 
-    [[eosio::on_notify("vtxstake1111::unstake")]]
+    [[eosio::on_notify("volentixstak::unstake")]]
     void onUnstake(name owner);
     
     static std::vector <name> get_voters_by_time(const name vouting_account, const uint64_t from, const uint64_t to, const name user) {
@@ -102,6 +102,8 @@ public:
             auto job_ids = get_jobs(voting_contract, producer.owner);
             if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
                 top_producers.push_back(producer.owner);
+                eosio::print("top producer");
+                eosio::print(producer.owner.value);
                 i++;
             } else if (i >= top) {
                 break;        

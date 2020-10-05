@@ -1,5 +1,5 @@
 #include "volentixgsys.hpp"
-// #include "../vdexdposvote/vdexdposvote.hpp"
+// #include "../volentixvote.hpp"
 
 void volentixgsys::arestriction (name account, name code, name permission)
 {

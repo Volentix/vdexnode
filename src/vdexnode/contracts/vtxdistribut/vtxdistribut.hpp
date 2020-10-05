@@ -22,7 +22,6 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         const name vtxsys_contract = name("volentixtsys");
         const name voting_contract = name("volentixvote");
         const symbol vtx_symbol = symbol(symbol_code("VTX"), 8);
-        // const uint32_t one_day = 24 * 60 * 60;
         const uint32_t daily_reward_id = 0;
         const uint32_t standby_reward_id = 1;
 
@@ -33,7 +32,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
          	
     
         [[eosio::action]]
-        void uptime(name account, const std::vector<uint32_t> &job_ids, string node_id);
+        void uptime(name account, const std::vector<uint32_t> &job_ids, string node_id, string memo);
         
         [[eosio::action]]
         void addblacklist(name account, string ip);
@@ -135,7 +134,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
 
 
         void reward(name account, uint32_t job_id, uint32_t timestamp);
-        void checkblaclist ( name account );
+        void checkblacklist ( name account );
         void add_reward(name node, asset amount, string memo);
 };
 

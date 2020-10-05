@@ -2,7 +2,7 @@
 import subprocess
 
 unlock = {
-    # "distributvtx":"PW5JZANXxtN8t3mrDtKhmGs9tmTH5sbwHM3J3HPMqJZhdf4DrEB9v",
+    "distributvtx":"PW5JZANXxtN8t3mrDtKhmGs9tmTH5sbwHM3J3HPMqJZhdf4DrEB9v",
     "quaremachina":"PW5J8pUqvutkxRVZCJ1qgBNCUCmwocZc7DRHr6QnTbGKDtNJsJdRa",
     "volentixwvtx":"PW5JMHyTZSaVoD21oFJgUk7DsWwj3o5hknsYJdvSN9DKxxojwxbuz",
     "volentixvote":"PW5JsJXVbGQojLqtt14dsX8zy8RALfYFBnrsMwubhhsCHASqp87Ny",
@@ -19,8 +19,9 @@ unlock = {
     "v22222222222":"PW5K24xVDGzFSJFWahgoi58rMbWh4sE19dG9ERyczmmC1LciYKwAT",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
-    "vtxcustodian":"PW5JQP5pZo2NHYtvsVrzgJEfATcmAKhcXgM12uAbP6eE4D1MnGhh5",
-    "volentixstak":"PW5KVt9eoBscguyX7tHBK5U88S71hYRc5QfzpGD9KgPAtRpJzfbnB"
+    "vtxcustodian":"PW5K6dDjZsNVLbngxezggpqURgMFuvcgHNwgEfBZYfyCaDWdqv1oh",
+    "volentixstak":"PW5JCnyAbEC2bQefDeVBhZGXAXPpQTQC8ukVE1JX6veURoZJMFbxa",
+    "vtxtestpool1":"PW5JdNTQxvQhXr3HrXAJSnSbdZWtJHYSfHC6pdTot5eku5fjK69Gn"
 }
 
 retries=300
@@ -34,5 +35,7 @@ def open_wallets():
     for i in unlock:
         subprocess.Popen(["cleos", "wallet", "open", "-n", i])
 
+# unlock_wallets()
+# open_wallets()
 unlock_wallets()
 

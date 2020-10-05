@@ -202,6 +202,10 @@
                 {
                     "name": "node_id",
                     "type": "string"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
                 }
             ]
         },

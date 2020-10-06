@@ -18,8 +18,8 @@ class [[eosio::contract]] volentixpool : public eosio::contract {
         volentixpool(name receiver, name code,  datastream<const char*> ds): contract(receiver, code, ds) {}
 
         const name treasury = name("staider1111"); //staider11111
-        const name vtxsys_contract = name("volentixgsys");
-        const name vtxdstr_contract = name("vtxdistribut");
+        const name vtxsys_contract = name("volentixtsys");
+        const name vtxdstr_contract = name("vistribution");
 
         [[eosio::action]]
         void payproducer(name account, asset quantity);

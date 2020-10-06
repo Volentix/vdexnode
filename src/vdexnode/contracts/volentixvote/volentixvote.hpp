@@ -3,6 +3,7 @@
 #include <eosio/symbol.hpp>
 #include <eosio/transaction.hpp>
 #include <cmath>
+#include <algorithm>
 
 using namespace eosio;
 
@@ -47,8 +48,8 @@ public:
     [[eosio::on_notify("volentixstak::unstake")]]
     void onUnstake(name owner);
     
-    static std::vector <name> get_voters_by_time(const name vouting_account, const uint64_t from, const uint64_t to, const name user) {
-        voters_table voters(vouting_account, vouting_account.value);
+    static std::vector <name> get_voters_by_time(const name voting_account, const uint64_t from, const uint64_t to, const name user) {
+        voters_table voters(voting_account, voting_account.value);
 
         std::vector <name> voters_need;
 
@@ -94,24 +95,31 @@ public:
     }
 
     static std::vector<name> get_top_nodes(name voting_contract, uint32_t top, uint32_t job_id) {
+        print("Get_top_nodes function\n");
+        print("#######################################################\n");
+        
         producers_table producers(voting_contract, voting_contract.value);
         auto producers_iter = producers.get_index<"prototalvote"_n>();
         std::vector<name> top_producers;
         uint32_t i = 0;
+        auto size = std::distance(producers.cbegin(),producers.cend());
+        
+        eosio::print(size);
         for (auto &producer : producers_iter) {
-            auto job_ids = get_jobs(voting_contract, producer.owner);
-            if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
-                top_producers.push_back(producer.owner);
-                eosio::print("top producer");
-                eosio::print(producer.owner.value);
-                i++;
-            } else if (i >= top) {
-                break;        
-            }
+            // auto job_ids = get_jobs(voting_contract, producer.owner);
+            // if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
+            //     top_producers.push_back(producer.owner);
+            //     i++;
+            // } else if (i >= top) {  
+            //     break;        
+            // }
+            top_producers.push_back(producer.owner);
         }
-
+        print("End of get_top_nodes function\n");
+        print("#######################################################\n");
+        print(i);
+        print(top_producers.size());
         return top_producers;
-
     }
 
 

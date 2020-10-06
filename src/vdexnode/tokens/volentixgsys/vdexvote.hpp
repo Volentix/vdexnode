@@ -81,8 +81,7 @@ private:
     };
 
     typedef eosio::multi_index<"producers"_n, producer_info,
-            indexed_by < "prototalvote"_n, const_mem_fun < producer_info, double, &producer_info::by_votes>  >
-    >
+            indexed_by < "prototalvote"_n, const_mem_fun < producer_info, double, &producer_info::by_votes>  > >
     producers_table;
 
     producers_table _producers;

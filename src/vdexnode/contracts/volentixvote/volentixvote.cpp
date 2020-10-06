@@ -87,7 +87,7 @@ void volentixvote::voteproducer(const name voter_name, const std::vector <name> 
 }
 
 void volentixvote::vote(const name voter_name, const std::vector <name> &producers,
-                    const double balance_tokens, const uint64_t vouting_time) {
+                    const double balance_tokens, const uint64_t voting_time) {
 
     double votes = sqrt(balance_tokens);
     //max producers 21
@@ -101,7 +101,7 @@ void volentixvote::vote(const name voter_name, const std::vector <name> &produce
     }
 
     update_producers(voter_name, producers, votes_per_prod, false);
-    update_voters(voter_name, producers, votes_per_prod, balance_tokens, vouting_time);
+    update_voters(voter_name, producers, votes_per_prod, balance_tokens, voting_time);
 }
 
 void volentixvote::update_producers(const name voter_name, const std::vector <name> &producers,
@@ -122,7 +122,7 @@ void volentixvote::update_producers(const name voter_name, const std::vector <na
 }
 
 void volentixvote::update_voters(const name voter_name, const std::vector <name> &producers,
-                             const double votes_per_prod, const double tokens, const uint64_t vouting_time) {
+                             const double votes_per_prod, const double tokens, const uint64_t voting_time) {
     auto voter = _voters.find(voter_name.value);
 
     if (voter != _voters.end()) {
@@ -130,7 +130,7 @@ void volentixvote::update_voters(const name voter_name, const std::vector <name>
             info.producers = producers;
             info.votes_per_prod = votes_per_prod;
             info.tokens = tokens;
-            if (vouting_time) info.date = vouting_time;
+            if (voting_time) info.date = voting_time;
         });
     } else {
         _voters.emplace(voter_name, [&](voter_info &info) {
@@ -138,7 +138,7 @@ void volentixvote::update_voters(const name voter_name, const std::vector <name>
             info.producers = producers;
             info.votes_per_prod = votes_per_prod;
             info.tokens = tokens;
-            if (vouting_time) info.date = vouting_time;
+            if (voting_time) info.date = voting_time;
         });
     }
 }

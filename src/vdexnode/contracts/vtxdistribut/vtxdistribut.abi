@@ -36,6 +36,10 @@
             "base": "",
             "fields": [
                 {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
                     "name": "job_id",
                     "type": "uint32"
                 }

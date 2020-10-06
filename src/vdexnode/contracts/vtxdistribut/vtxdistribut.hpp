@@ -47,7 +47,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         void rmup(name account);
 
         [[eosio::action]]
-        void calcrewards(uint32_t job_id);
+        void calcrewards(name account, uint32_t job_id);
 
         // [[eosio::action]]
         void getreward(name node);
@@ -132,7 +132,7 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         };
         typedef eosio::multi_index<"nodereward"_n, node_reward> node_rewards;
 
-
+        void payreward(name account, asset quantity, std::string memo);
         void reward(name account, uint32_t job_id, uint32_t timestamp);
         void checkblacklist ( name account );
         void add_reward(name node, asset amount, string memo);

@@ -3,10 +3,11 @@
 #include <eosio/symbol.hpp>
 #include <eosio/transaction.hpp>
 #include <cmath>
+#include <algorithm>
 
 using namespace eosio;
 
-class [[eosio::contract("vdexdposvote")]] vdexdposvote : public contract {
+class [[eosio::contract("volentixvote")]] volentixvote : public contract {
 public:
     using contract::contract;
 
@@ -21,7 +22,7 @@ public:
     
     const uint32_t job_id_bounds[2] = {1,8};
 
-    vdexdposvote(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
+    volentixvote(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
                                                                       _producers(receiver, receiver.value),
                                                                       _voters(receiver, receiver.value) {}
 
@@ -44,11 +45,11 @@ public:
     [[eosio::action]]
     void voteproducer(const name voter_name, const std::vector <name> &producers);
 
-    [[eosio::on_notify("vtxstake1111::unstake")]]
+    [[eosio::on_notify("volentixstak::unstake")]]
     void onUnstake(name owner);
     
-    static std::vector <name> get_voters_by_time(const name vouting_account, const uint64_t from, const uint64_t to, const name user) {
-        voters_table voters(vouting_account, vouting_account.value);
+    static std::vector <name> get_voters_by_time(const name voting_account, const uint64_t from, const uint64_t to, const name user) {
+        voters_table voters(voting_account, voting_account.value);
 
         std::vector <name> voters_need;
 
@@ -77,6 +78,8 @@ public:
         producers_table producers(voting_contract, voting_contract.value);
         auto iterator = producers.find(account.value);
         check( iterator != producers.end(), "producer with this name doesn't exist" );
+        std::string str(iterator->job_ids.begin(), iterator->job_ids.end());
+        eosio::print(str);
         return iterator->job_ids;
     }
 
@@ -98,20 +101,20 @@ public:
         auto producers_iter = producers.get_index<"prototalvote"_n>();
         std::vector<name> top_producers;
         uint32_t i = 0;
+        
+        auto size = std::distance(producers.cbegin(),producers.cend());    
+        eosio::print(size);
         for (auto &producer : producers_iter) {
             auto job_ids = get_jobs(voting_contract, producer.owner);
             if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
                 top_producers.push_back(producer.owner);
                 i++;
-            } else if (i >= top) {
+            } else if (i >= top) {  
                 break;        
             }
         }
-
         return top_producers;
-
     }
-
 
 
 private:

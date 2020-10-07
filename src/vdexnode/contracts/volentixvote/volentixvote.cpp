@@ -1,7 +1,7 @@
-#include "vdexdposvote.hpp"
+#include "volentixvote.hpp"
 #include "../volentixstak/volentixstak.hpp"
 
-void vdexdposvote::regproducer(const name producer, const std::string &producer_name, const std::string &url,
+void volentixvote::regproducer(const name producer, const std::string &producer_name, const std::string &url,
                                const std::string &key, const std::string &node_id, const std::vector<uint32_t> &job_ids) {
     require_auth(producer);
     check(jobs_valid(job_ids), "job ids vector is invalid");
@@ -31,7 +31,7 @@ void vdexdposvote::regproducer(const name producer, const std::string &producer_
     }
 }
 
-void vdexdposvote::unregprod(const name producer) {
+void volentixvote::unregprod(const name producer) {
     require_auth(producer);
 
     const auto &prod = _producers.get(producer.value, "producer not found");
@@ -41,7 +41,7 @@ void vdexdposvote::unregprod(const name producer) {
     });
 }
 
-void vdexdposvote::unregprodall() {
+void volentixvote::unregprodall() {
     require_auth(_self);
     auto itr = _producers.begin();
     while(itr != _producers.end()){
@@ -50,7 +50,7 @@ void vdexdposvote::unregprodall() {
     _producers.erase(itr);
 }
 
-void vdexdposvote::deluserinfo() {
+void volentixvote::deluserinfo() {
     require_auth(_self);
     auto itr = _voters.begin();
     while(itr != _voters.end()){
@@ -60,7 +60,7 @@ void vdexdposvote::deluserinfo() {
 }
 
 
-void vdexdposvote::activateprod(const name producer) {
+void volentixvote::activateprod(const name producer) {
     require_auth(producer);
 
     const auto &prod = _producers.get(producer.value, "producer not found");
@@ -70,7 +70,7 @@ void vdexdposvote::activateprod(const name producer) {
     });
 }
 
-void vdexdposvote::voteproducer(const name voter_name, const std::vector <name> &producers) {
+void volentixvote::voteproducer(const name voter_name, const std::vector <name> &producers) {
     require_auth(voter_name);
 
     check(producers.size() <= 21 , "You must vote for not more than 21 producers");
@@ -86,8 +86,8 @@ void vdexdposvote::voteproducer(const name voter_name, const std::vector <name> 
     vote(voter_name, producers, balance_tokens, now);
 }
 
-void vdexdposvote::vote(const name voter_name, const std::vector <name> &producers,
-                    const double balance_tokens, const uint64_t vouting_time) {
+void volentixvote::vote(const name voter_name, const std::vector <name> &producers,
+                    const double balance_tokens, const uint64_t voting_time) {
 
     double votes = sqrt(balance_tokens);
     //max producers 21
@@ -101,10 +101,10 @@ void vdexdposvote::vote(const name voter_name, const std::vector <name> &produce
     }
 
     update_producers(voter_name, producers, votes_per_prod, false);
-    update_voters(voter_name, producers, votes_per_prod, balance_tokens, vouting_time);
+    update_voters(voter_name, producers, votes_per_prod, balance_tokens, voting_time);
 }
 
-void vdexdposvote::update_producers(const name voter_name, const std::vector <name> &producers,
+void volentixvote::update_producers(const name voter_name, const std::vector <name> &producers,
                                 const double votes_per_prod, const bool undo_prev_vote) {
     for (size_t i = 0; i < producers.size(); i++) {
         name producer = producers[i];
@@ -121,8 +121,8 @@ void vdexdposvote::update_producers(const name voter_name, const std::vector <na
     }
 }
 
-void vdexdposvote::update_voters(const name voter_name, const std::vector <name> &producers,
-                             const double votes_per_prod, const double tokens, const uint64_t vouting_time) {
+void volentixvote::update_voters(const name voter_name, const std::vector <name> &producers,
+                             const double votes_per_prod, const double tokens, const uint64_t voting_time) {
     auto voter = _voters.find(voter_name.value);
 
     if (voter != _voters.end()) {
@@ -130,7 +130,7 @@ void vdexdposvote::update_voters(const name voter_name, const std::vector <name>
             info.producers = producers;
             info.votes_per_prod = votes_per_prod;
             info.tokens = tokens;
-            if (vouting_time) info.date = vouting_time;
+            if (voting_time) info.date = voting_time;
         });
     } else {
         _voters.emplace(voter_name, [&](voter_info &info) {
@@ -138,12 +138,12 @@ void vdexdposvote::update_voters(const name voter_name, const std::vector <name>
             info.producers = producers;
             info.votes_per_prod = votes_per_prod;
             info.tokens = tokens;
-            if (vouting_time) info.date = vouting_time;
+            if (voting_time) info.date = voting_time;
         });
     }
 }
 
-double vdexdposvote::get_token_balance(const name account) {
+double volentixvote::get_token_balance(const name account) {
     accounts vtx_table(vtx_account, account.value);
     const auto it = vtx_table.find(symbol_code(vtx_symbol_code).raw());
     if (it != vtx_table.end()) {
@@ -153,12 +153,12 @@ double vdexdposvote::get_token_balance(const name account) {
     }
 }
 
-void vdexdposvote::onUnstake(name owner) {
+void volentixvote::onUnstake(name owner) {
     require_auth(owner);
     updatevote(owner);
 }
 
-void vdexdposvote::updatevote(const name voter_name) {
+void volentixvote::updatevote(const name voter_name) {
     auto voter = _voters.find(voter_name.value);
 
     if (voter != _voters.end()) {
@@ -170,7 +170,7 @@ void vdexdposvote::updatevote(const name voter_name) {
     }
 }
 
-bool vdexdposvote::jobs_valid(const std::vector<uint32_t> &job_ids) {
+bool volentixvote::jobs_valid(const std::vector<uint32_t> &job_ids) {
     bool result = true;
     for (auto const &job_id : job_ids) {
         if ( job_id < job_id_bounds[0] || job_id > job_id_bounds[1] ) {

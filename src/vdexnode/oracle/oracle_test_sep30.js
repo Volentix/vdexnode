@@ -88,53 +88,53 @@ async function send_balance_EOS(balance){
         const timestamp = Date.now(); // Unix timestamp in milliseconds
         info = await rpc.get_info();
         console.log(info.chain_id);
-        // (async () => {
-        //     const result = await api.transact({
-        //     actions: [{
-        //         account: custodian_account,
-        //         name: 'updtblnc',
-        //         authorization: [{
-        //         actor: eos_account,
-        //         permission: 'active',
-        //         }],
-        //         data: {
-        //         account: eos_account,    
-        //         balance: balance,
-        //         timestamp: timestamp,
-        //         },
-        //     }]
-        //     }, {
-        //     blocksBehind: 3,
-        //     expireSeconds: 30,
-        //     });
-        //     console.dir(result);
-        // })();
+        (async () => {
+            const result = await api.transact({
+            actions: [{
+                account: custodian_account,
+                name: 'updtblnc',
+                authorization: [{
+                actor: eos_account,
+                permission: 'active',
+                }],
+                data: {
+                account: eos_account,    
+                balance: balance,
+                timestamp: timestamp,
+                },
+            }]
+            }, {
+            blocksBehind: 3,
+            expireSeconds: 30,
+            });
+            console.dir(result);
+        })();
         if(dht > 0){
-            // console.log('*************UPTIME**************\n');
-            // var jobs = new Int32Array();
-            // jobs[0] = 1;
-            // jobs[1] = 2;
-            // (async () => {
-            //     const result = await api.transact({
-            //     actions: [{
-            //         account: 'vistribution',
-            //         name: 'uptime',
-            //         authorization: [{
-            //         actor: eos_account,
-            //         permission: 'active',
-            //         }],
-            //         data: {
-            //             account: eos_account,    
-            //             job_ids:jobs,
-            //             node_id:dht.id
-            //         },
-            //     }]
-            //     }, {
-            //     blocksBehind: 3,
-            //     expireSeconds: 30,
-            //     });
-            //     console.dir(result);
-            // })();
+            console.log('*************UPTIME**************\n');
+            var jobs = new Int32Array();
+            jobs[0] = 1;
+            jobs[1] = 2;
+            (async () => {
+                const result = await api.transact({
+                actions: [{
+                    account: 'vistribution',
+                    name: 'uptime',
+                    authorization: [{
+                    actor: eos_account,
+                    permission: 'active',
+                    }],
+                    data: {
+                        account: eos_account,    
+                        job_ids:jobs,
+                        node_id:dht.id
+                    },
+                }]
+                }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+                });
+                console.dir(result);
+            })();
             // console.log('*************UPTIME**************\n');
             // const rpc = new JsonRpc(nodeos, { fetch });
             // eos_vtx_balance = rpc.get_currency_balance(eos_pool_account, eos_pool_account, 'VTX').then((balance) => {return balance})

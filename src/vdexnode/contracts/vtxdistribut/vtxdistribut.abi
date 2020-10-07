@@ -36,6 +36,10 @@
             "base": "",
             "fields": [
                 {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
                     "name": "job_id",
                     "type": "uint32"
                 }
@@ -201,6 +205,10 @@
                 },
                 {
                     "name": "node_id",
+                    "type": "string"
+                },
+                {
+                    "name": "memo",
                     "type": "string"
                 }
             ]

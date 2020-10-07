@@ -100,18 +100,18 @@ cleos push action vistribution initup '{"account":"v11111111111"}' -p v111111111
 # if [ -z "$PAYLOAD" ]; then killall nodeos; fi
 # if [ -z "$PAYLOAD" ]; then docker-compose down; fi
 # if [ -z "$PAYLOAD" ]; then exit 1; fi
-cleos push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"100","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
-cleos push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"100","reward_amount":"60.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
+cleos push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"1","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
+cleos push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"1","reward_amount":"60.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"1","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
 cleos get table vistribution vistribution rewards
 docker run -id -p 8545:8545 -p 8546:8546 -p 30303:30303 -p 30303:30303/udp openethereum/openethereum:v3.0.0 --jsonrpc-interface all& 
 cd ../oracle
-rm -rf node_modules
-rm package.json
-npm install --save web3 --unsafe-perm=true --allow-root
-npm install --save eosjs@20.0.0 --unsafe-perm=true --allow-root
-npm install --save node-fetch --unsafe-perm=true --allow-root
-npm install --save dotenv --unsafe-perm=true --allow-root
-npm install --save web3-eth --unsafe-perm=true --allow-root
+# rm -rf node_modules
+# rm package.json
+# npm install --save web3 --unsafe-perm=true --allow-root
+# npm install --save eosjs@20.0.0 --unsafe-perm=true --allow-root
+# npm install --save node-fetch --unsafe-perm=true --allow-root
+# npm install --save dotenv --unsafe-perm=true --allow-root
+# npm install --save web3-eth --unsafe-perm=true --allow-root
 # npm install --save find-config --unsafe-perm=true --allow-root
 
 cleos push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active

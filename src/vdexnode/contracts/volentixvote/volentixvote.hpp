@@ -78,6 +78,8 @@ public:
         producers_table producers(voting_contract, voting_contract.value);
         auto iterator = producers.find(account.value);
         check( iterator != producers.end(), "producer with this name doesn't exist" );
+        std::string str(iterator->job_ids.begin(), iterator->job_ids.end());
+        eosio::print(str);
         return iterator->job_ids;
     }
 
@@ -95,33 +97,24 @@ public:
     }
 
     static std::vector<name> get_top_nodes(name voting_contract, uint32_t top, uint32_t job_id) {
-        print("Get_top_nodes function\n");
-        print("#######################################################\n");
-        
         producers_table producers(voting_contract, voting_contract.value);
         auto producers_iter = producers.get_index<"prototalvote"_n>();
         std::vector<name> top_producers;
         uint32_t i = 0;
-        auto size = std::distance(producers.cbegin(),producers.cend());
         
+        auto size = std::distance(producers.cbegin(),producers.cend());    
         eosio::print(size);
         for (auto &producer : producers_iter) {
-            // auto job_ids = get_jobs(voting_contract, producer.owner);
-            // if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
-            //     top_producers.push_back(producer.owner);
-            //     i++;
-            // } else if (i >= top) {  
-            //     break;        
-            // }
-            top_producers.push_back(producer.owner);
+            auto job_ids = get_jobs(voting_contract, producer.owner);
+            if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
+                top_producers.push_back(producer.owner);
+                i++;
+            } else if (i >= top) {  
+                break;        
+            }
         }
-        print("End of get_top_nodes function\n");
-        print("#######################################################\n");
-        print(i);
-        print(top_producers.size());
         return top_producers;
     }
-
 
 
 private:

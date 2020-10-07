@@ -120,7 +120,7 @@ cleos push action volentixtsys issue '{"to": "v11111111111", "quantity": "200000
 cleos push action volentixtsys issue '{"to": "v22222222222", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "v33333333333", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "volentixsale", "quantity": " 128153044.02514328 VTX", "memo": "ETH ethereum"}' -p volentixtsys@active
-cleos push action volentixtsys issue '{"to": "vistribution", "quantity": "10000.00000000 VTX", "memo": "rewards pool"}' -p volentixtsys@active
+cleos push action volentixtsys issue '{"to": "vistribution", "quantity": "1000000.00000000 VTX", "memo": "rewards pool"}' -p volentixtsys@active
 cleos get currency stats volentixtsys VTX
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos push action volentixstak initglobal '{}' -p volentixstak@active
@@ -145,8 +145,8 @@ cleos push action volentixvote activateprod '{"producer":"v333333333333"}'-p v33
 cleos push action vistribution initup '{"account":"v11111111111"}' -p v11111111111@active
 cleos push action vistribution initup '{"account":"v22222222222"}' -p v22222222222@active
 cleos push action vistribution initup '{"account":"v33333333333"}' -p v33333333333@active
-cleos push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"1","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"3","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
-cleos push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"1","reward_amount":"60.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"3","standby_rank_threshold":"0", "memo":"Thank you for supporting the Volentix network","standby_memo":"Thank you for supporting the Volentix network"}}' -p vistribution@active
+cleos push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"10","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"10","standby_rank_threshold":"0", "memo":"Voting","standby_memo":"Voting"}}' -p vistribution@active
+cleos push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"10","reward_amount":"60.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"10","standby_rank_threshold":"0", "memo":"Oracle","standby_memo":"Oracle"}}' -p vistribution@active
 # cleos get table vistribution vistribution rewards
 
 cleos get table volentixvote volentixvote producers
@@ -168,26 +168,48 @@ sleep 3
 # cleos push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active
 
 # node oracle_test_sep30.js 2> /dev/pts/0& 
-echo "let period go by"
-sleep 10
-echo "Uptime_____________________________________"
-PAYLOAD='{"account":"v11111111111","job_ids":[1,2],"node_id":to_change,"memo":"1"}'
-PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
-echo "$PAYLOAD"
-cleos push action vistribution uptime $PAYLOAD -p v11111111111@active
-PAYLOAD='{"account":"v22222222222","job_ids":[1],"node_id":to_change,"memo":"2"}'
-PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
-echo "$PAYLOAD"
-cleos push action vistribution uptime $PAYLOAD -p v22222222222@active
+
+n=1
+while [ $n -le 5 ]
+do
+    echo "let period go by"
+    sleep 2
+    echo "Uptime_____________________________________"
+    PAYLOAD='{"account":"v11111111111","job_ids":[1,2],"node_id":to_change,"memo":"1"}'
+    PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
+    echo "$PAYLOAD"
+    cleos push action vistribution uptime $PAYLOAD -p v11111111111@active
+    sleep 1
+    PAYLOAD='{"account":"v22222222222","job_ids":[1],"node_id":to_change,"memo":"2"}'
+    PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
+    echo "$PAYLOAD"
+    cleos push action vistribution uptime $PAYLOAD -p v22222222222@active
+    echo "v11111111111 balance_____________________"
+    cleos get currency balance volentixtsys v11111111111
+    echo "v22222222222 balance_____________________"
+    cleos get currency balance volentixtsys v22222222222
+    echo "v33333333333 balance_____________________"
+    cleos get currency balance volentixtsys v33333333333
+    i=$[$i+1]
+    # echo "uptimes__________________________________"
+    # cleos get table vistribution vistribution uptimes
+    # echo "reward history___________________________"
+    # cleos get table vistribution vistribution rewardhistor
+    # echo "producers________________________________"
+    # cleos get table volentixvote volentixvote producers
+    # echo "voters___________________________________"
+    # cleos get table volentixvote volentixvote voters
+    # echo "dht___________________________________"
+    # cleos get table vistribution vistribution dht
+    # echo "inituptime___________________________________" 
+    # cleos get table vistribution vistribution inituptime
+    # echo "nodereward___________________________________"
+    # cleos get table vistribution vistribution nodereward
+
+done
 
 # cleos get account vtxtestpool1
 
-echo "v11111111111 balance_____________________"
-cleos get currency balance volentixtsys v11111111111
-echo "v22222222222 balance_____________________"
-cleos get currency balance volentixtsys v22222222222
-echo "v33333333333 balance_____________________"
-cleos get currency balance volentixtsys v33333333333
 echo "uptimes__________________________________"
 cleos get table vistribution vistribution uptimes
 echo "reward history___________________________"
@@ -202,8 +224,8 @@ echo "inituptime___________________________________"
 cleos get table vistribution vistribution inituptime
 echo "nodereward___________________________________"
 cleos get table vistribution vistribution nodereward
-killall nodeos
-exit 1
+# killall nodeos
+# exit 1
 
 # cleos get table vistribution vistribution rewards
 

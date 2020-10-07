@@ -210,20 +210,20 @@ done
 
 # cleos get account vtxtestpool1
 
-echo "uptimes__________________________________"
-cleos get table vistribution vistribution uptimes
-echo "reward history___________________________"
-cleos get table vistribution vistribution rewardhistor
-echo "producers________________________________"
-cleos get table volentixvote volentixvote producers
-echo "voters___________________________________"
-cleos get table volentixvote volentixvote voters
-echo "dht___________________________________"
-cleos get table vistribution vistribution dht
-echo "inituptime___________________________________" 
-cleos get table vistribution vistribution inituptime
-echo "nodereward___________________________________"
-cleos get table vistribution vistribution nodereward
+# echo "uptimes__________________________________"
+# cleos get table vistribution vistribution uptimes
+# echo "reward history___________________________"
+# cleos get table vistribution vistribution rewardhistor
+# echo "producers________________________________"
+# cleos get table volentixvote volentixvote producers
+# echo "voters___________________________________"
+# cleos get table volentixvote volentixvote voters
+# echo "dht___________________________________"
+# cleos get table vistribution vistribution dht
+# echo "inituptime___________________________________" 
+# cleos get table vistribution vistribution inituptime
+# echo "nodereward___________________________________"
+# cleos get table vistribution vistribution nodereward
 # killall nodeos
 # exit 1
 

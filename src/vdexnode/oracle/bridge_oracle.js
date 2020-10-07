@@ -25,7 +25,6 @@ let nodeos = 'http://127.0.0.1:8888';
 var result; 
 
 async function main(){
-    // console.log(process.env);
     eth_balance();
   }
 async function eth_balance(){
@@ -57,14 +56,11 @@ async function eth_balance(){
                 if(new_vtx_balance > 0){
                     send_balance_EOS(new_vtx_balance);
                 }
-                // const rpc = new JsonRpc(nodeos, { fetch });
-                // eos_vtx_balance = rpc.get_currency_balance(eos_pool_account, eos_pool_account, 'VTX').then((balance) => {return balance})
-                // eos_vtx_balance = await eos_vtx_balance;
-                // console.log('ETH balance', from_wei);
-                // console.log('EOS balance', eos_vtx_balance);
-                // if(i%10){
-                // register_up(new_vtx_balance); 
-                // }
+                const rpc = new JsonRpc(nodeos, { fetch });
+                eos_vtx_balance = rpc.get_currency_balance(eos_pool_account, eos_pool_account, 'VTX').then((balance) => {return balance})
+                eos_vtx_balance = await eos_vtx_balance;
+                console.log('ETH balance', from_wei);
+                console.log('EOS balance', eos_vtx_balance);
         }catch(err){
             console.log('provider not available. wait........');
         }
@@ -72,129 +68,29 @@ async function eth_balance(){
 }
 
 async function send_balance_EOS(balance){
-    console.log('******************send blance*********************\n');
-    var rpc;
-    const response = await fetch("http://127.0.0.1:8000");
-    const dht = await response.json(); //extract JSON from the http response
-    console.log('***************************************\n'); 
-    console.log("Node is up", dht);
-    console.log('***************************************\n');
-    // let dht = "1" 
+    console.log('SEND BALANCE\n');
+    var rpc; 
     try{
-        console.count('******************send blance*********************');
+       
         const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
         rpc = new JsonRpc(nodeos, { fetch }); 
         const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
-        const timestamp = Date.now(); // Unix timestamp in milliseconds
+        const timestamp = Date.now(); 
         info = await rpc.get_info();
         console.log(info.chain_id);
-        // (async () => {
-        //     const result = await api.transact({
-        //     actions: [{
-        //         account: custodian_account,
-        //         name: 'updtblnc',
-        //         authorization: [{
-        //         actor: eos_account,
-        //         permission: 'active',
-        //         }],
-        //         data: {
-        //         account: eos_account,    
-        //         balance: balance,
-        //         timestamp: timestamp,
-        //         },
-        //     }]
-        //     }, {
-        //     blocksBehind: 3,
-        //     expireSeconds: 30,
-        //     });
-        //     console.dir(result);
-        // })();
-        if(dht > 0){
-            console.log('*************UPTIME**************\n');
-            var jobs = new Int32Array();
-            jobs[0] = 1;
-            jobs[1] = 2;
-            (async () => {
-                const result = await api.transact({
-                actions: [{
-                    account: 'vistribution',
-                    name: 'uptime',
-                    authorization: [{
-                    actor: eos_account,
-                    permission: 'active',
-                    }],
-                    data: {
-                        account: eos_account,    
-                        node_id:dht.id,
-                        memo:"hey"
-                    },
-                }]
-                }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-                });
-                console.dir(result);
-            })();
-            // console.log('*************UPTIME**************\n');
-            // const rpc = new JsonRpc(nodeos, { fetch });
-            // eos_vtx_balance = rpc.get_currency_balance(eos_pool_account, eos_pool_account, 'VTX').then((balance) => {return balance})
-            // eos_vtx_balance = await eos_vtx_balance;
-            // console.log('EOS balance', eos_vtx_balance);
-        }else{
-            // var jobs = new Int32Array();
-            // jobs[0] = 1;
-            // jobs[1] = 2;
-            // sleep(3000);
-            // (async () => {
-            //     const result = await api.transact({
-            //     actions: [{
-            //         account: 'vistribution',
-            //         name: 'paycore',
-            //         authorization: [{
-            //         actor: eos_account,
-            //         permission: 'active',
-            //         }],
-            //         data: {
-            //             job_ids:jobs
-            //         },
-            //     }]
-            //     }, {
-            //     blocksBehind: 3,
-            //     expireSeconds: 30,
-            //     });
-            //     console.dir(result);
-            // })();
-
-        }
-    }catch(err){
-        console.log(err);
-        return;
-    }
-}
-
-function register_up(balance){
-   
-    var rpc;
-    try{
-        console.log('*****************UP*********************');
-        console.log(distribution_account);
-        console.log(eos_account);
-        const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
-        rpc = new JsonRpc(nodeos, { fetch }); 
-        const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
-        const timestamp = Date.now(); // Unix timestamp in milliseconds
         (async () => {
             const result = await api.transact({
             actions: [{
-                account: distribution_account,
-                name: 'uptime',
+                account: custodian_account,
+                name: 'updtblnc',
                 authorization: [{
                 actor: eos_account,
                 permission: 'active',
                 }],
                 data: {
                 account: eos_account,    
-                test: ''
+                balance: balance,
+                timestamp: timestamp,
                 },
             }]
             }, {
@@ -203,9 +99,9 @@ function register_up(balance){
             });
             console.dir(result);
         })();
-    
     }catch(err){
         console.log(err);
+        return;
     }
 }
 

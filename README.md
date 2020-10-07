@@ -13,7 +13,7 @@ Supporting the VDex network’s infrastructure and the capacity to back transact
     - votes for core network and/or for proposals for the volentixtrez
     - signs transactions
 
-    ### Subsidy:
+    #### Subsidy:
     - 66 VTX/day for running the bridging oracle
     - 10 VTX/day for voting
     
@@ -24,7 +24,7 @@ Supporting the VDex network’s infrastructure and the capacity to back transact
     - Superset of the voting node, sign transactions and receive vDex Node subsidies
     - Core 21 signing network 
 
-    ### Subsidy:
+    #### Subsidy:
     - 66 VTX/day of uptime
     - 10 VTX/vote
     - *% of transactions processed (in VTX)
@@ -39,7 +39,7 @@ Supporting the VDex network’s infrastructure and the capacity to back transact
     - Guaranteed continuous uptime 
     - Core 8 bridging oracle network
     
-    Subsidy:
+    #### Subsidy:
      - 300 VTX/day of uptime
      - 10 VTX/vote
      - *% of transactions signed (in VTX)
@@ -50,7 +50,7 @@ Supporting the VDex network’s infrastructure and the capacity to back transact
 The network might not work as intended and you temporarily might not receive VTX at all on a certain day or until issues are resolved.
 Please report if you have not received your VTX but do not expect this VTX as guaranteed._**
 
-### Get the node
+## Get the code
 
 Copy paste the following command in terminal to get the vDex Node docker image:
 Go to your home directory.
@@ -62,7 +62,9 @@ Clone the repository.
 git clone https://github.com/Volentix/vDexNode.git
 ```
 
-The node system is undergoing the finals steps 
+The node system development is undergoing the finals steps in integration of the bridging oracle, voting and rewards.
+For status pleas erefer to this document:
+[Test Plan](https://github.com/Volentix/vdexnode/blob/master/doc/test_plan.md)
 
 
 ## How to debug

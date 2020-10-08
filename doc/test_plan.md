@@ -1,74 +1,23 @@
 Preparation
 ===========
 
-**Main accounts on Jungle testnet 2** \* DONE
-
-1.  vltxstakenow\
-    *The staking contract*
-
-2.  volentixtsys\
-    *The main token contract, emulation of volentixgsys*
-
-3.  vistribution\
-    *Distribution contract*
-
-4.  volentixvote\
-    *Voting contract*
-
-5.  volentixsale\
-    Pool
+**Local network** \* ONGOING
 
 **Other preparatory actions**
 
-1.  compile Volentixgsys.cpp \* DONE\
-    <https://github.com/Volentix/volentix_contracts/blob/master/volentixgsys/src/volentixgsys.cpp>
+1.  Wallets reside on normal host  /eosio-wallet path
 
-2.  Deploy main token on *volentixtsys* \* DONE
+2.  Bash scripts run as root
 
-3.  Create 2.1 billion TVTX \* DONE
+3.  Open another terminal for nodeos output(tty 2)
+    <https://github.com/Volentix/vdexnode/tree/master/src/vdexnode/test>
 
-4.  Create volentixsale testnet account and issue balance of EOS
-    volentixsale (128153044.02514328 TVTX) \* DONE
+4.  Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten \* DONE
 
-5.  Create registering node account on eosio testnet and issue
-    v11111111111 1000000 TVTX
+5.  prevent issuing on the Ethereum side if there are less than 8 nodes
+    TODO
 
-6.  Deploy vdexdposvote contract to volentixvote + ressources \* DONE
-
-7.  Deploy vtxdistribut contract to vistribution + ressources \* DONE
-
-8.  Deploy volentixstak contract to vltxstakenow + ressources \* DONE
-
-9.  Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten \* DONE
-
-10. Deploy custodian on v22222222222 + ressources \* DONE
-
-11. set v22222222222 permissions for volentixtsys \* DONE
-
-12. set v22222222222 permissions for volentixtsys \* DONE
-
-13. Put condition for 10000 VTX staked in vltxstakenow \* DONE
-
-14. Put condition for 10000 VTX staked in vltxcustodian \* DONE
-
-15. Integrate oracle functionality to volentixnode
-
-16. Reward per container selection.\* DONE
-
-17. Uptime validation DONE
-
-18. Initialize v22222222222 *currentbal*
-
-19. Clear v22222222222 *balances* buffer
-
-20. Init vltxstakenow \* DONE
-
-21. Edit docker compose\
-    Initial default values
-
-22. prevent issuing on the Ethereum side if there are less than 8 nodes
-
-**Docker network** \* DONE
+**Docker network** \* ONGOING
 
 1.  Eos wallet
 
@@ -80,44 +29,56 @@ Preparation
 
 5.  Vdex node
 
+**Test network** \* DONE\
+Running nodeos binary and feeding the output to second terminal enables
+\"caveman\" debugging on the chain.
+
 Tests
 =====
 
 1.  **Staking test**
 
-    1.  v22222222222 stakes 10000 TVTX
+    1.  v11111111111 stakes 10000.00000000 VTX DONE
 
 2.  **Persistency test**
 
-    1.  Uptime
+    1.  Uptime DONE
 
-    2.  Less than 8 nodes
+    2.  Less than 8 nodes DONE
 
-    3.  Register and unregister nodes
+    3.  Register and unregister nodes DONE
 
 3.  **Authority tests**
 
     1.  Open, unlocks eos wallet and signs executes oracle balance
-        submisssion to EOS.
+        submisssion to EOS. DONE
 
-    2.  Register and unregister nodes
+    2.  Register and unregister nodes DONE
 
-    3.  Reward selection and funds transfer
+    3.  Reward test DONE
 
-4.  **Accuracy tests**
+        1.  Test job selection DONE
 
-    1.  reward selection and funds transfer
+        2.  Test reward calculation DONE
 
-Postulate
-=========
+        3.  Test transfer DONE
 
-1.  A default active private key can be used to send to oracle
-    initially.
+        4.  Test period DONE
 
-2.  Reverse proxy\
-    A Nginx HTTPS reverse proxy is an intermediary proxy service which
-    takes a client request, passes it on to one or more servers, and
-    subsequently delivers the server's response back to the client. In
-    our case for key management keosd has to be launched as daemon
-    behind reverse proxy(nginx) nginx will be used to enable password
-    based authentication.
+    4.  Oracle test \* REGRESSION
+
+        1.  Decouple eth-vtx oracle and uptime DONE
+
+        2.  Bridge functionality ONGOING
+
+        3.  Load tests TODO
+
+Postulates/Todo
+===============
+
+Reverse proxy\
+A Nginx HTTPS reverse proxy is an intermediary proxy service which takes
+a client request, passes it on to one or more servers, and subsequently
+delivers the server's response back to the client. In our case for key
+management keosd has to be launched as daemon behind reverse
+proxy(nginx) nginx will be used to enable password based authentication.

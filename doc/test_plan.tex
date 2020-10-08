@@ -47,7 +47,6 @@
 		   	\item Open another terminal for nodeos output(tty 2)
   			\url{https://github.com/Volentix/vdexnode/tree/master/src/vdexnode/test} 
  		  \item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten  * {\color{green} DONE}
- 		  \item Create reward pool {\color{red} TODO}
 		  \item prevent issuing on the Ethereum side if there are less than 8 nodes {\color{red} TODO}
 		   
 	 \end{enumerate}
@@ -59,7 +58,7 @@
   	\item Bitcoin node
   	\item Vdex node
   \end{enumerate}
-   \textbf{Test network}	  * {\color{yellow} ONGOING}\\
+   \textbf{Test network}	  * {\color{green} DONE}\\
    Running nodeos binary and feeding the output to second terminal enables "caveman"
    debugging on the chain. 
    
@@ -68,43 +67,50 @@
 					\begin{enumerate}
 						\item \textbf{Staking test}
 						\begin{enumerate}
-							\item v11111111111 stakes 10000 TVTX  {\color{green} DONE}
+							\item v11111111111 stakes 10000.00000000 VTX  {\color{green} DONE}
 						\end{enumerate}
 						\item \textbf{Persistency test}  
 							\begin{enumerate}
-								\item Uptime\textit{} {\color{blue} REGRESSION}
-								\item Less than 8 nodes {\color{blue} REGRESSION}
+								\item Uptime\textit{} {\color{green} DONE}
+								\item Less than 8 nodes {\color{green} DONE}
 								\item Register and unregister nodes  {\color{green} DONE}
 							\end{enumerate}
 						\item \textbf{Authority tests}
 							\begin{enumerate}
 							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS. {\color{green} DONE}
 							\item Register and unregister nodes  {\color{green} DONE}
-							\item Reward test	{\color{yellow} ONGOING}
+							\item Reward test	{\color{green} DONE}
 								\begin{enumerate}
 										\item Test job selection {\color{green} DONE}	
-										\item Test reward calculation {\color{yellow} ONGOING }	
-										\item Test transfer {\color{red} TODO}
+										\item Test reward calculation {\color{green} DONE }	
+										\item Test transfer {\color{green} DONE}
+										\item Test period {\color{green} DONE}
 
 								\end{enumerate}
 								\item Oracle test	* {\color{blue} REGRESSION }
 							\begin{enumerate}
-								\item Decouple eth-vtx oracle and uptime {\color{blue} REGRESSION }
+								\item Decouple eth-vtx oracle and uptime {\color{green} DONE }
+								\item Bridge functionality  {\color{yellow} ONGOING }
 								\item Load tests  {\color{red} TODO}
 							\end{enumerate}
 						\end{enumerate}
 				\end{enumerate}
-\section{Postulates}
+
+\section{Postulates/Todo}
+
+
 \begin{enumerate} 
+	\item Vdexnode config mechanism
+	\item VDex node EOSIO test net 
+	\begin{enumerate} 
+		\item Eosio config files {\color{green} DONE }
+		\item copy files on network
+		\item automate launch in vdexNode
+		\end{enumerate} 
 	\item Reverse proxy \\
 	A Nginx HTTPS reverse proxy is an intermediary proxy service which takes a client request, passes it on to one or more servers, and subsequently delivers the server's response back to the client. 
 	In our case for key management keosd has to be launched as daemon behind reverse proxy(nginx)
 	nginx will be used to enable password based authentication.
-\end{enumerate}
 
-\section{Conclusions}
-\begin{enumerate}
-	\item Oracle sending uptime does not observe micro service architecture 	{\color{red} TODO} 
-\end{enumerate}
 
 \end{document}

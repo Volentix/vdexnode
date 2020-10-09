@@ -67,11 +67,6 @@ For status pleas erefer to this document:
 [Test Plan](https://github.com/Volentix/vdexnode/blob/master/doc/test_plan.md)fo
 
 
-## How to debug
-
-You can attach a terminal to your vdexnode by running `docker exec -ti vdexnode bash`
-
-Then, you can use `bitcoin-cli` directly if you want: `bitcoin-cli -rpcuser="YOUR_USERNAME" -rpcpassword="YOUR_PASSWORD" -rpcport=18443 -rpcconnect="bitcoin" getnewaddress`.
 
 
 ### Support
@@ -88,7 +83,6 @@ See [the contribute file](.github/CONTRIBUTING.md)!
 
 PRs accepted.
 
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Acknowledgements
 

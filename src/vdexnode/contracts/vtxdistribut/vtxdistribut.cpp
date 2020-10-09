@@ -111,16 +111,15 @@ void vtxdistribut::payreward(name account, asset quantity, std::string memo)
 }
 
 
-void vtxdistribut::uptime(name account, const std::vector<uint32_t> &job_ids, string node_id, string memo) { 
+void vtxdistribut::uptime(name account, string node_id, string memo) { 
   
   check(!node_id.empty() , "Node needs to be up for rewards to work");
-  // dht_index dht_table(get_self(), get_self().value);
+  dht_index dht_table(get_self(), get_self().value);
   uint64_t size = 0;
   auto job_ids_new = volentixvote::get_jobs(VOTING_CONTRACT, account);
   for (auto &id: job_ids_new) {
     calcrewards(account, id);
   }
-  
   getreward(account);
   // auto itr = dht_table.find(account.value);
   // if(itr == dht_table.end()){

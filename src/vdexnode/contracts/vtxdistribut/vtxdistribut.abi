@@ -200,10 +200,6 @@
                     "type": "name"
                 },
                 {
-                    "name": "job_ids",
-                    "type": "uint32[]"
-                },
-                {
                     "name": "node_id",
                     "type": "string"
                 },

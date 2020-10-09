@@ -9,7 +9,7 @@ Supporting the VDex network’s infrastructure and the capacity to back transact
 ## VDex Nodes
 
 1. Voting Node
-    - stake >= 10.00000000 VTX
+    - stake >= 10.00000000 VTX (10,000 VTX)
     - votes for core network and/or for proposals for the volentixtrez
     - signs transactions
 
@@ -20,7 +20,7 @@ Supporting the VDex network’s infrastructure and the capacity to back transact
 
 2. VDex Node
 
-    - stake >= 10.00000000 VTX 
+    - stake >= 10.00000000 VTX (10,000 VTX)
     - Superset of the voting node, sign transactions and receive vDex Node subsidies
     - Core 21 signing network 
 
@@ -32,7 +32,7 @@ Supporting the VDex network’s infrastructure and the capacity to back transact
     
 3. VDex Node Pro
     
-    - stake >= 10.00000000 VTX 
+    - stake >= 10.00000000 VTX (10,000 VTX)
     - Sign transactions and receive vDex Node subsidies
     - Must provide ssh connection to dev team 
     - Meets the minimum hardware and bandwidth requirements { 2T SSD, 32GBRAM, High speed internet } 
@@ -64,14 +64,9 @@ git clone https://github.com/Volentix/vDexNode.git
 
 The node system development is undergoing the finals steps in integration of the bridging oracle, voting and rewards.
 For status pleas erefer to this document:
-[Test Plan](https://github.com/Volentix/vdexnode/blob/master/doc/test_plan.md)
+[Test Plan](https://github.com/Volentix/vdexnode/blob/master/doc/test_plan.md)fo
 
 
-## How to debug
-
-You can attach a terminal to your vdexnode by running `docker exec -ti vdexnode bash`
-
-Then, you can use `bitcoin-cli` directly if you want: `bitcoin-cli -rpcuser="YOUR_USERNAME" -rpcpassword="YOUR_PASSWORD" -rpcport=18443 -rpcconnect="bitcoin" getnewaddress`.
 
 
 ### Support
@@ -88,7 +83,6 @@ See [the contribute file](.github/CONTRIBUTING.md)!
 
 PRs accepted.
 
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## Acknowledgements
 

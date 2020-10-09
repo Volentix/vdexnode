@@ -121,7 +121,7 @@ cleos push action volentixtsys issue '{"to": "v22222222222", "quantity": "200000
 cleos push action volentixtsys issue '{"to": "v33333333333", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "volentixsale", "quantity": " 128153044.02514328 VTX", "memo": "ETH ethereum"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "vistribution", "quantity": "1000000.00000000 VTX", "memo": "rewards pool"}' -p volentixtsys@active
-cleos get currency stats volentixtsys VTX
+# cleos get currency stats volentixtsys VTX
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos push action volentixstak initglobal '{}' -p volentixstak@active
 cleos push action volentixtsys transfer '{"from":"v11111111111", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v11111111111@active
@@ -154,76 +154,81 @@ cleos push action volentixvote voteproducer  '{"voter_name": "v11111111111", "pr
 cleos push action volentixvote voteproducer  '{"voter_name": "v22222222222", "producers":["v11111111111"]}' -p v22222222222@active 
 cleos push action volentixvote voteproducer  '{"voter_name": "v33333333333", "producers":["v11111111111"]}' -p v33333333333@active 
 sleep 3
-# docker run -id -p 8545:8545 -p 8546:8546 -p 30303:30303 -p 30303:30303/udp openethereum/openethereum:v3.0.0 --jsonrpc-interface all -d 2> /dev/pts/0& 
-# cd ../oracle
-# rm -rf node_modules
-# rm package.json
-# npm install --save web3 --unsafe-perm=true --allow-root
-# npm install --save eosjs@20.0.0 --unsafe-perm=true --allow-root
-# npm install --save node-fetch --unsafe-perm=true --allow-root
-# npm install --save dotenv --unsafe-perm=true --allow-root
-# npm install --save web3-eth --unsafe-perm=true --allow-root
-# npm install --save find-config --unsafe-perm=true --allow-root
-# node oracle_test_sep30.js 2> /dev/pts/0&
-# cleos push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active
+echo "STARTING OPENETHEREUM"
+docker run -id -p 8545:8545 -p 8546:8546 -p 30303:30303 -p 30303:30303/udp openethereum/openethereum:v3.0.0 --chain ropsten --jsonrpc-interface all& #-d 2> /dev/pts/3& 
+docker ps
+sleep 10
 
-# node oracle_test_sep30.js 2> /dev/pts/0& 
+echo "STARTED OPENETHEREUM" 
+cd ../oracle
+rm -rf node_modules
+rm package.json
+npm install --save web3 --unsafe-perm=true --allow-root
+npm install --save eosjs@20.0.0 --unsafe-perm=true --allow-root
+npm install --save node-fetch --unsafe-perm=true --allow-root
+npm install --save dotenv --unsafe-perm=true --allow-root
+npm install --save web3-eth --unsafe-perm=true --allow-root
+npm install --save find-config --unsafe-perm=true --allow-root
+cleos push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active
 
-n=1
-while [ $n -le 5 ]
-do
-    echo "let period go by"
-    sleep 2
-    echo "Uptime_____________________________________"
-    PAYLOAD='{"account":"v11111111111","job_ids":[1,2],"node_id":to_change,"memo":"1"}'
-    PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
-    echo "$PAYLOAD"
-    cleos push action vistribution uptime $PAYLOAD -p v11111111111@active
-    sleep 1
-    PAYLOAD='{"account":"v22222222222","job_ids":[1],"node_id":to_change,"memo":"2"}'
-    PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
-    echo "$PAYLOAD"
-    cleos push action vistribution uptime $PAYLOAD -p v22222222222@active
-    echo "v11111111111 balance_____________________"
-    cleos get currency balance volentixtsys v11111111111
-    echo "v22222222222 balance_____________________"
-    cleos get currency balance volentixtsys v22222222222
-    echo "v33333333333 balance_____________________"
-    cleos get currency balance volentixtsys v33333333333
-    i=$[$i+1]
-    # echo "uptimes__________________________________"
-    # cleos get table vistribution vistribution uptimes
-    # echo "reward history___________________________"
-    # cleos get table vistribution vistribution rewardhistor
-    # echo "producers________________________________"
-    # cleos get table volentixvote volentixvote producers
-    # echo "voters___________________________________"
-    # cleos get table volentixvote volentixvote voters
-    # echo "dht___________________________________"
-    # cleos get table vistribution vistribution dht
-    # echo "inituptime___________________________________" 
-    # cleos get table vistribution vistribution inituptime
-    # echo "nodereward___________________________________"
-    # cleos get table vistribution vistribution nodereward
+node bridge_oracle.js 2> /dev/pts/1& 
+node vote_oracle2.js 2> /dev/pts/1& 
 
-done
+# n=1
+# while [ $n -le 5 ]
+# do
+#     echo "let period go by"
+#     sleep 2
+#     echo "Uptime_____________________________________"
+#     PAYLOAD='{"account":"v11111111111","job_ids":[1,2],"node_id":to_change,"memo":"1"}'
+#     PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
+#     echo "$PAYLOAD"
+#     cleos push action vistribution uptime $PAYLOAD -p v11111111111@active
+#     sleep 1
+#     PAYLOAD='{"account":"v22222222222","job_ids":[1],"node_id":to_change,"memo":"2"}'
+#     PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
+#     echo "$PAYLOAD"
+#     cleos push action vistribution uptime $PAYLOAD -p v22222222222@active
+#     echo "v11111111111 balance_____________________"
+#     cleos get currency balance volentixtsys v11111111111
+#     echo "v22222222222 balance_____________________"
+#     cleos get currency balance volentixtsys v22222222222
+#     echo "v33333333333 balance_____________________"
+#     cleos get currency balance volentixtsys v33333333333
+#     i=$[$i+1]
+#     # echo "uptimes__________________________________"
+#     # cleos get table vistribution vistribution uptimes
+#     # echo "reward history___________________________"
+#     # cleos get table vistribution vistribution rewardhistor
+#     # echo "producers________________________________"
+#     # cleos get table volentixvote volentixvote producers
+#     # echo "voters___________________________________"
+#     # cleos get table volentixvote volentixvote voters
+#     # echo "dht___________________________________"
+#     # cleos get table vistribution vistribution dht
+#     # echo "inituptime___________________________________" 
+#     # cleos get table vistribution vistribution inituptime
+#     # echo "nodereward___________________________________"
+#     # cleos get table vistribution vistribution nodereward
+
+# done
 
 # cleos get account vtxtestpool1
 
-echo "uptimes__________________________________"
-cleos get table vistribution vistribution uptimes
-echo "reward history___________________________"
-cleos get table vistribution vistribution rewardhistor
-echo "producers________________________________"
-cleos get table volentixvote volentixvote producers
-echo "voters___________________________________"
-cleos get table volentixvote volentixvote voters
-echo "dht___________________________________"
-cleos get table vistribution vistribution dht
-echo "inituptime___________________________________" 
-cleos get table vistribution vistribution inituptime
-echo "nodereward___________________________________"
-cleos get table vistribution vistribution nodereward
+# echo "uptimes__________________________________"
+# cleos get table vistribution vistribution uptimes
+# echo "reward history___________________________"
+# cleos get table vistribution vistribution rewardhistor
+# echo "producers________________________________"
+# cleos get table volentixvote volentixvote producers
+# echo "voters___________________________________"
+# cleos get table volentixvote volentixvote voters
+# echo "dht___________________________________"
+# cleos get table vistribution vistribution dht
+# echo "inituptime___________________________________" 
+# cleos get table vistribution vistribution inituptime
+# echo "nodereward___________________________________"
+# cleos get table vistribution vistribution nodereward
 # killall nodeos
 # exit 1
 

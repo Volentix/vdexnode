@@ -1,74 +1,106 @@
 Preparation
 ===========
 
-**Main accounts on Jungle testnet 2** \* DONE
+**Multi blockchain test network**\
+**EOSIO**
 
-1.  vltxstakenow\
-    *The staking contract*
+1.  EOSIO Public Key
 
-2.  volentixtsys\
-    *The main token contract, emulation of volentixgsys*
+2.  EOSIO Private Key
 
-3.  vistribution\
-    *Distribution contract*
+3.  Cleos command
 
-4.  volentixvote\
-    *Voting contract*
+4.  Path to nodeos binary
 
-5.  volentixsale\
-    Pool
+5.  Path to keosd binary
 
-**Other preparatory actions**
+6.  Path to latest contracts directory
 
-1.  compile Volentixgsys.cpp \* DONE\
-    <https://github.com/Volentix/volentix_contracts/blob/master/volentixgsys/src/volentixgsys.cpp>
+7.  Path to 1.8.x contracts directory
 
-2.  Deploy main token on *volentixtsys* \* DONE
+8.  Path to nodes directory
 
-3.  Create 2.1 billion TVTX \* DONE
+9.  Path to genesis.json
 
-4.  Create volentixsale testnet account and issue balance of EOS
-    volentixsale (128153044.02514328 TVTX) \* DONE
+10. Path to wallet directory
 
-5.  Create registering node account on eosio testnet and issue
-    v11111111111 1000000 TVTX
+11. Path to log file
 
-6.  Deploy vdexdposvote contract to volentixvote + ressources \* DONE
+12. The eosio.system symbol
 
-7.  Deploy vtxdistribut contract to vistribution + ressources \* DONE
+13. Max number of users. (0 = no limit)
 
-8.  Deploy volentixstak contract to vltxstakenow + ressources \* DONE
+14. Maximum user keys to import into wallet
 
-9.  Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten \* DONE
+15. How much funds for each user to spend on ram
 
-10. Deploy custodian on v22222222222 + ressources \* DONE
+16. Minimum stake before allocating unstaked funds
 
-11. set v22222222222 permissions for volentixtsys \* DONE
+17. Maximum unstaked funds
 
-12. set v22222222222 permissions for volentixtsys \* DONE
+18. Maximum number of producers. (0 = no limit)
 
-13. Put condition for 10000 VTX staked in vltxstakenow \* DONE
+19. Minimum producer funds
 
-14. Put condition for 10000 VTX staked in vltxcustodian \* DONE
+20. Number of producers for which each user votes
 
-15. Integrate oracle functionality to volentixnode
+21. Number of voters
 
-16. Reward per container selection.\* DONE
+22. Number of users to transfer funds randomly
 
-17. Uptime validation DONE
+23. Time (s) to sleep to allow producers to sync
 
-18. Initialize v22222222222 *currentbal*
+24. HTTP port for cleos
 
-19. Clear v22222222222 *balances* buffer
+25. Killswitch
 
-20. Init vltxstakenow \* DONE
+26. Unlock Wallet
 
-21. Edit docker compose\
-    Initial default values
+27. Start boot node
 
-22. prevent issuing on the Ethereum side if there are less than 8 nodes
+28. Create system accounts (eosio.\*)
 
-**Docker network** \* DONE
+29. Install system contracts (token, msig)
+
+30. Create tokens
+
+31. Set system contract
+
+32. Initialiaze system contract
+
+33. Create staked accounts
+
+34. Register producers
+
+35. Start producers
+
+36. Vote for producers
+
+37. Claim rewards
+
+38. Proxy votes
+
+39. Resign eosio
+
+40. Replace system contract using msig
+
+41. Random transfer tokens (infinite loop)
+
+42. Show tail of node’s log
+
+**ETHEREUM**
+
+1.  Set up a distributed ethereum test network with openethereum.
+
+2.  Deploy the 777 contract onto it
+
+3.  create pools
+
+4.  Setup openzeppelin tests
+
+5.  bridging oracle/custodian contract
+
+**Docker network**
 
 1.  Eos wallet
 
@@ -85,11 +117,11 @@ Tests
 
 1.  **Staking test**
 
-    1.  v22222222222 stakes 10000 TVTX
+    1.  v11111111111 stakes 10000 TVTX
 
 2.  **Persistency test**
 
-    1.  Uptime
+    1.  Uptime**
 
     2.  Less than 8 nodes
 
@@ -102,22 +134,36 @@ Tests
 
     2.  Register and unregister nodes
 
-    3.  Reward selection and funds transfer
+    3.  Reward test
 
-4.  **Accuracy tests**
+        1.  Test job selection
 
-    1.  reward selection and funds transfer
+        2.  Test reward calculation
 
-Postulate
-=========
+        3.  Test transfer
 
-1.  A default active private key can be used to send to oracle
-    initially.
+    4.  Oracle test
+
+        1.  Decouple eth-vtx oracle and uptime
+
+        2.  Load tests
+
+Conclusions/Todo
+================
+
+1.  Bridging oracle on ethereum watching eos pool
 
 2.  Reverse proxy\
     A Nginx HTTPS reverse proxy is an intermediary proxy service which
     takes a client request, passes it on to one or more servers, and
-    subsequently delivers the server's response back to the client. In
+    subsequently delivers the server’s response back to the client. In
     our case for key management keosd has to be launched as daemon
     behind reverse proxy(nginx) nginx will be used to enable password
     based authentication.
+
+3.  Ethereum oracle finance mechanism will be determined in next
+    iteration
+
+4.  Bridging oracle persistency lock to be considered
+
+

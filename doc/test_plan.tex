@@ -8,7 +8,8 @@
 \usepackage{textcomp}
 \usepackage{hyperref}
 \usepackage{enumerate}
-\usepackage[numbers]{natbib}	
+\usepackage[numbers]{natbib}
+
 
 % set the default code style
 \lstset{
@@ -22,7 +23,7 @@
 }
 
 %opening
-\title{Volentix network test plan}
+\title{Multi blockchain, multi node network test plan}
 \author{
 		The Volentix team\\
 	\texttt{sylvain@volentixlabs.com}
@@ -36,75 +37,112 @@
 
 \section{Preparation}
 
-\textbf{Local network}  * {\color{green} ONGOING}
+\textbf{Multi blockchain test network}  \\		   
+   \textbf{EOSIO} 
+   \begin{enumerate}
+		\item EOSIO Public Key
+		\item EOSIO Private Key
+		\item Cleos command
+		\item Path to nodeos binary
+		\item Path to keosd binary
+		\item Path to latest contracts directory
+		\item Path to 1.8.x contracts directory
+		\item Path to nodes directory
+		\item Path to genesis.json
+		\item Path to wallet directory
+		\item Path to log file
+		\item The eosio.system symbol
+		\item Max number of users. (0 = no limit)
+		\item Maximum user keys to import into wallet
+		\item How much funds for each user to spend on ram
+		\item Minimum stake before allocating unstaked funds
+		\item Maximum unstaked funds
+		\item Maximum number of producers. (0 = no limit)
+		\item Minimum producer funds
+		\item Number of producers for which each user votes
+		\item Number of voters
+		\item Number of users to transfer funds randomly 
+		\item Time (s) to sleep to allow producers to sync
+		\item HTTP port for cleos
+		\item Killswitch
+		\item Unlock Wallet
+		\item Start boot node
+		\item Create system accounts (eosio.*)
+		\item Install system contracts (token, msig)
+		\item Create tokens
+		\item Set system contract
+		\item Initialiaze system contract
+		\item Create staked accounts
+		\item Register producers
+		\item Start producers
+		\item Vote for producers
+		\item Claim rewards
+		\item Proxy votes
+		\item Resign eosio
+		\item Replace system contract using msig
+		\item Random transfer tokens (infinite loop)
+		\item Show tail of node's log
+   	  \end{enumerate}   
+	 \textbf{ETHEREUM}
+	   \begin{enumerate}
+	   	\item Set up a distributed ethereum test network with openethereum. \item Deploy the 777 contract onto it
+	    \item create pools 
+	   	\item Setup openzeppelin tests
+	   	\item bridging oracle/custodian contract
+	   	\end{enumerate}       
+   \textbf{Docker network}	 
+\begin{enumerate}
+	\item Eos wallet
+	\item Openethereum
+	\item Bridging oracle
+	\item Bitcoin node
+	\item Vdex node
+\end{enumerate}   
 
-
- \textbf{Other preparatory actions}
-  		\begin{enumerate}
-
-  		    \item Wallets reside on normal host ~/eosio-wallet path
-		   \item Bash scripts run as root
-		   	\item Open another terminal for nodeos output(tty 2)
-  			\url{https://github.com/Volentix/vdexnode/tree/master/src/vdexnode/test} 
- 		  \item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten  * {\color{green} DONE}
- 		  \item Create reward pool {\color{red} TODO}
-		  \item prevent issuing on the Ethereum side if there are less than 8 nodes {\color{red} TODO}
-		   
-	 \end{enumerate}
-   \textbf{Docker network}	  * {\color{yellow} ONGOING}
-  \begin{enumerate}
-  	\item Eos wallet
-  	\item Openethereum
-  	\item Bridging oracle
-  	\item Bitcoin node
-  	\item Vdex node
-  \end{enumerate}
-   \textbf{Test network}	  * {\color{yellow} ONGOING}\\
-   Running nodeos binary and feeding the output to second terminal enables "caveman"
-   debugging on the chain. 
-   
 
 \section{Tests}
 					\begin{enumerate}
 						\item \textbf{Staking test}
 						\begin{enumerate}
-							\item v11111111111 stakes 10000 TVTX  {\color{green} DONE}
+							\item v11111111111 stakes 10000 TVTX  
 						\end{enumerate}
 						\item \textbf{Persistency test}  
 							\begin{enumerate}
-								\item Uptime\textit{} {\color{blue} REGRESSION}
-								\item Less than 8 nodes {\color{blue} REGRESSION}
-								\item Register and unregister nodes  {\color{green} DONE}
+								\item Uptime\textit{} 
+								\item Less than 8 nodes 
+								\item Register and unregister nodes  
 							\end{enumerate}
 						\item \textbf{Authority tests}
 							\begin{enumerate}
-							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS. {\color{green} DONE}
-							\item Register and unregister nodes  {\color{green} DONE}
-							\item Reward test	{\color{yellow} ONGOING}
+							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS. 
+							\item Register and unregister nodes  
+							\item Reward test	
 								\begin{enumerate}
-										\item Test job selection {\color{green} DONE}	
-										\item Test reward calculation {\color{yellow} ONGOING }	
-										\item Test transfer {\color{red} TODO}
+										\item Test job selection 	
+										\item Test reward calculation 	
+										\item Test transfer 
 
 								\end{enumerate}
-								\item Oracle test	* {\color{blue} REGRESSION }
+								\item Oracle test	
 							\begin{enumerate}
-								\item Decouple eth-vtx oracle and uptime {\color{blue} REGRESSION }
-								\item Load tests  {\color{red} TODO}
+								\item Decouple eth-vtx oracle and uptime 
+								\item Load tests 
 							\end{enumerate}
 						\end{enumerate}
 				\end{enumerate}
-\section{Postulates}
-\begin{enumerate} 
-	\item Reverse proxy \\
-	A Nginx HTTPS reverse proxy is an intermediary proxy service which takes a client request, passes it on to one or more servers, and subsequently delivers the server's response back to the client. 
-	In our case for key management keosd has to be launched as daemon behind reverse proxy(nginx)
-	nginx will be used to enable password based authentication.
-\end{enumerate}
 
-\section{Conclusions}
+\section{Conclusions/Todo}
 \begin{enumerate}
-	\item Oracle sending uptime does not observe micro service architecture 	{\color{red} TODO} 
+		\item Bridging oracle on ethereum watching eos pool  
+		\item Reverse proxy \\
+		A Nginx HTTPS reverse proxy is an intermediary proxy service which takes a client request, passes it on to one or more servers, and subsequently delivers the server's response back to the client. 
+		In our case for key management keosd has to be launched as daemon behind reverse proxy(nginx)
+		nginx will be used to enable password based authentication.
+		
+		\item Ethereum oracle finance mechanism will be determined in next iteration
+		\item Bridging oracle persistency lock to be considered
+		
+	
 \end{enumerate}
 
 \end{document}

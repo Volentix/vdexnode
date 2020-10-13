@@ -1,6 +1,7 @@
 Preparation
 ===========
 
+<<<<<<< HEAD
 **Multi blockchain test network**\
 **EOSIO**
 
@@ -13,9 +14,13 @@ Preparation
 4.  Path to nodeos binary
 
 5.  Path to keosd binary
+=======
+**Local network** \* ONGOING
+>>>>>>> 76e3d4462f5734fd9cb40a44ccb2e74017538229
 
 6.  Path to latest contracts directory
 
+<<<<<<< HEAD
 7.  Path to 1.8.x contracts directory
 
 8.  Path to nodes directory
@@ -101,6 +106,21 @@ Preparation
 5.  bridging oracle/custodian contract
 
 **Docker network**
+=======
+1.  Wallets reside on normal host  /eosio-wallet path
+
+2.  Bash scripts run as root
+
+3.  Open another terminal for nodeos output(tty 2)
+    <https://github.com/Volentix/vdexnode/tree/master/src/vdexnode/test>
+
+4.  Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten \* DONE
+
+5.  prevent issuing on the Ethereum side if there are less than 8 nodes
+    TODO
+
+**Docker network** \* ONGOING
+>>>>>>> 76e3d4462f5734fd9cb40a44ccb2e74017538229
 
 1.  Eos wallet
 
@@ -112,28 +132,51 @@ Preparation
 
 5.  Vdex node
 
+**Test network** \* DONE\
+Running nodeos binary and feeding the output to second terminal enables
+\"caveman\" debugging on the chain.
+
 Tests
 =====
 
 1.  **Staking test**
 
+<<<<<<< HEAD
     1.  v11111111111 stakes 10000 TVTX
 
 2.  **Persistency test**
 
     1.  Uptime**
+=======
+    1.  v11111111111 stakes 10000.00000000 VTX DONE
 
-    2.  Less than 8 nodes
+2.  **Persistency test**
 
-    3.  Register and unregister nodes
+    1.  Uptime DONE
+>>>>>>> 76e3d4462f5734fd9cb40a44ccb2e74017538229
+
+    2.  Less than 8 nodes DONE
+
+    3.  Register and unregister nodes DONE
 
 3.  **Authority tests**
 
     1.  Open, unlocks eos wallet and signs executes oracle balance
-        submisssion to EOS.
+        submisssion to EOS. DONE
 
-    2.  Register and unregister nodes
+    2.  Register and unregister nodes DONE
 
+    3.  Reward test DONE
+
+        1.  Test job selection DONE
+
+        2.  Test reward calculation DONE
+
+        3.  Test transfer DONE
+
+        4.  Test period DONE
+
+<<<<<<< HEAD
     3.  Reward test
 
         1.  Test job selection
@@ -167,3 +210,22 @@ Conclusions/Todo
 4.  Bridging oracle persistency lock to be considered
 
 
+=======
+    4.  Oracle test \* REGRESSION
+
+        1.  Decouple eth-vtx oracle and uptime DONE
+
+        2.  Bridge functionality ONGOING
+
+        3.  Load tests TODO
+
+Postulates/Todo
+===============
+
+Reverse proxy\
+A Nginx HTTPS reverse proxy is an intermediary proxy service which takes
+a client request, passes it on to one or more servers, and subsequently
+delivers the server's response back to the client. In our case for key
+management keosd has to be launched as daemon behind reverse
+proxy(nginx) nginx will be used to enable password based authentication.
+>>>>>>> 76e3d4462f5734fd9cb40a44ccb2e74017538229

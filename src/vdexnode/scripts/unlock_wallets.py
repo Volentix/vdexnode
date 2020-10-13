@@ -2,6 +2,15 @@
 import subprocess
 
 unlock = {
+    "eosio.bpay":"PW5JJ7DBT6GUxaMGMeWyxLsHGRQYwDUxMYXfJYDkewzANuCKTmLSW",
+    "eosio.msig":"PW5HypaF1psJPe2xdLnVcQu6V9cwteJFdYmsbpdKCxzbThbxGRFzj",
+    "eosio.names":"PW5JKUryRD6AsS7uxJSecAnm5HpqiLg1uiHFh2Wn6LhBYRSQkmZzU",
+    "eosio.ram":"PW5JNahAo8WGf9oAA4vBq36s1eepgYy7Du8W36T8Jr3qtyZgscYS1",
+    "eosio.ramfee":"PW5HuiLRY7oC4EWKnvX9PxVhrWKWWFyyJk6qP46ZKnAaXFGRuzVZH",
+    "eosio.saving":"PW5Jz9z5tifXgUw1qk29MjTDepk11YcJWJL98n5R8u1APxufXEbXg",
+    "eosio.token":"PW5JtagZ63kBgzmYqKmQ2KU7dS6uY4sryPacEvMPAhnZxjsZRxj1j",
+    "eosio.vpay":"PW5Hz3gAf1Uj85qSFExJPNs8vP78vm7Xt9ekDgZ8NNkyhNnEJCatH",
+    "eosio.rex":"PW5HrW61fuhsY7ufFHvsm3xVovET4qqZL5mQ81JMbLKjiuTNVPA8k",
     "distributvtx":"PW5JZANXxtN8t3mrDtKhmGs9tmTH5sbwHM3J3HPMqJZhdf4DrEB9v",
     "quaremachina":"PW5J8pUqvutkxRVZCJ1qgBNCUCmwocZc7DRHr6QnTbGKDtNJsJdRa",
     "volentixwvtx":"PW5JMHyTZSaVoD21oFJgUk7DsWwj3o5hknsYJdvSN9DKxxojwxbuz",
@@ -21,7 +30,8 @@ unlock = {
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
     "vtxcustodian":"PW5K6dDjZsNVLbngxezggpqURgMFuvcgHNwgEfBZYfyCaDWdqv1oh",
     "volentixstak":"PW5JCnyAbEC2bQefDeVBhZGXAXPpQTQC8ukVE1JX6veURoZJMFbxa",
-    "vtxtestpool1":"PW5JdNTQxvQhXr3HrXAJSnSbdZWtJHYSfHC6pdTot5eku5fjK69Gn"
+    "vtxtestpool1":"PW5JdNTQxvQhXr3HrXAJSnSbdZWtJHYSfHC6pdTot5eku5fjK69Gn",
+
 }
 
 retries=300

@@ -91,9 +91,6 @@ eosio-cpp -I ../contracts/volentixstak/volentixstak.hpp -o ../contracts/vtxdistr
 #    echo "run nodeos for now "
 # done
 
-
-
-
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos set contract volentixtsys ../tokens/volentixgsys/ volentixgsys.wasm volentixgsys.abi -p volentixtsys@active
 cleos set contract volentixstak ../contracts/volentixstak/ volentixstak.wasm volentixstak.abi -p volentixstak@active

@@ -22,10 +22,7 @@ void vltxcstdn::clearblnc()
        itr = balances.erase(itr);   
    }
    
-}//add contract name and precision here instead of hardcode?
-
-
-
+}
 
 void vltxcstdn::updtblnc(name account, uint64_t balance, uint64_t timestamp)
 {
@@ -83,6 +80,7 @@ void vltxcstdn::updtblnc(name account, uint64_t balance, uint64_t timestamp)
    currentbal new_current_balance;
    new_current_balance.balance = balance;
    if (amount_to_transfer > 0 && send == true){
+      eosio::print("CUSTODIAN TRANSFER");
       asset eos_balance = asset(amount_to_transfer, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
       _currentbal.set(new_current_balance, get_self());       
       std::vector<permission_level> p;

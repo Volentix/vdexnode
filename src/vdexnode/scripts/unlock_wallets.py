@@ -2,6 +2,7 @@
 import subprocess
 
 unlock = {
+    "eosio":"PW5KCsKVF1SGtJrPPXaTXfP49P4jMY77ih6p5RyHJ99K9NHVszHry",
     "eosio.bpay":"PW5JJ7DBT6GUxaMGMeWyxLsHGRQYwDUxMYXfJYDkewzANuCKTmLSW",
     "eosio.msig":"PW5HypaF1psJPe2xdLnVcQu6V9cwteJFdYmsbpdKCxzbThbxGRFzj",
     "eosio.names":"PW5JKUryRD6AsS7uxJSecAnm5HpqiLg1uiHFh2Wn6LhBYRSQkmZzU",

@@ -124,7 +124,6 @@ cleos get table vtxcustodian vtxcustodian currentbal
 
 sleep 60
 
-
 # killall node
 cleos get currency balance volentixtsys vltxstakenow
 cleos get currency balance volentixtsys v11111111111
@@ -132,7 +131,7 @@ cleos get currency balance volentixtsys v11111111111
 # # sudo apt install -y software-properties-common 
 # # sudo apt update 
 # # sudo apt install -y python3.8 
-# # cleos wallet list 
+# cleos wallet list 
 # killall nodeos
 # killall keosd
 # docker-compose down

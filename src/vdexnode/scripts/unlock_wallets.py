@@ -46,7 +46,6 @@ def open_wallets():
     for i in unlock:
         subprocess.Popen(["cleos", "wallet", "open", "-n", i])
 
-# unlock_wallets()
 # open_wallets()
 unlock_wallets()
 

@@ -27,9 +27,9 @@ nodeos \
 --http-validate-host=false \
 --verbose-http-errors \
 --enable-stale-production \
---p2p-peer-address localhost:9011 \
---p2p-peer-address localhost:9012 \
---p2p-peer-address localhost:9013 \
+--p2p-peer-address 45.77.137.183:9010 \
+#--p2p-peer-address localhost:9012 \
+#--p2p-peer-address localhost:9013 \
 --delete-all-blocks 2> /dev/pts/2& 
 #>> $DATADIR"/nodeos.log" 2>&1 & \
 # echo $! > $DATADIR"/eosd.pid"

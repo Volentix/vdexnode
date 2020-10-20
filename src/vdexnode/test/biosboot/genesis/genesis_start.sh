@@ -20,8 +20,8 @@ nodeos \
 --blocks-dir $DATADIR"/blocks" \
 --config-dir $DATADIR"/config" \
 --producer-name eosio \
---http-server-address 127.0.0.1:8888 \
---p2p-listen-endpoint 127.0.0.1:9010 \
+--http-server-address 140.82.56.143:8888 \
+--p2p-listen-endpoint 140.82.56.143:9010 \
 --access-control-allow-origin=* \
 --contracts-console \
 --http-validate-host=false \
@@ -30,6 +30,7 @@ nodeos \
 --p2p-peer-address 45.77.137.183:9010 \
 #--p2p-peer-address localhost:9012 \
 #--p2p-peer-address localhost:9013 \
---delete-all-blocks 2> /dev/pts/2& 
+--delete-all-blocks& 
+#2> /dev/pts/2& 
 #>> $DATADIR"/nodeos.log" 2>&1 & \
 # echo $! > $DATADIR"/eosd.pid"

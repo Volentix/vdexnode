@@ -6,7 +6,8 @@ cd biosboot/genesis/
 sleep 1
 stop.sh
 clean.sh
-sh genesis_start.sh > /dev/null 2>&1 &
+sh genesis_start.sh& 
+#> /dev/null 2>&1 &
 echo "DONE****************"
 sleep 2
 cleos get info

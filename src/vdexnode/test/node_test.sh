@@ -1,13 +1,17 @@
 #apt-get install -y python 3.x cmake git g++ build-essential python3-pip openssl curl jq psmisc
-# exec nodeos -e -p eosio --disable-replay-opts --delete-all-blocks --contracts-console --chain-state-history  --verbose-http-errors 2> /dev/pts/2& 
-
 killall nodeos
 python3 ../scripts/unlock_wallets.py
-cd ~/biosboot/genesis/
-sh genesis_start.sh
-
-sleep 3
+rm -r biosboot/genesis/blockchain/data
+cd biosboot/genesis/
+sleep 1
+stop.sh
+clean.sh
+sh genesis_start.sh& 
+#> /dev/null 2>&1 &
+echo "DONE****************"
+sleep 2
 cleos get info
+cleos wallet list
 cleos create account eosio eosio.bpay EOS88zoCUmSaUYiyZLLNZyA7YJqDxyVvMvQ5F69jE5LiAHkJGfzn6
 cleos create account eosio eosio.msig EOS7DTFGFTttABMQ5nP2imLRnXMNAhvBZDDX67m2H5bqxADRPL2cW
 cleos create account eosio eosio.names EOS8fgro2YWCc8wwxoDMa7mFPcEjttvRBGycbGBF89G59YFNDtLiD
@@ -18,25 +22,40 @@ cleos create account eosio eosio.stake EOS8anV4mmVpHHehVDfDmrJyYiLSeruUP847shNJw
 cleos create account eosio eosio.token EOS8covVEZE7W6wyVknoqe4SeKicpSXJ2BfXT7RdGDQP3g9uCCtGv
 cleos create account eosio eosio.vpay EOS75av7RYvYAJcHRmYggE8sWwvontpJ3mtbm2jKpxn5epvSFAh74
 cleos create account eosio eosio.rex EOS5DZJwRJgFREgAtg4bJJzi6ezmpqbfmDRpqHRGoerm58bg2xo46
-cleos set contract eosio.token ~/eosio.contracts/build/contracts/eosio.token/
-cleos set contract eosio.msig ~/eosio.contracts/build/contracts/eosio.msig/
+rm /root/vdexnode/src/vdexnode/test/biosboot/genesis/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb.*
+wget https://github.com/eosio/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+sudo apt-get install -y /root/vdexnode/src/vdexnode/test/biosboot/genesis/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+cd /root
+git clone https://github.com/EOSIO/eosio.contracts.git
+cd ./eosio.contracts/
+./build.sh -y
+cleos set contract eosio.token build/contracts/eosio.token/
+cleos set contract eosio.msig  build/contracts/eosio.msig/
 cleos push action eosio.token create '[ "eosio", "10000000000.0000 SYS" ]' -p eosio.token@active
 cleos push action eosio.token issue '[ "eosio", "1000000000.0000 SYS", "memo" ]' -p eosio@active
-
-#sudo apt remove -y eosio.cdt
-#cd ~/eosio.contracts-1.8.x
-#wget https://github.com/eosio/eosio.cdt/releases/download/v1.6.3/eosio.cdt_1.6.3-1-ubuntu-18.04_amd64.deb
-#sudo apt install -y ./eosio.cdt_1.6.3-1-ubuntu-18.04_amd64.deb
-#git checkout release/1.8.x
-#./build.sh -y 
-#echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-#sudo apt remove -y eosio.cdt
-#cd ~/eosio.contracts
+sudo apt-get remove -y eosio.cdt
+sudo chown -Rv _apt:root /var/cache/apt/archives/partial/
+sudo chmod -Rv 700 /var/cache/apt/archives/partial/
+cd ../eosio.contracts-1.8.x
+wget https://github.com/eosio/eosio.cdt/releases/download/v1.6.3/eosio.cdt_1.6.3-1-ubuntu-18.04_amd64.deb .
+updatedb
+locate eosio.cdt_1.6.3-1-ubuntu-18.04_amd64.deb
+sudo apt-get install -y /root/eosio.contracts-1.8.x/eosio.cdt_1.6.3-1-ubuntu-18.04_amd64.deb
+cd /root
+git clone https://github.com/EOSIO/eosio.contracts.git eosio.contracts-1.8.x
+cd ./eosio.contracts-1.8.x/
+git checkout release/1.8.x
+./build.sh -y
+cmake .
+make
+#sudo apt-get remove -y eosio.cdt
+#touch /root/eosio.contract
+#cd /root/eosio.contract
 #wget https://github.com/eosio/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
 #sudo apt install ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
 #cmake .
 #make
-cd ~/eosio.contracts-1.8.x/contracts/eosio.system/
+cd /root/eosio.contracts-1.8.x/contracts/eosio.system/
 echo "schedule_protocol_feature_activations"
 curl --request POST \
     --url http://127.0.0.1:8888/v1/producer/schedule_protocol_feature_activations \
@@ -49,7 +68,6 @@ do
 done    
 
 cleos get info
-cleos set contract eosio . eosio.system.wasm eosio.system.abi 
 cleos push action eosio activate '["f0af56d2c5a48d60a4a5b5c903edfb7db3a736a94ed589d0b797df33ff9d3e1d"]' -p eosio
 cleos push action eosio activate '["2652f5f96006294109b3dd0bbde63693f55324af452b799ee137a81a905eed25"]' -p eosio
 cleos push action eosio activate '["8ba52fe7a3956c5cd3a656a3174b931d3bb2abb45578befc59f283ecd816a405"]' -p eosio
@@ -62,8 +80,7 @@ cleos push action eosio activate '["1a99a59d87e06e09ec5b028a9cbb7749b4a5ad881900
 cleos push action eosio activate '["4e7bf348da00a945489b2a681749eb56f5de00b900014e137ddae39f48f69d67"]' -p eosio
 cleos push action eosio activate '["4fca8bd82bbd181e714e283f83e1b45d95ca5af40fb89ad3977b653c448f78c2"]' -p eosio
 cleos push action eosio activate '["299dcb6af692324b899b39f16d5a530a33062804e41f09dc97e9f156b4476707"]' -p eosio
-
-cd ~/eosio.contracts/contracts/eosio.system
+cd ~/root/eosio.contracts-1.8.x/contracts/eosio.system/
 for i in `seq 1 3`;
 do
     cleos set contract eosio . eosio.system.wasm eosio.system.abi 

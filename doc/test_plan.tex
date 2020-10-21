@@ -38,77 +38,27 @@
 \section{Preparation}
 
 \textbf{Multi blockchain test network}  \\		   
-   \textbf{EOSIO} 
+   \textbf{EOSIO}  
    \begin{enumerate}
-		\item EOSIO Public Key
-		\item EOSIO Private Key
-		\item Cleos command
-		\item Path to nodeos binary
-		\item Path to keosd binary
-		\item Path to latest contracts directory
-		\item Path to 1.8.x contracts directory
-		\item Path to nodes directory
-		\item Path to genesis.json
-		\item Path to wallet directory
-		\item Path to log file
-		\item The eosio.system symbol
-		\item Max number of users. (0 = no limit)
-		\item Maximum user keys to import into wallet
-		\item How much funds for each user to spend on ram
-		\item Minimum stake before allocating unstaked funds
-		\item Maximum unstaked funds
-		\item Maximum number of producers. (0 = no limit)
-		\item Minimum producer funds
-		\item Number of producers for which each user votes
-		\item Number of voters
-		\item Number of users to transfer funds randomly 
-		\item Time (s) to sleep to allow producers to sync
-		\item HTTP port for cleos
-		\item Killswitch
-		\item Unlock Wallet
-		\item Start boot node
-		\item Create system accounts (eosio.*)
-		\item Install system contracts (token, msig)
-		\item Create tokens
-		\item Set system contract
-		\item Initialiaze system contract
-		\item Create staked accounts
-		\item Register producers
-		\item Start producers
-		\item Vote for producers
-		\item Claim rewards
-		\item Proxy votes
-		\item Resign eosio
-		\item Replace system contract using msig
-		\item Random transfer tokens (infinite loop)
-		\item Show tail of node's log
+		\item 2 node test network {\color{green} DONE} 
+			\item add more nodes {\color{yellow} ONGOING} 
    	  \end{enumerate}   
-	 \textbf{ETHEREUM}
+	 \textbf{ETHEREUM} {\color{red} TODO} 
 	   \begin{enumerate}
 	   	\item Set up a distributed ethereum test network with openethereum. \item Deploy the 777 contract onto it
-	    \item create pools 
 	   	\item Setup openzeppelin tests
-	   	\item bridging oracle/custodian contract
+	   	\item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten
 	   	\end{enumerate}       
-   \textbf{Docker network}	 
+   \textbf{Docker network}	  {\color{red} TODO} 
 \begin{enumerate}
-	\item Eos wallet
+	\item Keosd proxy
+		\item Eos Node
 	\item Openethereum
 	\item Bridging oracle
 	\item Bitcoin node
 	\item Vdex node
 \end{enumerate}   
-
-<<<<<<< HEAD
-=======
-  		    \item Wallets reside on normal host ~/eosio-wallet path
-		   \item Bash scripts run as root
-		   	\item Open another terminal for nodeos output(tty 2)
-  			\url{https://github.com/Volentix/vdexnode/tree/master/src/vdexnode/test} 
- 		  \item Mint 2 test pools of 100000.00000000 ERC-777 VTX on Ropsten  * {\color{green} DONE}
-		  \item prevent issuing on the Ethereum side if there are less than 8 nodes {\color{red} TODO}
-		   
-	 \end{enumerate}
+			 
    \textbf{Docker network}	  * {\color{yellow} ONGOING}
   \begin{enumerate}
   	\item Eos wallet
@@ -117,63 +67,35 @@
   	\item Bitcoin node
   	\item Vdex node
   \end{enumerate}
-   \textbf{Test network}	  * {\color{green} DONE}\\
-   Running nodeos binary and feeding the output to second terminal enables "caveman"
-   debugging on the chain. 
-   
->>>>>>> 76e3d4462f5734fd9cb40a44ccb2e74017538229
+   \
+ 
 
 \section{Tests}
 					\begin{enumerate}
 						\item \textbf{Staking test}
-						\begin{enumerate}
-<<<<<<< HEAD
-							\item v11111111111 stakes 10000 TVTX  
-						\end{enumerate}
+						
 						\item \textbf{Persistency test}  
 							\begin{enumerate}
-								\item Uptime\textit{} 
-								\item Less than 8 nodes 
-								\item Register and unregister nodes  
+								\item Uptime {\color{red} TODO}
+								\item Less than 8 nodes check   {\color{red} TODO}
+								\item Register and unregister nodes, updates  {\color{red} TODO}
 							\end{enumerate}
 						\item \textbf{Authority tests}
 							\begin{enumerate}
-							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS. 
-							\item Register and unregister nodes  
-							\item Reward test	
-								\begin{enumerate}
-										\item Test job selection 	
-										\item Test reward calculation 	
-										\item Test transfer 
-=======
-							\item v11111111111 stakes 10000.00000000 VTX  {\color{green} DONE}
-						\end{enumerate}
-						\item \textbf{Persistency test}  
-							\begin{enumerate}
-								\item Uptime\textit{} {\color{green} DONE}
-								\item Less than 8 nodes {\color{green} DONE}
-								\item Register and unregister nodes  {\color{green} DONE}
-							\end{enumerate}
-						\item \textbf{Authority tests}
-							\begin{enumerate}
-							\item Open, unlocks eos wallet and signs executes oracle balance submisssion to EOS. {\color{green} DONE}
-							\item Register and unregister nodes  {\color{green} DONE}
-							\item Reward test	{\color{green} DONE}
-								\begin{enumerate}
-										\item Test job selection {\color{green} DONE}	
-										\item Test reward calculation {\color{green} DONE }	
-										\item Test transfer {\color{green} DONE}
-										\item Test period {\color{green} DONE}
->>>>>>> 76e3d4462f5734fd9cb40a44ccb2e74017538229
-
-								\end{enumerate}
+							\item Keosd running as a reverse proxy in docker network
+							\item Reward test	 {\color{green} DONE}
+								
 								\item Oracle test	
-							\begin{enumerate}
-<<<<<<< HEAD
-								\item Decouple eth-vtx oracle and uptime 
-								\item Load tests 
+							\begin{enumerate}						
+								\item Load tests
+									\item Ressources test 	 			
 							\end{enumerate}
-						\end{enumerate}
+							\item Ethereum {\color{red} TODO}  
+						   \begin{enumerate}
+						   		\item bridging oracle/custodian contract
+						   	\item prevent issuing on the Ethereum side if there are less than 8 nodes 
+						   	\end{enumerate}
+						
 				\end{enumerate}
 
 \section{Conclusions/Todo}
@@ -185,34 +107,11 @@
 		nginx will be used to enable password based authentication.
 		
 		\item Ethereum oracle finance mechanism will be determined in next iteration
-		\item Bridging oracle persistency lock to be considered
-		
-	
+		\item Bridging oracle persistency lock 
+		\item Vdexnode config mechanism
+			
 \end{enumerate}
-=======
-								\item Decouple eth-vtx oracle and uptime {\color{green} DONE }
-								\item Bridge functionality  {\color{yellow} ONGOING }
-								\item Load tests  {\color{red} TODO}
-							\end{enumerate}
-						\end{enumerate}
-				\end{enumerate}
-
-\section{Postulates/Todo}
-
-
-\begin{enumerate} 
-	\item Vdexnode config mechanism
-	\item VDex node EOSIO test net 
-	\begin{enumerate} 
-		\item Eosio config files {\color{green} DONE }
-		\item copy files on network
-		\item automate launch in vdexNode
-		\end{enumerate} 
-	\item Reverse proxy \\
-	A Nginx HTTPS reverse proxy is an intermediary proxy service which takes a client request, passes it on to one or more servers, and subsequently delivers the server's response back to the client. 
-	In our case for key management keosd has to be launched as daemon behind reverse proxy(nginx)
-	nginx will be used to enable password based authentication.
-
->>>>>>> 76e3d4462f5734fd9cb40a44ccb2e74017538229
+			
+\end{enumerate}
 
 \end{document}

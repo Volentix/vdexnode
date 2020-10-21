@@ -7,7 +7,8 @@ if [ ! -d $DATADIR ]; then
 fi
 
 nodeos \
---signature-provider EOS5g6mXhM4UesmKm4XDwmJYiz4A2tXAUQMpp3VWYkTAWad6G9c78=KEY:5JU3EK9LQoJpHctzaMJ6NBMdZari3uE7kAN9VqRDS9ryFRc4TMh \
+--genesis-json $DATADIR"/../../genesis.json" \
+--signature-provider <EOSIO_TEST_NODE_PRODUCER_PUBLIC_KEY>=KEY:<EOSIO_TEST_NODE_PRODUCER_PRIVATE_KEY> \
 --plugin eosio::producer_plugin \
 --plugin eosio::producer_api_plugin \
 --plugin eosio::chain_plugin \
@@ -19,16 +20,16 @@ nodeos \
 --blocks-dir $DATADIR"/blocks" \
 --config-dir $DATADIR"/config" \
 --producer-name $CURDIRNAME \
---http-server-address 127.0.0.1:8011 \
---p2p-listen-endpoint 127.0.0.1:9011 \
+--http-server-address <EOSIO_TEST_NODE_PRODUCER_PUBLIC_IP>:8888 \
+--p2p-listen-endpoint <EOSIO_TEST_NODE_PRODUCER_PUBLIC_IP>:9010 \
 --access-control-allow-origin=* \
 --contracts-console \
 --http-validate-host=false \
 --verbose-http-errors \
 --enable-stale-production \
+#genesis node or other
 --p2p-peer-address 140.82.56.143:9010 \
 #--p2p-peer-address localhost:9012 \
 #--p2p-peer-address localhost:9013 \
---hard-replay-blockchain \
 >> $DATADIR"/nodeos.log" 2>&1 & \
 echo $! > $DATADIR"/eosd.pid"

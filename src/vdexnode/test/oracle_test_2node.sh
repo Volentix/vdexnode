@@ -91,9 +91,12 @@ eosio-cpp -I ../contracts/volentixstak/volentixstak.hpp -o ../contracts/vtxdistr
 #    echo "run nodeos for now "
 # done
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 27c0f49bfd6edeeffa3bbf2c7ce2618c6b0c9b6a
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos --url  http://140.82.56.143:8888 set contract volentixtsys ../tokens/volentixgsys/ volentixgsys.wasm volentixgsys.abi -p volentixtsys@active
 cleos --url  http://140.82.56.143:8888 set contract volentixstak ../contracts/volentixstak/ volentixstak.wasm volentixstak.abi -p volentixstak@active
@@ -171,8 +174,13 @@ npm install --save web3-eth --unsafe-perm=true --allow-root
 npm install --save find-config --unsafe-perm=true --allow-root
 cleos --url  http://140.82.56.143:8888 push action vtxcustodian initbalance '{"balance":1985099999687}' -p vtxcustodian@active
 
+<<<<<<< HEAD
 node bridge_oracle.js& #2> /dev/pts/1& 
 # node vote_oracle2.js 2> /dev/pts/1& 
+=======
+node bridge_oracle.js 2> /dev/pts/1& 
+node vote_oracle2.js 2> /dev/pts/1& 
+>>>>>>> 27c0f49bfd6edeeffa3bbf2c7ce2618c6b0c9b6a
 
 
 

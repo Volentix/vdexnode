@@ -1,4 +1,0 @@
-#!/bin/bash
-bitcoind -port=1111 -datadir=/node1 -conf=/node1/.bitcoin.conf
-
-/bin/bash "$@"

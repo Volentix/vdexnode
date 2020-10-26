@@ -2,12 +2,13 @@
 chain = "demo-spec.json"
 base_path = "/tmp/parity1"
 [network]
-port = 30301
+port = 30300
+reserved_peers="./ips"
 [rpc]
-port = 8541
+port = 8540
 apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
 [websockets]
-port = 8451
+port = 8450
 [ipc]
 disable = true
 

@@ -5,10 +5,11 @@ CURDIRNAME=${PWD##*/}
 if [ ! -d $DATADIR ]; then
   mkdir -p $DATADIR;
 fi
-
+#Private key: 5JU3EK9LQoJpHctzaMJ6NBMdZari3uE7kAN9VqRDS9ryFRc4TMh
+#Public key: EOS5g6mXhM4UesmKm4XDwmJYiz4A2tXAUQMpp3VWYkTAWad6G9c78
 nodeos \
 --genesis-json $DATADIR"/../../genesis.json" \
---signature-provider <EOSIO_TEST_NODE_PRODUCER_PUBLIC_KEY>=KEY:<EOSIO_TEST_NODE_PRODUCER_PRIVATE_KEY> \
+--signature-provider EOS5g6mXhM4UesmKm4XDwmJYiz4A2tXAUQMpp3VWYkTAWad6G9c78=KEY:5JU3EK9LQoJpHctzaMJ6NBMdZari3uE7kAN9VqRDS9ryFRc4TMh \
 --plugin eosio::producer_plugin \
 --plugin eosio::producer_api_plugin \
 --plugin eosio::chain_plugin \
@@ -20,8 +21,8 @@ nodeos \
 --blocks-dir $DATADIR"/blocks" \
 --config-dir $DATADIR"/config" \
 --producer-name $CURDIRNAME \
---http-server-address <EOSIO_TEST_NODE_PRODUCER_PUBLIC_IP>:8888 \
---p2p-listen-endpoint <EOSIO_TEST_NODE_PRODUCER_PUBLIC_IP>:9010 \
+--http-server-address 45.77.137.183:8888 \
+--p2p-listen-endpoint 45.77.137.183:9010 \
 --access-control-allow-origin=* \
 --contracts-console \
 --http-validate-host=false \

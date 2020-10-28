@@ -6,23 +6,41 @@ var jsonFile = "build/contracts/VTX.json";
 var truffleFile = JSON.parse(fs.readFileSync(jsonFile));
 abi = truffleFile['abi']
 bytecode = truffleFile['bytecode']
-const privKey = '0x1db2c0cf57505d0f4a3d589414f0a0025ca97421d2cd596a9486bc7e2cd2bf8b'; // Genesis private key
-const address = '0x511bfda122bfff8df03bcfa6fca082e341f06ee6';
-const account = '0x511bfda122bfff8df03bcfa6fca082e341f06ee6';
-
-function deploy_contract(){
+let code = '0x' + bytecode;
+async function deploy_contract(){
     const myContract = new web3.eth.Contract(abi);
     myContract.deploy({data:bytecode}).send({
-      from:"0x87a8ad840b5787c8033979b0d67ed40c6952a719",
-        gas: 4700000
+      from:"0xb269c357ce08dbbc80b021d9024b07bd66585885",
+        gas: 4600000
     },(err,res) => {
         if(err){
             console.log(err);
+		console.log("error!!!!!!!");
         }
         if(res){
             console.log(res);
+		console.log("Great success!!!!");
         }
    })
+	.on('error', function(error){ console.log("error")})
+.on('transactionHash', function(transactionHash){ console.log(transactionHash)})
+.on('receipt', function(receipt){
+   console.log(receipt.contractAddress) // contains the new contract address
+})
+.on('confirmation', function(confirmationNumber, receipt){ consoel.log(confirmationNumber) })
+.then(function(myContract){
+    console.log(myContract.options.address) // instance with the new contract address
+});
+	
+
+	
+	//await sleep(2000);	
+ //web3.eth.getCode("0xb269c357ce08dbbc80b021d9024b07bd66585885").then(console.log);	
+ //web3.eth.getBalance("0xb269c357ce08dbbc80b021d9024b07bd66585885").then(console.log);	
     
 }
 deploy_contract();
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

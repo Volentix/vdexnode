@@ -43,10 +43,12 @@ module.exports = {
     // options below to some value.
     //
     development: {
-      host: '140.82.56.143', 
+      host: '127.0.0.1', 
       port: 8540, // Standard Ethereum port (default: none)
-      from: "0x1497adc741e4d1ee400da6f4adad5ab053500f78",        // Account to send txs from (default: accounts[0])
-      // eslint-disable-next-line camelcase
+      from: "0xb269c357ce08dbbc80b021d9024b07bd66585885",        // Account to send txs from (default: accounts[0])
+      gas: 100000,           // Gas sent with each transaction (default: ~6700000)
+      gasPrice: 0, 
+     // eslint-disable-next-line camelcase
       network_id: '*', // Any network (default: none)
     },
 
@@ -54,10 +56,7 @@ module.exports = {
     // advanced: {
     // port: 8777,             // Custom port
     // network_id: 1342,       // Custom network
-    // gas: 8500000,           // Gas sent with each transaction (default: ~6700000)
-    // gasPrice: 20000000000,  // 20 gwei (in wei) (default: 100 gwei)
     // from: <address>,        // Account to send txs from (default: accounts[0])
-    // websockets: true        // Enable EventEmitter interface for web3 (default: false)
     // },
 
     rinkeby: {
@@ -103,7 +102,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: '0.6.7', // Fetch exact version from solc-bin (default: truffle's version)
+      version: '0.6.0', // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       settings: {          // See the solidity docs for advice about optimization and evmVersion
        optimizer: {

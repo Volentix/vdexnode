@@ -32,7 +32,7 @@ If this is too expensive you can rent it from here:
 https://eosauthority.com/rex/dapps?network=eos
 
 ## Do I need VTX to become a node?
-Yes you need at least 10,0000 VTX
+Yes, you need at least 10,000 VTX
 
 ## I did not receive my VTX what do I do?
 Please advise the dev team, our feedback is important for fixing bugs.

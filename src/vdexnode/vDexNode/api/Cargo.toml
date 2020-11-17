@@ -1,6 +1,6 @@
 [package]
 name = "api"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Sébastien Blin <sebastien.blin@savoirfairelinux.com>"]
 edition = "2018"
 
@@ -25,9 +25,9 @@ structopt = "0.3"
 subtle = {version = "2", features = ["nightly"]}
 uuid = { version = "0.7", features = ["v4"] }
 
-[dependencies.curv]
-git = "https://github.com/KZen-networks/curv"
-features =  ["ec_secp256k1"]
+#[dependencies.curv]
+#git = "https://github.com/KZen-networks/curv"
+#features =  ["ec_secp256k1"]
 
 [dependencies.centipede]
 git = "https://github.com/KZen-networks/centipede"

@@ -105,7 +105,7 @@ services:
     container_name: vdexnode
     environment: # EDIT THESE VALUES!
       # - IP= # Comment to transform into a bootstrap
-      - EOSKEY=EOS8jvrLP2sDq6q7QiMGEAHewG3w1pgeAjjJt1Susr9jxfXcwmfVX
+      - EOSKEY=
       # - BITCOIN_USER=sylvain
       # - BITCOIN_PASS=VBtu_InZ1oTL1oeKkZbSm97QzLMTPr0yvo6AFY0GFT4=
       # - BITCOIN_ENDPOINT=bitcoin

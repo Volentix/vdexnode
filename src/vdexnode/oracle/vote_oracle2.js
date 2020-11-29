@@ -13,7 +13,7 @@ var defaultPrivateKey = '5JoNVLWQ4Wq7hZRgHu6vyjbqUpU4enHPn7sMMsnwtcJEzWrhaHY'
 const node_ip_address = process.env.NODE_IP_ADDRESS;
 
 
-let nodeos = 'http://127.0.0.1:8888';
+let nodeos = 'http://140.82.56.143:8888';
 
 async function main(){
     uptime();

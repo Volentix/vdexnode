@@ -21,7 +21,7 @@ const node_ip_address = process.env.NODE_IP_ADDRESS;
 let web3;
 let contract;
 let check; 
-let nodeos = 'http://127.0.0.1:8888';
+let nodeos = 'http://140.82.56.143:8888';
 var result; 
 
 async function main(){

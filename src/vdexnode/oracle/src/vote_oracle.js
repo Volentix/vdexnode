@@ -14,8 +14,13 @@ function main() {
   // Execute update_voting_info_EOS every 3 seconds
   setTimeout(() => {
     update_voting_info_EOS()
-      .catch(console.error)
-      .finally(() => main())
+      .then(
+        () => main(), // Success callback
+        (error) => { // Error callback
+          console.error(error)
+          main()
+        }
+      )
   }, 3000)
 }
 

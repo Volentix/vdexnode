@@ -45,11 +45,12 @@ module.exports = {
     development: {
       host: '127.0.0.1', 
       port: 8540, // Standard Ethereum port (default: none)
-      from: "0xb269c357ce08dbbc80b021d9024b07bd66585885",        // Account to send txs from (default: accounts[0])
-      gas: 100000,           // Gas sent with each transaction (default: ~6700000)
-      gasPrice: 0, 
-     // eslint-disable-next-line camelcase
-      network_id: '*', // Any network (default: none)
+      from: "0x1957ce2d67aeeefd47fbaea5bc37faa7a0a537a8",
+	//gas: "6058838",
+	gas:"6000000",    
+	//from: "0x511bfda122bfff8df03bcfa6fca082e341f06ee6",
+	   // from: "0xb269c357ce08dbbc80b021d9024b07bd66585885",        // Account to send txs from (default: accounts[0])	  
+	    network_id: '*', // Any network (default: none)
     },
 
     // Another network with more advanced options...
@@ -102,11 +103,11 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: '0.6.0', // Fetch exact version from solc-bin (default: truffle's version)
+      version: '0.6.2', // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       settings: {          // See the solidity docs for advice about optimization and evmVersion
        optimizer: {
-         enabled: false,
+         enabled: true,
          runs: 200
        },
        evmVersion: "byzantium"

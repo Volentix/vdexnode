@@ -29,7 +29,7 @@ unlock = {
     "v22222222222":"PW5K24xVDGzFSJFWahgoi58rMbWh4sE19dG9ERyczmmC1LciYKwAT",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
-    "vtxcustodian":"PW5K6dDjZsNVLbngxezggpqURgMFuvcgHNwgEfBZYfyCaDWdqv1oh",
+    "vtxcustodian":"PW5KPgJGtMrXomSmxRddrYq34CXHr93tZ1qusreRarMdYZn7EDEtX",
     "volentixstak":"PW5JCnyAbEC2bQefDeVBhZGXAXPpQTQC8ukVE1JX6veURoZJMFbxa",
     "vtxtestpool1":"PW5JdNTQxvQhXr3HrXAJSnSbdZWtJHYSfHC6pdTot5eku5fjK69Gn",
     "accountnum11":"PW5KEbZE91yjedDQwN37PY8V7c9ajiuDQG211VEWf1JyRKQTfqghC"

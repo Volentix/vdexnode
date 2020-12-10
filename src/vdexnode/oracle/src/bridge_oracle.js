@@ -13,10 +13,10 @@ const {
   ETH_POOL_ADDRESS,
   EOS_TOKEN_CONTRACT,
   EOS_POOL_ACCOUNT,
-  EOS_ACCOUNT,
-  EOS_CUSTODIAN_ACCOUNT,
   EOS_NODE_URL,
-  EOS_PRIVATE_KEY,
+  EOS_ACCOUNT,
+  EOS_ACCOUNT_PK,
+  EOS_CUSTODIAN_ACCOUNT,
 } = process.env
 
 async function main() {
@@ -65,7 +65,7 @@ async function main() {
 
 async function send_balance_EOS(balance) {
   console.log(`SEND BALANCE "${balance}"\n`)
-  const signatureProvider = new JsSignatureProvider([EOS_PRIVATE_KEY])
+  const signatureProvider = new JsSignatureProvider([EOS_ACCOUNT_PK])
   const rpc = new JsonRpc(EOS_NODE_URL, {
     fetch,
   })

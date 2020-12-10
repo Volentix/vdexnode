@@ -6,8 +6,8 @@ require('dotenv').config({ path: require('find-config')('.env') })
 const {
   EOS_NODE_URL,
   EOS_ACCOUNT,
+  EOS_ACCOUNT_PK,
   EOS_DISTRIBUTION_ACCOUNT,
-  EOS_DISTRIBUTION_ACCOUNT_PK,
 } = process.env
 
 function main() {
@@ -32,7 +32,7 @@ async function update_voting_info_EOS() {
   console.log('***************************************\n')
   console.log(dht.id)
   console.log('SEND VOTE INFO\n')
-  const signatureProvider = new JsSignatureProvider([EOS_DISTRIBUTION_ACCOUNT_PK])
+  const signatureProvider = new JsSignatureProvider([EOS_ACCOUNT_PK])
   const rpc = new JsonRpc(EOS_NODE_URL, { fetch })
   const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() })
   const info = await rpc.get_info()

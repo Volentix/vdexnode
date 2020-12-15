@@ -13,15 +13,19 @@ const eth_pool_address =  process.env.ETH_POOL_ADDRESS;
 const eos_token_contract = process.env.EOS_TOKEN_CONTRACT 
 const eos_pool_account = process.env.EOS_POOL_ACCOUNT 
 const eos_account = process.env.EOS_ACCOUNT 
-const custodian_account = process.env.CUSTODIAN_ACCOUNT 
+const custodian_account = process.env.EOS_CUSTODIAN_ACCOUNT 
 const distribution_account = process.env.EOS_DISTRIBUTION_ACCOUNT
 var defaultPrivateKey = '5JoNVLWQ4Wq7hZRgHu6vyjbqUpU4enHPn7sMMsnwtcJEzWrhaHY'
 const node_ip_address = process.env.NODE_IP_ADDRESS;
 
+
+
+
+
 let web3;
 let contract;
 let check; 
-let nodeos = 'http://127.0.0.1:8888';
+let nodeos = ' http://140.82.56.143:8888 ';
 var result; 
 
 async function main(){
@@ -29,7 +33,7 @@ async function main(){
   }
 async function eth_balance(){
     for (i =0;;i++) {
-            var web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545');
+            var web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:8540');
             var web3 = new Web3(web3Provider);
             check = web3.eth.isSyncing().then(result=>{return result;}).catch(result => {});
             check = await check;
@@ -90,7 +94,7 @@ async function send_balance_EOS(balance){
         (async () => {
             const result = await api.transact({
             actions: [{
-                account: custodian_account,
+                account: 'vtxcustodian',
                 name: 'updtblnc',
                 authorization: [{
                 actor: eos_account,

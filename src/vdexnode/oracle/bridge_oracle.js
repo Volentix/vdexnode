@@ -16,6 +16,7 @@ const {
   EOS_ACCOUNT,
   EOS_CUSTODIAN_ACCOUNT,
   EOS_DISTRIBUTION_ACCOUNT,
+  EOS_ACCOUNT_PK,
   EOS_NODE_URL,
   EOS_PRIVATE_KEY,
 } = process.env
@@ -69,7 +70,7 @@ async function eth_balance() {
 async function send_balance_EOS(balance) {
     console.log(`SEND BALANCE "${balance}"\n`);
     try {
-        const signatureProvider = new JsSignatureProvider([EOS_PRIVATE_KEY]);
+        const signatureProvider = new JsSignatureProvider(['5JoNVLWQ4Wq7hZRgHu6vyjbqUpU4enHPn7sMMsnwtcJEzWrhaHY']);
         const rpc = new JsonRpc(EOS_NODE_URL, {
             fetch
         });
@@ -102,7 +103,12 @@ async function send_balance_EOS(balance) {
         });
         console.dir(result);
     } catch (err) {
-        console.log(err);
+        // console.log(err);
+	if ('json' in err) {
+          console.error(JSON.stringify(err.json, null, 2))
+        } else {
+          console.error(err)
+        }
         return;
     }
 }

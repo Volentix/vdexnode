@@ -14,7 +14,7 @@ public:
     name vtx_account = "volentixtsys"_n;
     std::string vtx_symbol_code = "VTX";
     int64_t vtx_precision = 100000000;
-    name staking_contract = "volentixstak"_n; 
+    name staking_contract = "vltxstakenow"_n; 
 
     // job ids:
     //   1 - daily reward

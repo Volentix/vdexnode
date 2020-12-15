@@ -27,7 +27,7 @@ void vltxcstdn::clearblnc()
 void vltxcstdn::updtblnc(name account, uint64_t balance, uint64_t timestamp)
 {
    require_auth(account);
-   name staking_contract = "volentixstak"_n; 
+   name staking_contract = "vltxstakenow"_n; 
    auto staked = volentixstak::get_staked_amount(staking_contract, account);
    const double balance_tokens = staked.amount / vtx_precision;
    check(balance_tokens >= 10000.00000000, balance_tokens);
@@ -66,13 +66,13 @@ void vltxcstdn::updtblnc(name account, uint64_t balance, uint64_t timestamp)
    if(size > 8){
             balances.erase(balances.begin());   
    }
+
    bool send = false;
    //calculate consecutive 2/3 majority
    if (size != 0 && same /size  > .666666){
       send = true;
    }
    //determine amount
-   uint64_t test = 3;
    uint64_t amount_to_transfer = (current_balance - balance);
    std::string amount = std::to_string(amount_to_transfer);
    amount = "Impossible amount to transfer: " + amount;
@@ -80,18 +80,18 @@ void vltxcstdn::updtblnc(name account, uint64_t balance, uint64_t timestamp)
    currentbal new_current_balance;
    new_current_balance.balance = balance;
    if (amount_to_transfer > 0 && send == true){
-      eosio::print("CUSTODIAN TRANSFER");
-      asset eos_balance = asset(amount_to_transfer, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
-      _currentbal.set(new_current_balance, get_self());       
-      std::vector<permission_level> p;
-      p.push_back(permission_level{ name(TOKEN_ACC), "active"_n });
-      action(
-         p,
-         TOKEN_ACC,
-         "retire"_n,
-         std::make_tuple(eos_balance, std::string("test")) 
-      ).send();
-   }
+    eosio::print("CUSTODIAN TRANSFER");
+    asset eos_balance = asset(amount_to_transfer, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
+    _currentbal.set(new_current_balance, get_self());       
+    std::vector<permission_level> p;
+    p.push_back(permission_level{ name(TOKEN_ACC), "active"_n });
+    action(
+       p,
+       TOKEN_ACC,
+       "retire"_n,
+       std::make_tuple(eos_balance, std::string("test")) 
+    ).send();
+ }
 }
 
 void vltxcstdn::regnode(name account)

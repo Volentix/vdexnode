@@ -1,0 +1,16 @@
+[parity]
+chain = "demo-spec.json"
+base_path = "/tmp/parity2"
+[network]
+port = 30300
+reserved_peers="./ips"
+[rpc]
+port = 8540
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
+[websockets]
+port = 8450
+[ipc]
+disable = true
+[account]
+password = ["ss2.pwd"]
+unlock = ["0x1957CE2D67aeeEFD47fbaEa5BC37faA7A0a537A8"]

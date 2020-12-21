@@ -30,3 +30,4 @@ jspm_packages
 
 src/*.spec.js
 kubernetes
+.env.example

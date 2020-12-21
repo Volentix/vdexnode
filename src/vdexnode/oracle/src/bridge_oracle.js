@@ -54,7 +54,11 @@ async function main() {
     setTimeout(() => {
       update_balance()
         .then(callback, (error) => {
-          console.error(error)
+          if ('json' in error) {
+            console.error(JSON.stringify(error.json, null, 2))
+          } else {
+            console.error(error)
+          }
           callback()
         })
     }, 3000)
@@ -77,7 +81,13 @@ async function send_balance_EOS(balance) {
   })
   const timestamp = Date.now()
   const info = await rpc.get_info()
-  console.log(info.chain_id)
+  console.log(`CHAIN_ID: ${info.chain_id}`)
+  const data = {
+    account: EOS_ACCOUNT,
+    balance: balance,
+    timestamp,
+  }
+  console.log(`data: "${JSON.stringify(data)}"\n`)
   const result = await api.transact({
     actions: [
       {
@@ -89,11 +99,7 @@ async function send_balance_EOS(balance) {
             permission: 'active',
           },
         ],
-        data: {
-          account: EOS_ACCOUNT,
-          balance: balance,
-          timestamp: timestamp,
-        },
+        data,
       },
     ],
   }, {

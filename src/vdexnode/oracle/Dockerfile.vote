@@ -13,4 +13,4 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-CMD [ "node", "run", "bridge-oracle" ]
+CMD [ "npm", "run", "bridge-oracle" ]

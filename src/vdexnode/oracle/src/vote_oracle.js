@@ -8,7 +8,6 @@ const {
   EOS_ACCOUNT,
   EOS_ACCOUNT_PK,
   EOS_DISTRIBUTION_ACCOUNT,
-  NODE_INFO_URL,
 } = process.env
 
 async function main() {
@@ -33,18 +32,17 @@ async function main() {
 }
 
 async function update_voting_info_EOS() {
-  const response = await fetch(NODE_INFO_URL)
-  const dht = await response.json()
-  console.log('***************************************\n')
-  console.log("Node is up", dht)
-  console.log('***************************************\n')
-  console.log(dht.id)
-  console.log('SENDING VOTE INFO...\n')
   const signatureProvider = new JsSignatureProvider([EOS_ACCOUNT_PK])
   const rpc = new JsonRpc(EOS_NODE_URL, { fetch })
   const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() })
   const info = await rpc.get_info()
+  const data = {
+    account: EOS_ACCOUNT,
+    node_id: EOS_ACCOUNT,
+    memo: "hey",
+  }
   console.log(`Chain id: ${info.chain_id}`)
+  console.log(`DATA: ${JSON.stringify(data, null, 2)}`)
   return await api.transact({
     actions: [
       {
@@ -56,11 +54,7 @@ async function update_voting_info_EOS() {
             permission: 'active',
           },
         ],
-        data: {
-          account: EOS_ACCOUNT,
-          node_id: EOS_ACCOUNT,
-          memo: "hey",
-        },
+        data: data,
       },
     ],
   }, {

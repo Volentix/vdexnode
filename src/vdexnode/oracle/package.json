@@ -2,7 +2,6 @@
   "name": "oracle",
   "version": "1.0.0",
   "description": "Volentix Oracles",
-  "author": "Lohann Paterno Coutinho Ferreira",
   "scripts": {
     "bridge-oracle": "node src/bridge_oracle.js",
     "vote-oracle": "node src/vote_oracle.js"

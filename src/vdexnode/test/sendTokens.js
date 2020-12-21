@@ -2,7 +2,7 @@ require('dotenv').config();
 var Web3 = require('web3');
 // var Tx = require('ethereumjs-tx');
 var Tx = require("ethereumjs-tx").Transaction;
-const json  = require("../oracle/VTX.json");
+const json  = require("../oracle/src/VTX.json");
 var EthUtil = require('ethereumjs-util');
 var Wallet = require('ethereumjs-wallet');
 // const web3= new Web3('http://127.0.0.1:8545');
@@ -17,7 +17,7 @@ const main = async () => {
     // transferAmount = transferAmount.toString();
     var contractAddress = "0x71c5a83193399b15417ffda7f9406cd72f311d8a";//ropsten
     const contract = new web3.eth.Contract(json.abi, contractAddress);
-    new_vtx_balance = contract.methods.balanceOf(myAddress).call((err, result) => {}); 
+    new_vtx_balance = contract.methods.balanceOf(myAddress).call((err, result) => {});
     new_vtx_balance = await new_vtx_balance;
     console.log(new_vtx_balance);
     var balance = await contract.methods.balanceOf(myAddress).call();
@@ -25,7 +25,7 @@ const main = async () => {
     var count = await web3.eth.getTransactionCount(myAddress);
     console.log(`num transactions so far: ${count}`);
     count = count+1;
-        
+
     var gasPriceGwei = 60;
     var gasLimit = 4000000;
     // Chain ID of Ropsten Test Net is 3, replace it to 1 for Main Net

@@ -1,6 +1,6 @@
 let json = require('./VTX.json')
 const Web3 = require('web3')
-const { Api, JsonRpc, RpcError } = require('eosjs')
+const { Api, JsonRpc } = require('eosjs')
 const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig')
 const fetch = require('node-fetch')
 const { TextEncoder, TextDecoder } = require('util')
@@ -63,6 +63,7 @@ async function main() {
         })
     }, 3000)
   }
+
   callback()
   console.log('Listening...')
 }

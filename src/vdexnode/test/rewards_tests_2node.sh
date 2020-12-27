@@ -128,7 +128,8 @@
 #cleos --url  http://140.82.56.143:8888 push action volentixtsys transfer '{"from":"v22222222222", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v22222222222@active
 #cleos --url  http://140.82.56.143:8888 push action volentixtsys transfer '{"from":"v33333333333", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v33333333333@active
 #WORD="$ID"
-#MATCH="to_change"
+WORD="10101010101010"
+MATCH="to_change"
 ## echo "|____________________________________________________________________________________________________________________________________________|"
 #PAYLOAD='{"producer":"v11111111111","producer_name":"v11111111111","url":"https://ca.linkedin.com/in/sylvain-cormier-0592805?challengeId=AQGxyq1T82aaFgAAAXTZnJr9dxcc_QYJcrXQPqU8IJoUmXhDNY2IWtRDXf5R3CRTPrGPshqGewv4F4Gml-X20cQX-XuVkxaw9Q&submissionId=7d9297ca-7d3d-3916-7ed9-4b6721432015","key":"EOS6p2vZXiRpzz7FKhMtxFpKVKNZfnNb27coTJgSUZE4KzeSDdoCZ","node_id":to_change,"job_ids":[1,2]}'
 #PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")

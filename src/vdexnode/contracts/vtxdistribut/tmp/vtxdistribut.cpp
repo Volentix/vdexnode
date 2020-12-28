@@ -77,10 +77,10 @@ void vtxdistribut::getreward(name node) {
   //require_auth(node);
   node_rewards node_reward_table(get_self(), node.value);
   auto itr = node_reward_table.begin();
-  //auto itr = node_reward_table.end();
-  payreward(node, itr->amount, itr->memo);
-  node_reward_table.erase(itr);
-  
+  while (itr != node_reward_table.end()) {
+    payreward(node, itr->amount, itr->memo);
+    itr = node_reward_table.erase(itr);
+  }
 }
 
 void vtxdistribut::payreward(name account, asset quantity, std::string memo)
@@ -106,21 +106,26 @@ void vtxdistribut::uptime(name account, string node_id, string memo) {
   for (auto &id: job_ids_new) {
     calcrewards(account, id);
   }
-  std::vector<name> top_nodes = volentixvote::get_top_nodes(VOTING_CONTRACT, 1, 1);
-  asset amount;
+  //std::vector<name> top_nodes = volentixvote::get_top_nodes(VOTING_CONTRACT, 1, 1);
+  //asset amount;
+  //for (auto &node: top_nodes) {
 
-  name accnt = "volentixvote"_n;
-  name scope = "volentixvote"_n;
-  auto nodes =  volentixvote::producers_table(accnt, scope.value);
-  auto itr =    nodes.begin();
-  for (auto itr = nodes.cbegin(); itr != nodes.cend(); itr++) {
-	getreward(itr->owner);
-  }
+//	name difacc = "volentixvote"_n;
+//	name difscope = "volentixvote"_n;
+        	//auto db = volentixvote::(_self, _self);
+	//auto producers = volentixvote:: producers_table(difacc, difscope.value);
+//	producers_table producers(voting_contract, voting_contract.value);
+        //auto iterator = producers.find(account.value);
+       // check( iterator != producers.end(), "producer with this name doesn't exist" );
+	
+
+	 // getreward(node);
+  //}
 
   
   
-  //	getreward(nodes.owner);
- //	auto itr = dht_table.find(account.value);
+  
+  // auto itr = dht_table.find(account.value);
   // if(itr == dht_table.end()){
   //      dht_table.emplace(get_self(), [&] ( auto& row ) {
   //      row.account = account;

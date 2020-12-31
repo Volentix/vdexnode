@@ -20,7 +20,7 @@ public:
     //   1 - daily reward
     //   2 - ETH/VTXoracle
     
-    const uint32_t job_id_bounds[2] = {1,8};
+    const uint32_t job_id_bounds[2] = {1,2};
 
     volentixvote(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
                                                                       _producers(receiver, receiver.value),

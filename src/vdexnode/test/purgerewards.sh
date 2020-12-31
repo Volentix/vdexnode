@@ -11,9 +11,9 @@ do
 #    PAYLOAD=$(echo "$PAYLOAD" | sed "s/$MATCH/$WORD/g")
 #    echo "$PAYLOAD"
 #
-    # cleos --url  http://140.82.56.143:8888 push action vistribution getreward '{"node": "berthonytha2"}' -p vistribution@active
+    cleos --url  http://199.247.30.155:8888 push action vistribution getreward '{"node": "v3333333333"}' -p vistribution@active
+    cleos --url  http://140.82.56.143:8888 push action vistribution getreward '{"node": "berthonytha2"}' -p vistribution@active
     cleos --url  http://140.82.56.143:8888 push action vistribution getreward '{"node": "berthonytha1"}' -p vistribution@active
-    # cleos --url  http://140.82.56.143:8888 push action vistribution getreward '{"node": "v11111111111"}' -p vistribution@active
-    # cleos --url  http://140.82.56.143:8888 push action vistribution getreward '{"node": "v22222222222"}' -p vistribution@active
-    # cleos --url  http://140.82.56.143:8888 push action vistribution getreward '{"node": "v3333333333"}' -p vistribution@active
+    cleos --url  http://140.82.56.143:8888 push action vistribution getreward '{"node": "v11111111111"}' -p vistribution@active
+    cleos --url  http://140.82.56.143:8888 push action vistribution getreward '{"node": "v22222222222"}' -p vistribution@active
 done

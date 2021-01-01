@@ -1,0 +1,11 @@
+{
+  "published_database": "published-posts.json",
+  "source": {
+    "feed": "test",
+    "refresh_interval": 6000
+  },
+  "telegram": {
+    "token": "",
+    "channel": ETHVTXoracle
+  }
+}

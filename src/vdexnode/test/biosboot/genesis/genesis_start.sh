@@ -7,7 +7,7 @@ fi
 
 nodeos \
 --genesis-json $DATADIR"/../../genesis.json" \
---signature-provider EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT=KEY:5JDCvBSasZRiyHXCkGNQC7EXdTNjima4MXKoYCbs9asRiNvDukc \
+--signature-provider  EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT=KEY:5JDCvBSasZRiyHXCkGNQC7EXdTNjima4MXKoYCbs9asRiNvDukc=KEY:5JDCvBSasZRiyHXCkGNQC7EXdTNjima4MXKoYCbs9asRiNvDukc \
 --plugin eosio::producer_plugin \
 --plugin eosio::producer_api_plugin \
 --plugin eosio::chain_plugin \

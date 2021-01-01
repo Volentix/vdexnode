@@ -74,7 +74,14 @@ void volentixvote::voteproducer(const name voter_name, const std::vector <name> 
     require_auth(voter_name);
 
     check(producers.size() <= 21 , "You must vote for not more than 21 producers");
-   
+
+    for (size_t i = 0; i < producers.size(); i++) {
+        name producer = producers[i];
+
+        check(producer.value != voter_name.value, "producer cannot vote for himself");
+    }
+
+
     //get_token_balance(voter_name); 
     name staking_contract = "vltxstakenow"_n; 
     auto staked = volentixstak::get_staked_amount(staking_contract,voter_name);

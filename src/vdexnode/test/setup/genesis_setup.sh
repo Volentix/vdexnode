@@ -1,6 +1,7 @@
 #apt-get install -y python 3.x cmake git g++ build-essential python3-pip openssl curl jq psmisc
 killall nodeos
-python3 ../scripts/unlock_wallets.py
+cleos wallet create -n eosio --file password 
+cleos wallet import -n eosio --private-key "5JDCvBSasZRiyHXCkGNQC7EXdTNjima4MXKoYCbs9asRiNvDukc"
 rm -r biosboot/genesis/blockchain/data
 cd biosboot/genesis/
 sleep 1
@@ -12,16 +13,16 @@ echo "DONE****************"
 sleep 2
 cleos get info
 cleos wallet list
-cleos create account eosio eosio.bpay EOS88zoCUmSaUYiyZLLNZyA7YJqDxyVvMvQ5F69jE5LiAHkJGfzn6
-cleos create account eosio eosio.msig EOS7DTFGFTttABMQ5nP2imLRnXMNAhvBZDDX67m2H5bqxADRPL2cW
-cleos create account eosio eosio.names EOS8fgro2YWCc8wwxoDMa7mFPcEjttvRBGycbGBF89G59YFNDtLiD
-cleos create account eosio eosio.ram EOS7P96GArztS6HbnFKhhamGG6uLVR4Rirdt2h4jWJXQ4fmpGx8XY
-cleos create account eosio eosio.ramfee EOS8gPHiLEsuot5PbRDMnipAZ19ULZb7s8YUWcTCtcUctv8sRkhk4
-cleos create account eosio eosio.saving EOS6XvJesyDwcRhGN84BJPhju9DN1VR4yV2geVGWFjrcqsVdzHR6C
-cleos create account eosio eosio.stake EOS8anV4mmVpHHehVDfDmrJyYiLSeruUP847shNJwo5yRjYMTg7yJ
-cleos create account eosio eosio.token EOS8covVEZE7W6wyVknoqe4SeKicpSXJ2BfXT7RdGDQP3g9uCCtGv
-cleos create account eosio eosio.vpay EOS75av7RYvYAJcHRmYggE8sWwvontpJ3mtbm2jKpxn5epvSFAh74
-cleos create account eosio eosio.rex EOS5DZJwRJgFREgAtg4bJJzi6ezmpqbfmDRpqHRGoerm58bg2xo46
+cleos create account eosio eosio.bpay EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.msig EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.names EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.ram EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.ramfee EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.saving EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.stake EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.token EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.vpay EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
+cleos create account eosio eosio.rex EOS8UrDjUkeVxfUzUS1hZQtmaGkdWbGLExyzKF6569kRMR5TzSnQT
 rm /root/vdexnode/src/vdexnode/test/biosboot/genesis/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb.*
 wget https://github.com/eosio/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
 sudo apt-get install -y /root/vdexnode/src/vdexnode/test/biosboot/genesis/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
@@ -31,8 +32,8 @@ cd ./eosio.contracts/
 ./build.sh -y
 cleos set contract eosio.token build/contracts/eosio.token/
 cleos set contract eosio.msig  build/contracts/eosio.msig/
-cleos push action eosio.token create '[ "eosio", "10000000000.0000 SYS" ]' -p eosio.token@active
-cleos push action eosio.token issue '[ "eosio", "1000000000.0000 SYS", "memo" ]' -p eosio@active
+cleos push action eosio.token create '[ "eosio", "10000000000.0000 VTN" ]' -p eosio.token@active
+cleos push action eosio.token issue '[ "eosio", "1000000000.0000 VTN", "Volentix test network" ]' -p eosio@active
 sudo apt-get remove -y eosio.cdt
 sudo chown -Rv _apt:root /var/cache/apt/archives/partial/
 sudo chmod -Rv 700 /var/cache/apt/archives/partial/

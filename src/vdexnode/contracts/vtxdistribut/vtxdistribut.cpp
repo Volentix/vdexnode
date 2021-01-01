@@ -70,7 +70,7 @@ void vtxdistribut::calcrewards(name account, uint32_t job_id) {
       		amount = reward_iter->standby_amount;
       		memo = reward_iter->standby_memo;
     	}
-    	memo = std::to_string(job_id) + "*" + std::to_string(rank+1) + "*"  + std::to_string(now); 
+    	memo = std::to_string(job_id) + " | " + std::to_string(rank+1) + " | "  + std::to_string(now); 
    	  
     	add_reward(node, amount, memo);
   }

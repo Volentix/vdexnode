@@ -1,15 +1,14 @@
 #apt-get install -y python 3.x cmake git g++ build-essential python3-pip openssl curl jq psmisc
 killall nodeos
-cleos wallet create -n eosio --file password 
-cleos wallet import -n eosio --private-key "5JDCvBSasZRiyHXCkGNQC7EXdTNjima4MXKoYCbs9asRiNvDukc"
+killall keosd
+cp -r ../eosio-wallet ~/
+cleos wallet unlock -n eosio --password "PW5HqVwGQsiBGo3zLwWYwg3UFQAHikHCVkntR53oxRutRWYPy2GfZ"
 rm -r biosboot/genesis/blockchain/data
-cd biosboot/genesis/
+cd ../biosboot/genesis/
 sleep 1
 stop.sh
 clean.sh
 sh genesis_start.sh& 
-#> /dev/null 2>&1 &
-echo "DONE****************"
 sleep 2
 cleos get info
 cleos wallet list

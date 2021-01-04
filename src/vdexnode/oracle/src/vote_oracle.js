@@ -1,4 +1,4 @@
-const { Api, JsonRpc } = require('eosjs')
+const { Api, JsonRpc, RpcError } = require('eosjs')
 const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig')
 const fetch = require('node-fetch')
 const { TextEncoder, TextDecoder } = require('util')
@@ -27,15 +27,26 @@ async function main() {
           }
           main()
         },
+        () => main(), // Success callback
+        (error) => { // Error callback
+          console.error(error)
+          main()
+        }
       )
   }, 3000)
 }
 
 async function update_voting_info_EOS() {
+  const response = await fetch("http://127.0.0.1:8000");
+  const dht = await response.json();
+  console.log('***************************************\n')
+  console.log("Node is up", dht)
+  console.log('***************************************\n')
+  console.log(dht.id)
+  console.log('SEND VOTE INFO\n')
   const signatureProvider = new JsSignatureProvider([EOS_ACCOUNT_PK])
   const rpc = new JsonRpc(EOS_NODE_URL, { fetch })
   const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() })
-  const info = await rpc.get_info()
   const data = {
     account: EOS_ACCOUNT,
     node_id: EOS_ACCOUNT,
@@ -54,7 +65,11 @@ async function update_voting_info_EOS() {
             permission: 'active',
           },
         ],
-        data: data,
+        data: {
+          account: EOS_ACCOUNT,
+          node_id: "11111111",
+          memo: "hey",
+        },
       },
     ],
   }, {

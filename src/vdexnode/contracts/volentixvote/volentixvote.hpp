@@ -14,13 +14,13 @@ public:
     name vtx_account = "volentixtsys"_n;
     std::string vtx_symbol_code = "VTX";
     int64_t vtx_precision = 100000000;
-    name staking_contract = "volentixstak"_n; 
+    name staking_contract = "vltxstakenow"_n; 
 
     // job ids:
     //   1 - daily reward
     //   2 - ETH/VTXoracle
     
-    const uint32_t job_id_bounds[2] = {1,8};
+    const uint32_t job_id_bounds[2] = {1,2};
 
     volentixvote(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
                                                                       _producers(receiver, receiver.value),
@@ -48,6 +48,7 @@ public:
     [[eosio::on_notify("volentixstak::unstake")]]
     void onUnstake(name owner);
     
+
     static std::vector <name> get_voters_by_time(const name voting_account, const uint64_t from, const uint64_t to, const name user) {
         voters_table voters(voting_account, voting_account.value);
 
@@ -100,24 +101,23 @@ public:
         producers_table producers(voting_contract, voting_contract.value);
         auto producers_iter = producers.get_index<"prototalvote"_n>();
         std::vector<name> top_producers;
-        uint32_t i = 0;
+        //uint32_t i = 0;
         
-        auto size = std::distance(producers.cbegin(),producers.cend());    
-        eosio::print(size);
+        //auto size = std::distance(producers.cbegin(),producers.cend());    
+        //eosio::print(size);
         for (auto &producer : producers_iter) {
-            auto job_ids = get_jobs(voting_contract, producer.owner);
-            if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
+		//auto job_ids = get_jobs(voting_contract, producer.owner);
+            //if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
                 top_producers.push_back(producer.owner);
-                i++;
-            } else if (i >= top) {  
-                break;        
-            }
+              //  i++;
+            //} else if (i >= top) {  
+              //  break;        
+           // }
         }
         return top_producers;
     }
 
 
-private:
 
     struct [[eosio::table]] producer_info {
         name owner;
@@ -142,6 +142,9 @@ private:
     producers_table;
 
     producers_table _producers;
+
+
+
 
     struct [[eosio::table]] voter_info {
         name owner;

@@ -1,0 +1,3 @@
+curl --data '{"method":"parity_newAccountFromSecret","params":["0x1db2c0cf57505d0f4a3d589414f0a0025ca97421d2cd596a9486bc7e2cd2bf8b","hunter2"],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:8540
+{"jsonrpc":"2.0","result":"0x511bfda122bfff8df03bcfa6fca082e341f06ee6","id":1}
+

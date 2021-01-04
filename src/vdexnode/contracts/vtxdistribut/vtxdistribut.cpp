@@ -17,11 +17,23 @@ void vtxdistribut::setrewardrule(const reward_info& rule)
   } 
 }
 
+
+void vtxdistribut::delhistory() {
+    auto itr = rewardhistory.find(1);
+    while(itr!=rewardhistory.end()){
+      itr = rewardhistory.erase(itr);
+    }
+    auto itr2 = rewardhistory.find(2);
+    while(itr2!=rewardhistory.end()){
+      itr2 = rewardhistory.erase(itr2);
+    }
+
+}
 void vtxdistribut::calcrewards(name account, uint32_t job_id) {
   time_point_sec tps = current_time_point();
   uint32_t now = tps.sec_since_epoch();
 
-  auto reward_iter = rewards.find(job_id);
+  auto reward_iter = rewards.find(2);
   check(reward_iter != rewards.end(), "unknown job_id");
 
   auto history_iter = rewardhistory.find(job_id);
@@ -45,24 +57,25 @@ void vtxdistribut::calcrewards(name account, uint32_t job_id) {
     });
 
   }
-  // std::vector<name> top_nodes = volentixvote::get_top_nodes(VOTING_CONTRACT, reward_iter->standby_rank_threshold, job_id);
-  uint32_t rank  = volentixvote::get_rank(VOTING_CONTRACT, account);
   
-  // uint32_t rank = 0;
+  std::vector<name> top_nodes = volentixvote::get_top_nodes(VOTING_CONTRACT, reward_iter->standby_rank_threshold, job_id);
   string memo;
   asset amount;
-  // for (auto &node: top_nodes) {
-    if (rank < reward_iter->rank_threshold) {
-      amount = reward_iter->reward_amount;
-      memo = reward_iter->memo;
-    } else {
-      amount = reward_iter->standby_amount;
-      memo = reward_iter->standby_memo;
-    }
-    memo += " job_id: " + std::to_string(job_id) + " rank: " + std::to_string(rank+1) + " calcrewards timestamp: " + std::to_string(now); // rank starts from 1
-    add_reward(account, amount, memo);
-    // rank++;
-  // }
+  for (auto &node: top_nodes) {
+  	uint32_t rank  = volentixvote::get_rank(VOTING_CONTRACT, node);
+    	if (rank < reward_iter->rank_threshold) {
+      		amount = reward_iter->reward_amount;
+      		memo = reward_iter->memo;
+    	} else {
+      		amount = reward_iter->standby_amount;
+      		memo = reward_iter->standby_memo;
+    	}
+    	memo = std::to_string(job_id) + " | " + std::to_string(rank+1) + " | "  + std::to_string(now); 
+   	  
+    	add_reward(node, amount, memo);
+  }
+  
+  
 }
 
 void vtxdistribut::add_reward(name node, asset amount, string memo) {
@@ -72,34 +85,23 @@ void vtxdistribut::add_reward(name node, asset amount, string memo) {
     row.amount = amount;
     row.memo = memo;
   });
-  
 }
 
 void vtxdistribut::getreward(name node) {
 
-  require_auth(node);
+  //require_auth(node);
   node_rewards node_reward_table(get_self(), node.value);
   auto itr = node_reward_table.begin();
-  // auto size = std::distance(node_reward_table.cbegin(), node_reward_table.cend());
-  // eosio::print(size);
-  while (itr != node_reward_table.end()) {
-    eosio::print(itr->amount);
-    eosio::print("\n");
-    eosio::print((itr->memo));
-    eosio::print("\n");
-     eosio::print(node.to_string());
-    eosio::print("\n");
-    std::vector<permission_level> p; 
-    p.push_back(permission_level{ node, "active"_n });
-    p.push_back(permission_level{ pool_account, "active"_n });
+  while(itr!=node_reward_table.end()){
     payreward(node, itr->amount, itr->memo);
     itr = node_reward_table.erase(itr);
   }
+  
 }
 
 void vtxdistribut::payreward(name account, asset quantity, std::string memo)
 {
-	require_auth(account);
+	//require_auth(account);
   std::vector<permission_level> p;
   p.push_back(permission_level{ get_self(), "active"_n });
   action(
@@ -112,16 +114,22 @@ void vtxdistribut::payreward(name account, asset quantity, std::string memo)
 
 
 void vtxdistribut::uptime(name account, string node_id, string memo) { 
-  
-  check(!node_id.empty() , "Node needs to be up for rewards to work");
-  dht_index dht_table(get_self(), get_self().value);
+  //check(!node_id.empty() , "Node needs to be up for rewards to work");
+  //dht_index dht_table(get_self(), get_self().value);
   uint64_t size = 0;
   auto job_ids_new = volentixvote::get_jobs(VOTING_CONTRACT, account);
-  for (auto &id: job_ids_new) {
-    calcrewards(account, id);
+  //hardcoded for now
+  calcrewards(account, 1);
+  calcrewards(account, 2);
+  name accnt = "volentixvote"_n;
+  name scope = "volentixvote"_n;
+  auto nodes =  volentixvote::producers_table(accnt, scope.value);
+  auto itr =    nodes.begin();
+  for (auto itr = nodes.cbegin(); itr != nodes.cend(); itr++) {
+	  getreward(itr->owner);
   }
-  getreward(account);
-  // auto itr = dht_table.find(account.value);
+
+ //	auto itr = dht_table.find(account.value);
   // if(itr == dht_table.end()){
   //      dht_table.emplace(get_self(), [&] ( auto& row ) {
   //      row.account = account;

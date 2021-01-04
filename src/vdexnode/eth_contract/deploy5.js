@@ -9,16 +9,17 @@ var jsonFile = "build/contracts/VTX.json";
 var truffleFile = JSON.parse(fs.readFileSync(jsonFile));
 abi = truffleFile['abi']
 bytecode = truffleFile['bytecode']
-let code = bytecode;
+let code = '0x0' + bytecode;
 const myContract = new web3.eth.Contract(abi);
 var test;
 
 
 async function deploy_contract(){
-    var test = await myContract.deploy({data:bytecode}).send({
+    var test = await myContract.deploy({data: '0x0' + bytecode, arguments: 'Hi there!'}).send({
       //from:"0xb269c357ce08dbbc80b021d9024b07bd66585885",
-      from:"0x867bc02711e94b7d848b8423f07ac99e0db5b735",
-        gas: 0
+     // from:"0x867bc02711e94b7d848b8423f07ac99e0db5b735",
+	    from: "0x1957ce2d67aeeefd47fbaea5bc37faa7a0a537a8",
+      gas: 0
     },async function(error, transactionHash){
 	var address = await web3.eth.getTransaction(transactionHash);
 	  console.log(address.creates);

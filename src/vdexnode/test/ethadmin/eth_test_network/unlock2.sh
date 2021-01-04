@@ -1,0 +1,1 @@
+curl --data '{"method":"personal_unlockAccount","params":["0xf5B719378261d911a788E1498fCE36308EB9caff","hunter2",null],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:8540

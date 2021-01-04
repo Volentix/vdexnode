@@ -1,0 +1,26 @@
+const VTX = artifacts.require('VTX');
+const VTXRecipient = artifacts.require('VTXRecipient');
+
+require('@openzeppelin/test-helpers/configure')({ provider: web3.currentProvider, environment: 'truffle' });
+
+const { singletons } = require('@openzeppelin/test-helpers');
+
+module.exports = async function (deployer, network, accounts) {	
+	if (network === 'development') {
+    // In a test environment an ERC777 token requires deploying an ERC1820 registry
+  	await singletons.ERC1820Registry(accounts[0]);
+  }
+const startTime = latestTime() + duration.seconds(120);
+    const endTime = startTime + (86400 * 30); // 30 days
+    const ethRate = new web3.BigNumber(1000);
+    const wallet = accounts[0];
+	
+  const token = await VTX.deployed();
+		
+await deployer.deploy(token, startTime, endTime, ethRate, wallet);	
+	#await deployer.deploy(VTXRecipient, token.address);
+ 
+};
+
+ 	
+

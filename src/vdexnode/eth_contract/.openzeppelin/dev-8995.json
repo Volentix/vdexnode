@@ -1,0 +1,61 @@
+{
+  "contracts": {},
+  "solidityLibs": {},
+  "proxies": {
+    "vtx/Migrations": [
+      {
+        "address": "0x89127A948dC04E05c42C866523e0aFe6145Da140",
+        "kind": "NonProxy",
+        "bytecodeHash": "14197f59a039e593a73d9f8e4d0f0c325e1d65d609d8c0a9f536b68b37296a4e"
+      },
+      {
+        "address": "0x03a65C3Aa35534F642405325fFDB67Fc623bC262",
+        "kind": "NonProxy",
+        "bytecodeHash": "14197f59a039e593a73d9f8e4d0f0c325e1d65d609d8c0a9f536b68b37296a4e"
+      },
+      {
+        "address": "0x0C97D7e2Bc2466B52a90228e847BdaE17c500B34",
+        "kind": "NonProxy",
+        "bytecodeHash": "14197f59a039e593a73d9f8e4d0f0c325e1d65d609d8c0a9f536b68b37296a4e"
+      },
+      {
+        "address": "0x4eA4030C8CfC31f99bbA2D14Ac74d738DEF75977",
+        "kind": "NonProxy",
+        "bytecodeHash": "14197f59a039e593a73d9f8e4d0f0c325e1d65d609d8c0a9f536b68b37296a4e"
+      }
+    ],
+    "vtx/VTXSender": [
+      {
+        "address": "0x48cf3511420B33e9176526787655113e1e7698c0",
+        "kind": "NonProxy",
+        "bytecodeHash": "f68192cb467abd719cc7f54b8c2886de95414cdcb6bbf7d045a77a2940306c3f"
+      },
+      {
+        "address": "0x3FF1e883A13d7f5E0A85a1b1e43fE1A1dA7AE5aa",
+        "kind": "NonProxy",
+        "bytecodeHash": "f68192cb467abd719cc7f54b8c2886de95414cdcb6bbf7d045a77a2940306c3f"
+      }
+    ],
+    "vtx/VTXRecipient": [
+      {
+        "address": "0x3170F2A6dDe23D6167680270fdDd99b0789629EA",
+        "kind": "NonProxy",
+        "bytecodeHash": "975b656dcd7f2e3421f003d6e044edc1dad42798291f4b67fba7b81a73d880e2"
+      }
+    ],
+    "vtx/VTX": [
+      {
+        "address": "0x3FF1e883A13d7f5E0A85a1b1e43fE1A1dA7AE5aa",
+        "kind": "NonProxy",
+        "bytecodeHash": "453caf9fb14113e285f3b7cde6bfb1735a53cf4a6b2a9d7fe8977fa8025df961"
+      },
+      {
+        "address": "0xf5B719378261d911a788E1498fCE36308EB9caff",
+        "kind": "NonProxy",
+        "bytecodeHash": "453caf9fb14113e285f3b7cde6bfb1735a53cf4a6b2a9d7fe8977fa8025df961"
+      }
+    ]
+  },
+  "manifestVersion": "2.2",
+  "version": "1.0.0"
+}

@@ -46,6 +46,11 @@
             ]
         },
         {
+            "name": "delhistory",
+            "base": "",
+            "fields": []
+        },
+        {
             "name": "dht_info",
             "base": "",
             "fields": [
@@ -64,6 +69,16 @@
                 {
                     "name": "timestamp",
                     "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "getreward",
+            "base": "",
+            "fields": [
+                {
+                    "name": "node",
+                    "type": "name"
                 }
             ]
         },
@@ -245,6 +260,16 @@
         {
             "name": "calcrewards",
             "type": "calcrewards",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "delhistory",
+            "type": "delhistory",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "getreward",
+            "type": "getreward",
             "ricardian_contract": ""
         },
         {

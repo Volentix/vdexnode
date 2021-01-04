@@ -1,0 +1,17 @@
+# File users.toml
+# This configuration file can be used for either Alice, Bob or Charlie
+
+[parity]
+chain = "dev"
+base_path = "db.users"
+
+[rpc]
+port = 8540#default http port for RPC
+apis = ["secretstore"] # to access dedicated methods
+
+[secretstore]
+disable = true # users do not run a secret store node
+
+[network]
+port = 30300
+

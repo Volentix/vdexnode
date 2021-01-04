@@ -1,0 +1,54 @@
+[parity]
+<<<<<<< HEAD
+chain = "demo-spec.json"
+base_path = "/tmp/parity0"
+
+=======
+chain = "volentix.json"
+base_path = "/tmp/parity1"
+>>>>>>> e2a54a4639244f975f38109b2bd7c6ed88648c8d
+[network]
+port = 30300
+reserved_peers="./ips"
+
+[rpc]
+port = 8540
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
+<<<<<<< HEAD
+
+[ipc]
+disable = true
+
+[account]
+password = ["ss2.pwd"]
+unlock = ["0x1957CE2D67aeeEFD47fbaEa5BC37faA7A0a537A8"]
+
+[mining]
+engine_signer = "0x1957CE2D67aeeEFD47fbaEa5BC37faA7A0a537A8"
+reseal_min_period = 0
+min_gas_price = 0
+usd_per_tx = "0"
+
+=======
+[ipc]
+disable = true
+#[secretstore]
+#self_secret = "0xd11f9dc2c257e52bdc386a6a950701805bd942c70130b858d97cae91ec00e620"
+[account]
+#unlock = ["0x867bc02711e94b7d848b8423f07ac99e0db5b735"]
+password = ["ss0.pwd"]
+[mining]
+reseal_min_period = 0
+min_gas_price = 0
+>>>>>>> e2a54a4639244f975f38109b2bd7c6ed88648c8d
+[websockets]
+disable = false
+port = 8546
+interface = "local"
+origins = ["none"]
+apis = ["web3", "eth", "pubsub", "net", "parity", "parity_pubsub", "traces", "rpc"]
+hosts = ["none"]
+<<<<<<< HEAD
+
+=======
+>>>>>>> e2a54a4639244f975f38109b2bd7c6ed88648c8d

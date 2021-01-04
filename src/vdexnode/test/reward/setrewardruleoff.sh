@@ -1,0 +1,3 @@
+cleos --url  http://140.82.56.143:8888 push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"100000000","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"0","standby_rank_threshold":"0", "memo":"Voting","standby_memo":"Voting"}}' -p vistribution@active
+cleos --url  http://140.82.56.143:8888 push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"100000000","reward_amount":"66.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"0","standby_rank_threshold":"0", "memo":"Oracle","standby_memo":"Oracle"}}' -p vistribution@active
+

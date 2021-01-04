@@ -49,8 +49,10 @@ class[[eosio::contract]] vtxdistribut : public eosio::contract {
         [[eosio::action]]
         void calcrewards(name account, uint32_t job_id);
 
-        // [[eosio::action]]
+        [[eosio::action]]
         void getreward(name node);
+        [[eosio::action]]    
+        void delhistory(); 
 
         struct [[eosio::table]] reward_info {
             uint32_t reward_id;

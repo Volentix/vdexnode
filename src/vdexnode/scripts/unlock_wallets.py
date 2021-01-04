@@ -2,7 +2,7 @@
 import subprocess
 
 unlock = {
-    "eosio":"PW5KCsKVF1SGtJrPPXaTXfP49P4jMY77ih6p5RyHJ99K9NHVszHry",
+    "eosio":"PW5JDoY7y16raGZVZMA6F53W8zm41ycNTG76jES5mAZrK9Zc2knLr",
     "eosio.bpay":"PW5JJ7DBT6GUxaMGMeWyxLsHGRQYwDUxMYXfJYDkewzANuCKTmLSW",
     "eosio.msig":"PW5HypaF1psJPe2xdLnVcQu6V9cwteJFdYmsbpdKCxzbThbxGRFzj",
     "eosio.names":"PW5JKUryRD6AsS7uxJSecAnm5HpqiLg1uiHFh2Wn6LhBYRSQkmZzU",
@@ -29,7 +29,7 @@ unlock = {
     "v22222222222":"PW5K24xVDGzFSJFWahgoi58rMbWh4sE19dG9ERyczmmC1LciYKwAT",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
     "v11111111111":"PW5HwdNt1TrmJKjrWGgcZMVFbgrp4SVkhTTWDG865o6DGhVzLz5op",
-    "vtxcustodian":"PW5K6dDjZsNVLbngxezggpqURgMFuvcgHNwgEfBZYfyCaDWdqv1oh",
+    "vtxcustodian":"PW5KPgJGtMrXomSmxRddrYq34CXHr93tZ1qusreRarMdYZn7EDEtX",
     "volentixstak":"PW5JCnyAbEC2bQefDeVBhZGXAXPpQTQC8ukVE1JX6veURoZJMFbxa",
     "vtxtestpool1":"PW5JdNTQxvQhXr3HrXAJSnSbdZWtJHYSfHC6pdTot5eku5fjK69Gn",
     "accountnum11":"PW5KEbZE91yjedDQwN37PY8V7c9ajiuDQG211VEWf1JyRKQTfqghC"

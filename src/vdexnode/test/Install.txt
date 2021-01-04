@@ -1,0 +1,24 @@
+- install docker
+- install eos
+- install cdt
+- apt-get update && apt-get install -y  git wget nodejs npm  python3.8
+- make sure ports are open for eos:8888, eth:, vdexnode:8000   
+- git clone git@github.com:Volentix/vdexnode.github
+- cd vdexnode/src/vdexnode/test/
+- killall docker instances
+- turn off network
+- cleos create key --to-console
+- save keys and wallet on veracrypt usb keys
+- cleos wallet create -n yourwalletname
+- cleos wallet import -n yourwalletname --private-key  "that key"
+- erase your history .bash_history
+- cleos --url  http://140.82.56.143:8888 create account  eosio "Eos account name" "EOS public key"
+- edit ../biosboot/node_template/start.sh 
+    - with account with test keys
+    - http-server-address <Your external IP> 
+    - p2p-listen-endpoint
+
+- edit docker-compose.yml file
+ -   - EOSKEY=<PRODUCER_EOS_KEY>
+
+

@@ -1,12 +1,34 @@
-#EOSIO install
-# apt-get update && apt-get install -y  git wget nodejs npm 
-#eosio_2.0.7-1-ubuntu-16.04_amd64
-#wget https://github.com/EOSIO/eos/releases/download/v2.0.7/eosio_2.0.7-1-ubuntu-18.04_amd64.deb \
-#apt install -y ./eosio_2.0.7-1-ubuntu-18.04_amd64.deb \
-#rm ./eosio_2.0.7-1-ubuntu-18.04_amd64.deb \
-# apt update 
-# apt install -y python3.8 
-#install docker
+# - install ubuntu 18.04
+# - install docker
+# - Install eos
+# - https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+   #wget https://github.com/EOSIO/eos/releases/download/v2.0.7/eosio_2.0.7-1-ubuntu-18.04_amd64.deb \
+   #apt install -y ./eosio_2.0.7-1-ubuntu-18.04_amd64.deb \
+# - Install cdt
+#  wget https://github.com/eosio/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+#  sudo apt install ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+# apt update\
+# apt-get update && apt-get install -y  git wget nodejs npm python3.8
+# make sure ports are open for eos:8888, eth:, vdexnode:8000   
+#  cd ~/
+#  git clone git@github.com:Volentix/vdexnode.github
+#  turn off network
+#  cleos create key --to-console
+#  save keys and wallet on veracrypt usb keys
+#  cleos wallet create -n <PRODUCER_ACCOUNT_NAME>
+#  cleos wallet import -n <PRODUCER_ACCOUNT_NAME> --private-key  <PRODUCER_PRIVATE_KEY>
+#  erase your history .bash_history && clear console output
+#  cleos --url  http://140.82.56.143:8888 create account  eosio <PRODUCER_ACCOUNT_NAME> <PRODUCER_PUBLIC_KEY>
+#  turn on network
+#  cd vdexnode/src/vdexnode/test/biosboot
+#  cp -r node_template <PRODUCER_ACCOUNT_NAME>
+#  edit start.sh 
+#    - signature-provider  <PRODUCER_PUBLIC_KEY>=KEY:<PRODUCER_PRIVATE_KEY>
+#    - http-server-address <PRODUCER_EXTERNAL_IP> 
+#    - p2p-listen-endpoint <PRODUCER_EXTERNAL_IP>
+#  cd ../../     
+#  edit docker-compose.yml file
+#    - EOSKEY=<PRODUCER_EOS_KEY>
 
 #killall nodeos
 #killall keosd

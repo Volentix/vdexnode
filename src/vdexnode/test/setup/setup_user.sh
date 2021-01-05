@@ -19,12 +19,12 @@
 #  save keys and wallet on veracrypt usb keys
 #  cleos wallet create -n <PRODUCER_ACCOUNT_NAME>
 #  cleos wallet import -n <PRODUCER_ACCOUNT_NAME> --private-key  <PRODUCER_PRIVATE_KEY>
-#unlock-timeout = 9000000
+# unlock-timeout = 9000000
 #  erase your history ~/.bash_history && clear previous console output
 #  cleos --url  http://140.82.56.143:8888 create account  eosio <PRODUCER_ACCOUNT_NAME> <PRODUCER_PUBLIC_KEY>
 #  mainnet turn on network
 #  cd vdexnode/src/vdexnode/test/biosboot
-#  cp -r node_template <PRODUCER_ACCOUNT_NAME>
+#  cp -r node_template aaaaaaaaaaaa
 #  edit start.sh 
 #    - signature-provider  <PRODUCER_PUBLIC_KEY>=KEY:<PRODUCER_PRIVATE_KEY>
 #    - http-server-address <PRODUCER_EXTERNAL_IP> 
@@ -34,22 +34,24 @@
 #    - EOSKEY=<PRODUCER_EOS_KEY>
 #docker network create --driver=bridge --subnet=172.20.0.0/24 vdexnode_volentix
 #Bring up vdexnode
-#docker stop $(docker ps -a -q)
-#docker rm -f $(docker ps -a -q)
-#docker rmi -f $(docker images -a -q)
-#cd ../vDexNode && docker build . -t volentix/vdexnode
-#docker network create --driver=bridge --subnet=172.20.0.0/24 vdexnode_volentix
-#cd ../ && docker-compose up -d > /dev/pts/0& 
-#sudo docker network inspect bridge
-#Make sure vdex is running
-# ID=$(curl -s http://127.0.0.1:8000/ | jq '.id')
-# if [ -z "$ID" ]; then killall nodeos; fi
-# if [ -z "$ID" ]; then docker-compose down; fi
-# if [ -z "$ID" ]; then exit 1; fi
-# #sleep 3
-# IP=$(curl -s http://127.0.0.1:8000/ | jq '.ips')
-# #echo "$IP"
-# sleep 3
-# EOS_KEY=$(curl -s http://127.0.0.1:8000/ | jq '.key')
-# #sleep 3
-# NODE_KEY=$(curl -s http://127.0.0.1:8000/ | jq '.public_key')
+
+
+docker stop $(docker ps -a -q)
+docker rm -f $(docker ps -a -q)
+docker rmi -f $(docker images -a -q)
+cd ../vDexNode && docker build . -t volentix/vdexnode
+docker network create --driver=bridge --subnet=172.20.0.0/24 vdexnode_volentix
+cd ../ && docker-compose up -d > /dev/pts/0& 
+sudo docker network inspect bridge
+Make sure vdex is running
+ID=$(curl -s http://127.0.0.1:8000/ | jq '.id')
+if [ -z "$ID" ]; then killall nodeos; fi
+if [ -z "$ID" ]; then docker-compose down; fi
+if [ -z "$ID" ]; then exit 1; fi
+#sleep 3
+IP=$(curl -s http://127.0.0.1:8000/ | jq '.ips')
+#echo "$IP"
+sleep 3
+EOS_KEY=$(curl -s http://127.0.0.1:8000/ | jq '.key')
+#sleep 3
+NODE_KEY=$(curl -s http://127.0.0.1:8000/ | jq '.public_key')

@@ -30,6 +30,6 @@ nodeos \
 #genesis node or other
 --p2p-peer-address 140.82.56.143:9010 \
 #--p2p-peer-address localhost:9012 \
-#--p2p-peer-address localhost:9013 \
+#--p2p-peer-add1ress localhost:9013 \
 >> $DATADIR"/nodeos.log" 2>&1 & \
 echo $! > $DATADIR"/eosd.pid"

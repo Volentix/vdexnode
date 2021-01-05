@@ -101,6 +101,11 @@ void vtxdistribut::getreward(name node) {
 
 void vtxdistribut::payreward(name account, asset quantity, std::string memo)
 {
+  name staking_contract = "vltxstakenow"_n; 
+    auto staked = volentixstak::get_staked_amount(staking_contract, account);
+    const double balance_tokens = staked.amount / vtx_precision;
+    check(balance_tokens >= 10000, "need at least 10000 VTX staked for registration");
+    
 	//require_auth(account);
   std::vector<permission_level> p;
   p.push_back(permission_level{ get_self(), "active"_n });

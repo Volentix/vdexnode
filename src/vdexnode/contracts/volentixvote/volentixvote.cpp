@@ -5,7 +5,11 @@ void volentixvote::regproducer(const name producer, const std::string &producer_
                                const std::string &key, const std::string &node_id, const std::vector<uint32_t> &job_ids) {
     require_auth(producer);
     check(jobs_valid(job_ids), "job ids vector is invalid");
-
+    name staking_contract = "vltxstakenow"_n; 
+    auto staked = volentixstak::get_staked_amount(staking_contract, producer);
+    const double balance_tokens = staked.amount / vtx_precision;
+    check(balance_tokens >= 10000, "need at least 10000 VTX staked for registration");
+    
     auto prod = _producers.find(producer.value);
 
     if (prod != _producers.end()) {

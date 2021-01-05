@@ -5,7 +5,7 @@ services:
     image: volentix/vdexnode
     container_name: vdexnode
     environment: # EDIT THESE VALUES!
-      # - IP= # Comment to transform into a bootstrap
+       - IP= 199.237.40.155
       - EOSKEY=<PRODUCER_EOS_KEY>
     expose:
       - "4222"

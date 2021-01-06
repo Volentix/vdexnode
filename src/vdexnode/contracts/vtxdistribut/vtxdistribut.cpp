@@ -81,9 +81,12 @@ void vtxdistribut::add_reward(name node, asset amount, string memo) {
   name accnt = "volentixvote"_n;
   name scope = "volentixvote"_n;
   auto voters =  volentixvote::voters_table(accnt, scope.value);
-  auto itr =    voters.begin();
+  auto voter = voters.find(node.value);
+  if (voter == voters.end()) {
+      return;
+  }
   for (auto itr = voters.cbegin(); itr != voters.cend(); itr++) {
-	  if(itr->owner == node && itr->producers.size() == 0){
+	  if(itr->owner == node && itr->producers.empty()){
       return;
     }
   }
@@ -112,7 +115,6 @@ void vtxdistribut::payreward(name account, asset quantity, std::string memo)
   name staking_contract = "vltxstakenow"_n; 
   auto staked = volentixstak::get_staked_amount(staking_contract, account);
   const double balance_tokens = staked.amount / vtx_precision;
-  //check(balance_tokens >= 10000, "you need at least 10000 VTX to get rewards");
   if(balance_tokens >= 10000){
     std::vector<permission_level> p;
     p.push_back(permission_level{ get_self(), "active"_n });

@@ -83,7 +83,7 @@ void vtxdistribut::add_reward(name node, asset amount, string memo) {
   auto voters =  volentixvote::voters_table(accnt, scope.value);
   auto itr =    voters.begin();
   for (auto itr = voters.cbegin(); itr != voters.cend(); itr++) {
-	  if(itr->owner == node){
+	  if(itr->owner == node && itr->producers.size() == 0){
       return;
     }
   }
@@ -98,7 +98,6 @@ void vtxdistribut::add_reward(name node, asset amount, string memo) {
 
 void vtxdistribut::getreward(name node) {
 
-  //require_auth(node);
   node_rewards node_reward_table(get_self(), node.value);
   auto itr = node_reward_table.begin();
   while(itr!=node_reward_table.end()){
@@ -111,25 +110,24 @@ void vtxdistribut::getreward(name node) {
 void vtxdistribut::payreward(name account, asset quantity, std::string memo)
 {
   name staking_contract = "vltxstakenow"_n; 
-    auto staked = volentixstak::get_staked_amount(staking_contract, account);
-    const double balance_tokens = staked.amount / vtx_precision;
-    check(balance_tokens >= 10000, "need at least 10000 VTX staked for registration");
-    
-	//require_auth(account);
-  std::vector<permission_level> p;
-  p.push_back(permission_level{ get_self(), "active"_n });
-  action(
-    p, 
-    vtxsys_contract, 
-    "transfer"_n, 
-    std::make_tuple( get_self(), account, quantity, memo )
-  ).send();
+  auto staked = volentixstak::get_staked_amount(staking_contract, account);
+  const double balance_tokens = staked.amount / vtx_precision;
+  //check(balance_tokens >= 10000, "you need at least 10000 VTX to get rewards");
+  if(balance_tokens >= 10000){
+    std::vector<permission_level> p;
+    p.push_back(permission_level{ get_self(), "active"_n });
+    action(
+      p, 
+      vtxsys_contract, 
+      "transfer"_n, 
+      std::make_tuple( get_self(), account, quantity, memo )
+    ).send();
+  }
+
 }
 
 
 void vtxdistribut::uptime(name account, string node_id, string memo) { 
-  //check(!node_id.empty() , "Node needs to be up for rewards to work");
-  //dht_index dht_table(get_self(), get_self().value);
   uint64_t size = 0;
   auto job_ids_new = volentixvote::get_jobs(VOTING_CONTRACT, account);
   //hardcoded for now
@@ -142,17 +140,7 @@ void vtxdistribut::uptime(name account, string node_id, string memo) {
   for (auto itr = nodes.cbegin(); itr != nodes.cend(); itr++) {
 	  getreward(itr->owner);
   }
-
- //	auto itr = dht_table.find(account.value);
-  // if(itr == dht_table.end()){
-  //      dht_table.emplace(get_self(), [&] ( auto& row ) {
-  //      row.account = account;
-  //      row.id = node_id;
-  //      row.timestamp = current_time_point().sec_since_epoch();
-  //     });
-  // }
 }
-
 
 void vtxdistribut::addblacklist(name account, string ip){
   require_auth( account );

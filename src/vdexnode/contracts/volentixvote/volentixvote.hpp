@@ -101,24 +101,12 @@ public:
         producers_table producers(voting_contract, voting_contract.value);
         auto producers_iter = producers.get_index<"prototalvote"_n>();
         std::vector<name> top_producers;
-        //uint32_t i = 0;
-        
-        //auto size = std::distance(producers.cbegin(),producers.cend());    
-        //eosio::print(size);
         for (auto &producer : producers_iter) {
-		//auto job_ids = get_jobs(voting_contract, producer.owner);
-            //if (i < top && std::find(job_ids.begin(), job_ids.end(), job_id) != job_ids.end()) {
-                top_producers.push_back(producer.owner);
-              //  i++;
-            //} else if (i >= top) {  
-              //  break;        
-           // }
+            top_producers.push_back(producer.owner);
         }
         return top_producers;
     }
-
-
-
+    
     struct [[eosio::table]] producer_info {
         name owner;
         double total_votes = 0;

@@ -94,11 +94,6 @@ void volentixvote::voteproducer(const name voter_name, const std::vector <name> 
         
         check(producer.value != voter_name.value, "producer cannot vote for himself");
     }
-
-
-    
-
-
     uint64_t now = current_time_point().sec_since_epoch();
 
     vote(voter_name, producers, balance_tokens, now);

@@ -1,5 +1,6 @@
 #include "vtxdistribut.hpp"
 #include "../volentixvote/volentixvote.hpp"
+#include "../volentixstak/volentixstak.hpp"
 #include <algorithm>
 void vtxdistribut::setrewardrule(const reward_info& rule)
 {
@@ -33,11 +34,9 @@ void vtxdistribut::calcrewards(name account, uint32_t job_id) {
   time_point_sec tps = current_time_point();
   uint32_t now = tps.sec_since_epoch();
 
-  auto reward_iter = rewards.find(2);
+  auto reward_iter = rewards.find(job_id);
   check(reward_iter != rewards.end(), "unknown job_id");
-
   auto history_iter = rewardhistory.find(job_id);
-
   //first reward
   if (history_iter == rewardhistory.end()) {      
       rewardhistory.emplace(get_self(), [&] ( auto& row ) {
@@ -79,6 +78,16 @@ void vtxdistribut::calcrewards(name account, uint32_t job_id) {
 }
 
 void vtxdistribut::add_reward(name node, asset amount, string memo) {
+  name accnt = "volentixvote"_n;
+  name scope = "volentixvote"_n;
+  auto voters =  volentixvote::voters_table(accnt, scope.value);
+  auto itr =    voters.begin();
+  for (auto itr = voters.cbegin(); itr != voters.cend(); itr++) {
+	  if(itr->owner == node){
+      return;
+    }
+  }
+
   node_rewards node_reward_table(get_self(), node.value);
   node_reward_table.emplace(get_self(), [&] ( auto& row ) {
     row.id = node_reward_table.available_primary_key(),
@@ -165,6 +174,13 @@ void vtxdistribut::rmblacklist(name account){
 }
 void vtxdistribut::initup(name account){
   require_auth( account );
+
+  name staking_contract = "vltxstakenow"_n; 
+    auto staked = volentixstak::get_staked_amount(staking_contract, account);
+    const double balance_tokens = staked.amount / vtx_precision;
+    check(balance_tokens >= 10000, "need at least 10000 VTX staked for init");
+  
+
     auto iterator = inituptime.find(account.value);
     
     check(iterator == inituptime.end(), "node already registered");

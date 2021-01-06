@@ -13,6 +13,8 @@
 
 using std::string;
 using namespace eosio;
+int64_t vtx_precision = 100000000;
+name staking_contract = "vltxstakenow"_n; 
 
 class[[eosio::contract]] vtxdistribut : public eosio::contract {
     public:

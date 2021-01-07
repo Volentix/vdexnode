@@ -1,4 +1,4 @@
-#cleos --url  http://140.82.56.143:8888 push action volentixtsys transfer '{"from":"v11111111111", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v11111111111@active
+cleos --url  http://140.82.56.143:8888 push action volentixtsys transfer '{"from":"v11111111111", "to":"volentixstak", "quantity":"10000.00000000 VTX", "memo":"1"}' -p v11111111111@active
 WORD="test"
 MATCH="to_change"
 echo "|____________________________________________________________________________________________________________________________________________|"
@@ -14,9 +14,7 @@ cleos --url  http://140.82.56.143:8888 push action vistribution setrewardrule '{
 cleos --url  http://140.82.56.143:8888 push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"10","reward_amount":"66.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"5","standby_rank_threshold":"10", "memo":"Vote","standby_memo":"Vote standby"}}' -p vistribution@active
 n=1
 cleos --url  http://140.82.56.143:8888 get currency balance volentixtsys v11111111111
-while [ $n -le 5 ]
-do
-    WORD="10101010101010"
+WORD="10101010101010"
     MATCH="to_change"
     # Vote for oneself//To do not working
     cleos --url  http://140.82.56.143:8888 push action volentixvote voteproducer  '{"voter_name": "v11111111111", "producers":["v22222222222"]}' -p v11111111111@active 
@@ -24,8 +22,8 @@ do
     cleos --url  http://140.82.56.143:8888 push action volentixvote voteproducer  '{"voter_name": "v33333333333", "producers":["v22222222222"]}' -p v33333333333@active 
 
     PAYLOAD='{"account":"v11111111111","job_ids":[1,2],"node_id":1,"memo":"1"}'
-    cleos --url  http://199.247.30.155:8888 get table vistribution vistribution rewardhistor
-    cleos --url  http://199.247.30.155:8888 get table vistribution vistribution nodereward
+    cleos --url  http://140.82.56.143:8888 get table vistribution vistribution rewardhistor
+    cleos --url  http://140.82.56.143:8888 get table vistribution vistribution nodereward
     cleos --url  http://140.82.56.143:8888 push action vistribution uptime $PAYLOAD -p v11111111111@active
     
     # sleep 1
@@ -34,14 +32,13 @@ do
     # cleos --url  http://140.82.56.143:8888 push action vistribution uptime $PAYLOAD -p v11111111111@active
     # sleep 1
     # cleos --url  http://140.82.56.143:8888 push action vistribution uptime $PAYLOAD -p v11111111111@active
-    cleos --url  http://199.247.30.155:8888 get table vistribution vistribution rewardhistor
-    cleos --url  http://199.247.30.155:8888 get table vistribution vistribution nodereward
+    cleos --url  http://140.82.56.143:8888 get table vistribution vistribution rewardhistor
+    cleos --url  http://140.82.56.143:8888 get table vistribution vistribution nodereward
 
 
    
 cleos --url  http://140.82.56.143:8888 get currency balance volentixtsys v11111111111   
 
-done
 
 cleos --url  http://140.82.56.143:8888 push action vistribution setrewardrule '{"rule":{"reward_id":"2","reward_period":"1000000","reward_amount":"66.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"0","standby_rank_threshold":"0", "memo":"Oracle","standby_memo":"Oracle"}}' -p vistribution@active
 cleos --url  http://140.82.56.143:8888 push action vistribution setrewardrule '{"rule":{"reward_id":"1","reward_period":"1000000","reward_amount":"10.00000000 VTX","standby_amount":"2.00000000 VTX","rank_threshold":"0","standby_rank_threshold":"0", "memo":"Voting","standby_memo":"Voting"}}' -p vistribution@active

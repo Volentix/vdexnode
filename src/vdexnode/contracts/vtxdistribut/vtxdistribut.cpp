@@ -20,6 +20,7 @@ void vtxdistribut::setrewardrule(const reward_info& rule)
 
 
 void vtxdistribut::delhistory() {
+    require_auth(get_self());
     auto itr = rewardhistory.find(1);
     while(itr!=rewardhistory.end()){
       itr = rewardhistory.erase(itr);
@@ -112,6 +113,7 @@ void vtxdistribut::getreward(name node) {
 
 void vtxdistribut::payreward(name account, asset quantity, std::string memo)
 {
+
   name staking_contract = "vltxstakenow"_n; 
   auto staked = volentixstak::get_staked_amount(staking_contract, account);
   const double balance_tokens = staked.amount / vtx_precision;
@@ -129,7 +131,8 @@ void vtxdistribut::payreward(name account, asset quantity, std::string memo)
 }
 
 
-void vtxdistribut::uptime(name account, string node_id, string memo) { 
+void vtxdistribut::uptime(name account, string node_id, string memo) {
+  require_auth(account); 
   uint64_t size = 0;
   auto job_ids_new = volentixvote::get_jobs(VOTING_CONTRACT, account);
   //hardcoded for now
@@ -196,4 +199,4 @@ void vtxdistribut::checkblacklist ( name account ){
   check( refuse == usblacklist.end(), "Your IP is from a restricted country, cannot proceed with reward" );
 }
 
-EOSIO_DISPATCH(vtxdistribut, (setrewardrule)(getreward)(calcrewards)(uptime)(addblacklist)(rmblacklist)(initup)(rmup))
+EOSIO_DISPATCH(vtxdistribut, (setrewardrule)(calcrewards)(uptime)(addblacklist)(rmblacklist)(initup)(rmup))

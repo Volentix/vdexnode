@@ -1,0 +1,47 @@
+{
+  "rows": [{
+      "code": "vtxstake1111",
+      "scope": "bdevgroup123",
+      "table": "accounts",
+      "payer": "vtxstake1111",
+      "count": 2
+    },{
+      "code": "vtxstake1111",
+      "scope": "berthonythe2",
+      "table": "accounts",
+      "payer": "vtxstake1111",
+      "count": 2
+    },{
+      "code": "vtxstake1111",
+      "scope": "intafeynbaba",
+      "table": "accounts",
+      "payer": "vtxstake1111",
+      "count": 2
+    },{
+      "code": "vtxstake1111",
+      "scope": "nikobalakhof",
+      "table": "accounts",
+      "payer": "vtxstake1111",
+      "count": 1
+    },{
+      "code": "vtxstake1111",
+      "scope": "vertodefi4me",
+      "table": "accounts",
+      "payer": "vtxstake1111",
+      "count": 3
+    },{
+      "code": "vtxstake1111",
+      "scope": "volentixdev2",
+      "table": "accounts",
+      "payer": "vtxstake1111",
+      "count": 1
+    },{
+      "code": "vtxstake1111",
+      "scope": "volentixqkxd",
+      "table": "accounts",
+      "payer": "vtxstake1111",
+      "count": 1
+    }
+  ],
+  "more": ""
+}

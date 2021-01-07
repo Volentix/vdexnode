@@ -113,6 +113,7 @@ cleos get account vtxtestpool1
 
 echo "|____________________________________________________________________________________________________________________________________________|"
 cleos push action volentixtsys create '{"issuer": "volentixtsys", "maximum_supply": "2100000000.00000000 VTX"}' -p volentixtsys@active
+
 cleos push action volentixtsys issue '{"to": "v11111111111", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "v22222222222", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active
 cleos push action volentixtsys issue '{"to": "v33333333333", "quantity": "200000.00000000 VTX", "memo": "tester"}' -p volentixtsys@active

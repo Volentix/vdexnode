@@ -60,7 +60,6 @@ void volentixvote::deluserinfo() {
     while(itr != _voters.end()){
         itr = _voters.erase(itr);
     }
-    itr = _voters.erase(itr);
 }
 
 

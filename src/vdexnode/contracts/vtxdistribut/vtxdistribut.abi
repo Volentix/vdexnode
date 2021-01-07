@@ -73,16 +73,6 @@
             ]
         },
         {
-            "name": "getreward",
-            "base": "",
-            "fields": [
-                {
-                    "name": "node",
-                    "type": "name"
-                }
-            ]
-        },
-        {
             "name": "init_uptime",
             "base": "",
             "fields": [
@@ -265,11 +255,6 @@
         {
             "name": "delhistory",
             "type": "delhistory",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "getreward",
-            "type": "getreward",
             "ricardian_contract": ""
         },
         {

@@ -113,7 +113,6 @@ void vtxdistribut::getreward(name node) {
 
 void vtxdistribut::payreward(name account, asset quantity, std::string memo)
 {
-
   name staking_contract = "vltxstakenow"_n; 
   auto staked = volentixstak::get_staked_amount(staking_contract, account);
   const double balance_tokens = staked.amount / vtx_precision;
@@ -127,7 +126,6 @@ void vtxdistribut::payreward(name account, asset quantity, std::string memo)
       std::make_tuple( get_self(), account, quantity, memo )
     ).send();
   }
-
 }
 
 

@@ -10,7 +10,6 @@ void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
    if (from == get_self() || to != get_self() || from == TOKEN_ACC) {
         return;
   }
-   
 
    // TODO: handle wrong memo
    uint16_t periods_num = stoi(memo);
@@ -32,8 +31,17 @@ void volentixstak::_stake(name account, asset quantity, uint16_t periods_num)
       });
 
    update_globals(quantity, subsidy, false);
+   // std::vector<permission_level> p;
+   // p.push_back(permission_level{ account, "active"_n });
+   // p.push_back(permission_level{ get_self(), "active"_n });
+    action(
+      permission_level{ get_self(), "active"_n }, 
+      "volentixwork"_n, 
+      "setvoter"_n, 
+      account
+    ).send();
+  }
    
-}
 
 void volentixstak::unstake_unlocked(name account, uint64_t timestamp)
 {

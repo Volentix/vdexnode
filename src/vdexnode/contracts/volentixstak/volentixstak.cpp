@@ -24,9 +24,9 @@ void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
    for (int i=1;i<=10;++i) periods.push_back(i);
    bool found = (std::find(periods.begin(), periods.end(), periods_num) != periods.end());
    check(found, "Memo must be a number 1-10");
-   double value = quantity.amount/100000000;
+   double value = quantity.amount/10000000;
    check(value >= 10000.00000000, "Minimum stake amount of 10,000 VTX");
-   check( value <= 10000000.00000000, "Exceeded 10,000,000 VTX staking limit");
+   check( value <= 10000000.00000000, "Exceededs 10,000,000 VTX staking limit");
    check(periods_num <= 10 && periods_num != 0, "Memo must be a number 1-10");
    _stake(from, quantity, periods_num);
 }

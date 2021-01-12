@@ -10,6 +10,7 @@
 #include "../eosio.token/include/eosio.token/eosio.token.hpp"
 
 
+
 static const uint32_t SYMBOL_PRE_DIGIT = 8;
 static const std::string TOKEN_SYMBOL = std::string("VTX");
 static const eosio::name TOKEN_ACC = eosio::name("volentixtsys");
@@ -122,7 +123,7 @@ private:
       } else {
          
          check( globals.cumulative_staked + globals.cumulative_subsidy + quantity + subsidy <= balance, "Contract needs funding for this amount");
-         check( globals.cumulative_staked + globals.cumulative_subsidy + quantity + subsidy <= MAX_STAKE_AMOUNT, "Exceeded 10,000,000 VTX staking limit");
+         
          globals.currently_staked += quantity;
          globals.cumulative_staked += quantity;
          globals.cumulative_subsidy += subsidy;

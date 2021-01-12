@@ -118,11 +118,12 @@ private:
       auto globals = _globals.get();
       auto balance = get_account_balance();   
       check(balance.amount > 0, "Balance must be greater than 0");
+      
       if (unstake) {
          globals.currently_staked -= quantity;
       } else {
-         
-         check( globals.cumulative_staked + globals.cumulative_subsidy + quantity + subsidy <= balance, "Contract needs funding for this amount");
+
+         check( globals.cumulative_staked.amount + globals.cumulative_subsidy.amount + quantity.amount + subsidy.amount <= balance.amount, "Contract needs funding for this amount");
          
          globals.currently_staked += quantity;
          globals.cumulative_staked += quantity;

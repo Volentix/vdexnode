@@ -1,8 +1,15 @@
 #include "volentixstak.hpp"
+#include <ctype.h>
 
 void volentixstak::initglobal() {
    globalamount initial_global_amounts;
    _globals.get_or_create(get_self(), initial_global_amounts);
+}
+
+bool is_number(const std::string& s)
+{
+    return !s.empty() && std::find_if(s.begin(), 
+        s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
 }
 
 void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
@@ -10,16 +17,22 @@ void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
    if (from == "v22222222222"_n || from == get_self() || to != get_self() || from == TOKEN_ACC) {
         return;
    }
-   check(!memo.empty(), "Memo must not be empty. Must be an number 1-10");
+   check(is_number(memo), "must be a digit");
    uint16_t periods_num = stoi(memo);
-   std::string::size_type sz;  
-   check(quantity.amount > 10000, "Minimum stake amount of 10000 VTX");
-   check(periods_num <= 10, "Memo must be a number 1-10");
+   std::list<int> periods;
+   int sum (0);
+   for (int i=1;i<=10;++i) periods.push_back(i);
+   bool found = (std::find(periods.begin(), periods.end(), periods_num) != periods.end());
+   check(found, "Memo must be a number 1-10");
+   double value = quantity.amount/100000000;
+   check(value >= 10000.00000000, "Minimum stake amount of 10,000 VTX");
+   check( value <= 10000000.00000000, "Exceeded 10,000,000 VTX staking limit");
+   check(periods_num <= 10 && periods_num != 0, "Memo must be a number 1-10");
    _stake(from, quantity, periods_num);
 }
 
 void volentixstak::_stake(name account, asset quantity, uint16_t periods_num)
-{
+{  
    asset subsidy = calculate_subsidy(quantity, periods_num);
    auto now = current_time_point().sec_since_epoch();
    account_stake stake_table(get_self(), account.value);
@@ -75,9 +88,3 @@ void volentixstak::unstake(name owner){
    unstake_unlocked(owner, now);
 }
 
-void test(){
-
-   uint64_t allo = 12345;
-   std::string allo2 = "please set this contract";
-
-}

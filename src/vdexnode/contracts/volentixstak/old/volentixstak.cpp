@@ -7,14 +7,14 @@ void volentixstak::initglobal() {
 
 void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
 {
-   if (from == "v22222222222"_n || from == get_self() || to != get_self() || from == TOKEN_ACC) {
+   if (from == get_self() || to != get_self() || from == TOKEN_ACC) {
         return;
-   }
-   check(!memo.empty(), "Memo must not be empty. Must be an number 1-10");
+  }
+   
+
+   // TODO: handle wrong memo
    uint16_t periods_num = stoi(memo);
-   std::string::size_type sz;  
-   check(quantity.amount > 10000, "Minimum stake amount of 10000 VTX");
-   check(periods_num <= 10, "Memo must be a number 1-10");
+   // check_blacklist(from);
    _stake(from, quantity, periods_num);
 }
 
@@ -23,24 +23,21 @@ void volentixstak::_stake(name account, asset quantity, uint16_t periods_num)
    asset subsidy = calculate_subsidy(quantity, periods_num);
    auto now = current_time_point().sec_since_epoch();
    account_stake stake_table(get_self(), account.value);
-   update_globals(quantity, subsidy, false);
+   
    stake_table.emplace(get_self(), [&](auto& row){
         row.id = stake_table.available_primary_key();
         row.amount = quantity;
         row.subsidy = subsidy;
         row.unlock_timestamp = now + periods_num * STAKE_PERIOD;
       });
+
+   update_globals(quantity, subsidy, false);
    
-    action(
-      permission_level{ get_self(), "active"_n }, 
-      "volentixwork"_n, 
-      "setvoter"_n, 
-      account
-    ).send();
 }
-   
+
 void volentixstak::unstake_unlocked(name account, uint64_t timestamp)
 {
+   check_blacklist(account);
 
    asset to_transfer = asset(0, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
    account_stake stake_table(get_self(), account.value);
@@ -57,6 +54,7 @@ void volentixstak::unstake_unlocked(name account, uint64_t timestamp)
       }
    }
 
+   // TODO: add some memo
    string memo = "unstaking fund";
 
    action(
@@ -75,9 +73,54 @@ void volentixstak::unstake(name owner){
    unstake_unlocked(owner, now);
 }
 
-void test(){
+// // For debug purposes
+// void volentixstak::mockunstake(name owner, uint64_t now){
+//    require_auth(get_self());
+//    unstake_unlocked(owner, now);
+// }
 
-   uint64_t allo = 12345;
-   std::string allo2 = "please set this contract";
+void volentixstak::addblacklist(name account)
+{
+   require_auth(get_self());
+   auto iter = _blacklist.find(account.value);
+   if (iter ==  _blacklist.end())
+   {
+       _blacklist.emplace(get_self(), [&](auto &row) {
+         row.account = account;
+      });
+   }
+}
 
+void volentixstak::rmblacklist(name account)
+{
+   require_auth(get_self());
+   auto itr = _blacklist.find(account.value);
+   if (itr != _blacklist.end())
+   {
+      _blacklist.erase(itr);
+   }
+};
+
+void volentixstak::check_blacklist(name account)
+{
+   auto itr = _blacklist.find(account.value);
+   check(itr == _blacklist.end(), "account is blacklisted.");
+};
+
+void volentixstak::clearstakes(name account)
+{
+   require_auth(get_self());
+   account_stake stake_table(get_self(), account.value);
+   auto itr = stake_table.begin();
+
+   while (itr != stake_table.end()) {
+      itr = stake_table.erase(itr);
+   }
+}
+
+void volentixstak::clearglobals()
+{
+   require_auth(get_self());
+   globalamount initial_global_amounts;
+   _globals.set(initial_global_amounts, get_self());  
 }

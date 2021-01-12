@@ -4,6 +4,31 @@
     "types": [],
     "structs": [
         {
+            "name": "addblacklist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "clearglobals",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "clearstakes",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "globalamount",
             "base": "",
             "fields": [
@@ -25,6 +50,16 @@
             "name": "initglobal",
             "base": "",
             "fields": []
+        },
+        {
+            "name": "rmblacklist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
         },
         {
             "name": "stake",
@@ -49,6 +84,16 @@
             ]
         },
         {
+            "name": "stake_blacklist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "unstake",
             "base": "",
             "fields": [
@@ -61,8 +106,28 @@
     ],
     "actions": [
         {
+            "name": "addblacklist",
+            "type": "addblacklist",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "clearglobals",
+            "type": "clearglobals",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "clearstakes",
+            "type": "clearstakes",
+            "ricardian_contract": ""
+        },
+        {
             "name": "initglobal",
             "type": "initglobal",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "rmblacklist",
+            "type": "rmblacklist",
             "ricardian_contract": ""
         },
         {
@@ -75,6 +140,13 @@
         {
             "name": "accountstake",
             "type": "stake",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "blacklist",
+            "type": "stake_blacklist",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

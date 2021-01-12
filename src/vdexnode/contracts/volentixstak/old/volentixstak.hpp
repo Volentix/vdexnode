@@ -7,18 +7,14 @@
 #include <eosio/transaction.hpp>
 #include <eosio/singleton.hpp>
 #include <string>
-#include "../eosio.token/include/eosio.token/eosio.token.hpp"
 
-
-static const uint32_t SYMBOL_PRE_DIGIT = 8;
-static const std::string TOKEN_SYMBOL = std::string("VTX");
-static const eosio::name TOKEN_ACC = eosio::name("volentixtsys");
-static const eosio::name TREASURY_ACC = eosio::name("volentixrez");
-static const eosio::asset MIN_STAKE_AMOUNT = eosio::asset(100000000000, eosio::symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
-static const eosio::asset MAX_STAKE_AMOUNT = eosio::asset(1000000000000000, eosio::symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
-// #define STAKE_PERIOD 30 * 24 * 60 * 60
-static const uint64_t STAKE_PERIOD = 5 * 60;
-static constexpr eosio::name VOTING_CONTRACT = eosio::name("volentixvote");
+#define SYMBOL_PRE_DIGIT 8
+#define TOKEN_SYMBOL "VTX"
+#define TOKEN_ACC name("volentixtsys")
+#define MIN_STAKE_AMOUNT asset(100000000000, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT))
+#define MAX_STAKE_AMOUNT asset(1000000000000000, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT))
+#define STAKE_PERIOD 30 * 24 * 60 * 60
+#define VOTING_CONTRACT name("volentixvote")
 
 using namespace eosio;
 using std::string;
@@ -29,8 +25,8 @@ public:
    using contract::contract;
 
    volentixstak(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
-                                                                      _globals(receiver, receiver.value) 
-                                                                      {}
+                                                                      _globals(receiver, receiver.value),
+                                                                      _blacklist(receiver, receiver.value) {}
 
 
    [[eosio::on_notify("volentixtsys::transfer")]] 
@@ -41,10 +37,24 @@ public:
 
    [[eosio::action]] 
    void unstake(name owner);
-   
+
+   // [[eosio::action]] 
+   // void mockunstake(name owner, uint64_t now);
+
    [[eosio::action]]
    void initglobal();
    
+   [[eosio::action]] 
+   void addblacklist(name account);
+   
+   [[eosio::action]]
+   void rmblacklist(name account);
+
+   [[eosio::action]]
+   void clearstakes(name account);
+
+   [[eosio::action]]
+   void clearglobals();
 
    static asset get_staked_amount( const name& token_contract_account, const name& account)
    {
@@ -83,6 +93,14 @@ private:
    typedef singleton<name("globalamount"), globalamount> global_amounts;
    global_amounts _globals;
 
+   struct [[eosio::table]] stake_blacklist
+   {
+      name account;
+      uint64_t primary_key() const { return account.value; }
+   };
+   
+   typedef multi_index<name("blacklist"), stake_blacklist> blacklist_table;
+   blacklist_table _blacklist;
 
    void check_quantity(asset quantity)
    {
@@ -94,35 +112,31 @@ private:
       
    }
 
-   
    asset calculate_subsidy(asset quantity, uint16_t periods_num) 
    {
       check_quantity(quantity);
       check(periods_num <= 10, "max allowed periods num is 10 stake periods");
-      double subsidy_part = (periods_num * ( 1 + (periods_num / 10.0) ) / 100);
+      double subsidy_part = ( 1 + periods_num / 10.0 ) / 100;
       asset subsidy = asset(0, symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
       subsidy.amount = quantity.amount * subsidy_part;
       return subsidy; 
    }
 
-   eosio::asset get_account_balance(){
-      std::string_view str= "VTX";
-      const symbol sym(str, 8);
-      eosio::asset balance = eosio::token::get_balance("volentixtsys"_n, get_self(), sym.code());
-      return balance;
-   }
+   void check_blacklist(name account);
 
    void update_globals(asset quantity, asset subsidy, bool unstake) 
    {
       auto globals = _globals.get();
-      auto balance = get_account_balance();   
-      check(balance.amount > 0, "Balance must be greater than 0");
+
       if (unstake) {
          globals.currently_staked -= quantity;
       } else {
-         
-         check( globals.cumulative_staked + globals.cumulative_subsidy + quantity + subsidy <= balance, "Contract needs funding for this amount");
-         check( globals.cumulative_staked + globals.cumulative_subsidy + quantity + subsidy <= MAX_STAKE_AMOUNT, "Exceeded 10,000,000 VTX staking limit");
+         // check global limit
+         check(
+            globals.cumulative_staked + globals.cumulative_subsidy + quantity + subsidy <= MAX_STAKE_AMOUNT, 
+            "Exceed total limit"
+         );
+
          globals.currently_staked += quantity;
          globals.cumulative_staked += quantity;
          globals.cumulative_subsidy += subsidy;
@@ -132,5 +146,4 @@ private:
    }
 
    void unstake_unlocked(name account, uint64_t timestamp);
-
 };

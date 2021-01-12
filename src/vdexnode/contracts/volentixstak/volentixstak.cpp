@@ -75,9 +75,3 @@ void volentixstak::unstake(name owner){
    unstake_unlocked(owner, now);
 }
 
-void test(){
-
-   uint64_t allo = 12345;
-   std::string allo2 = "please set this contract";
-
-}

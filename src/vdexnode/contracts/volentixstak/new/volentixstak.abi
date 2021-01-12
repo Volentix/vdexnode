@@ -1,0 +1,92 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [],
+    "structs": [
+        {
+            "name": "globalamount",
+            "base": "",
+            "fields": [
+                {
+                    "name": "currently_staked",
+                    "type": "asset"
+                },
+                {
+                    "name": "cumulative_staked",
+                    "type": "asset"
+                },
+                {
+                    "name": "cumulative_subsidy",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "initglobal",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "stake",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "amount",
+                    "type": "asset"
+                },
+                {
+                    "name": "subsidy",
+                    "type": "asset"
+                },
+                {
+                    "name": "unlock_timestamp",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "unstake",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "initglobal",
+            "type": "initglobal",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "unstake",
+            "type": "unstake",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "accountstake",
+            "type": "stake",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "globalamount",
+            "type": "globalamount",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": []
+}

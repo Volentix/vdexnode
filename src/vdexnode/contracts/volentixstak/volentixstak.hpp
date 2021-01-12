@@ -10,6 +10,7 @@
 #include "../eosio.token/include/eosio.token/eosio.token.hpp"
 
 
+
 static const uint32_t SYMBOL_PRE_DIGIT = 8;
 static const std::string TOKEN_SYMBOL = std::string("VTX");
 static const eosio::name TOKEN_ACC = eosio::name("volentixtsys");

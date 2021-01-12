@@ -1,5 +1,8 @@
 #include "volentixstak.hpp"
 
+void trigger_set(){
+
+}
 void volentixstak::initglobal() {
    globalamount initial_global_amounts;
    _globals.get_or_create(get_self(), initial_global_amounts);
@@ -10,11 +13,11 @@ void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
    if (from == "v22222222222"_n || from == get_self() || to != get_self() || from == TOKEN_ACC) {
         return;
    }
-   check(!memo.empty(), "Memo must not be empty. Must be an number 1-10");
+   check(memo.size() == 1 && !memo.empty(), "Memo must not be empty and 1 digit. Must be an number 1-10");
    uint16_t periods_num = stoi(memo);
-   std::string::size_type sz;  
-   check(quantity.amount > 10000, "Minimum stake amount of 10000 VTX");
-   check(periods_num <= 10, "Memo must be a number 1-10");
+   double value = quantity.amount/100000000;
+   check(value >= 10000.00000000, "Minimum stake amount of 10,000 VTX");
+   check(periods_num <= 10 && periods_num != 0, "Memo must be a number 1-10");
    _stake(from, quantity, periods_num);
 }
 

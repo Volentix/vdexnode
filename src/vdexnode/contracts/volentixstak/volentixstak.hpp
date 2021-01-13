@@ -14,7 +14,7 @@
 static const uint32_t SYMBOL_PRE_DIGIT = 8;
 static const std::string TOKEN_SYMBOL = std::string("VTX");
 static const eosio::name TOKEN_ACC = eosio::name("volentixtsys");
-static const eosio::name TREASURY_ACC = eosio::name("volentixrez");
+static const eosio::name TREASURY_ACC = eosio::name("v22222222222");
 static const eosio::asset MIN_STAKE_AMOUNT = eosio::asset(100000000000, eosio::symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
 static const eosio::asset MAX_STAKE_AMOUNT = eosio::asset(1000000000000000, eosio::symbol(TOKEN_SYMBOL, SYMBOL_PRE_DIGIT));
 // #define STAKE_PERIOD 30 * 24 * 60 * 60
@@ -107,9 +107,9 @@ private:
    }
 
    eosio::asset get_account_balance(){
-      std::string_view str= "VTX";
+      std::string_view str= TOKEN_SYMBOL;
       const symbol sym(str, 8);
-      eosio::asset balance = eosio::token::get_balance("volentixtsys"_n, get_self(), sym.code());
+      eosio::asset balance = eosio::token::get_balance(TOKEN_ACC, get_self(), sym.code());
       return balance;
    }
 

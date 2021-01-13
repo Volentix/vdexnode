@@ -14,7 +14,7 @@ bool is_number(const std::string& s)
 
 void volentixstak::onTransfer(name from, name to, asset quantity, string memo)
 {
-   if (from == "v22222222222"_n || from == get_self() || to != get_self() || from == TOKEN_ACC) {
+   if (from == TREASURY_ACC || from == get_self() || to != get_self() || from == TOKEN_ACC) {
         return;
    }
    check(is_number(memo), "must be a digit");

@@ -9,7 +9,7 @@
 *.lo
 *.o
 *.obj
-
+*.tex
 # Compiled Dynamic libraries
 *.so
 *.dylib

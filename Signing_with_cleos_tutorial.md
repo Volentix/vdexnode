@@ -52,7 +52,7 @@ Type your private key. You should see something like this:
 
 ```console
 
-private key: imported private key for: EOS8FBXJUfbANf3xeDWPoJxnip3Ych9HjzLBr1VaXRQFdkVAxwLE7
+private key: imported private key for:  <your_eos_public_key>
 
 ```
 
@@ -69,7 +69,7 @@ Use the provided tx.json to sign the transaction. (mainnet chain-id)
 
 ```
 
-cleos sign tx.json --public-key <eos_public_key> --chain-id aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906
+cleos sign tx.json --public-key <your_eos_public_key> --chain-id aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906
 
 ```
 

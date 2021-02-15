@@ -23,7 +23,7 @@ wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0
 sudo apt install ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
 ```
 
-## create wallet
+# create wallet
 ```
 cleos wallet create -n <named_wallet> --file password.pwd
 
@@ -39,7 +39,7 @@ saving password to passwd
 
 ```
 
-## import private key to wallets
+# import private key to wallets
 
 
 ```
@@ -56,14 +56,14 @@ private key: imported private key for: EOS8FBXJUfbANf3xeDWPoJxnip3Ych9HjzLBr1VaX
 
 ```
 
-## make sure the wallet is unlocked
+# make sure the wallet is unlocked
 
 ```
 cleos wallet unlock -n <named_wallet>
 
 ```
 
-## Sign transaction
+# Sign transaction
 
 Use the provided tx.json to sign the transaction. (mainnet chain-id)
 

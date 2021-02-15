@@ -23,3 +23,16 @@ wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0
 sudo apt install ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
 ```
 
+## create wallet
+```
+cleos wallet create -n named_wallet --file password.pwd
+
+```
+You should see the output below: 
+
+# shell
+Creating wallet: named_wallet
+Save password to use in the future to unlock this wallet.
+Without password imported keys will not be retrievable.
+saving password to passwd
+# shell

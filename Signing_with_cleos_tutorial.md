@@ -3,14 +3,17 @@
 
 ## Mac EOSIO install
 
-###Install package manager brew
+### Install package manager brew
 
-```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-###Install eosio
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+```
+### Install eosio
 ```
 brew tap eosio/eosio
 brew install eosio
+
 ```
 
 

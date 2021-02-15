@@ -30,9 +30,11 @@ cleos wallet create -n named_wallet --file password.pwd
 ```
 You should see the output below: 
 
-# shell
+```console
+
 Creating wallet: named_wallet
 Save password to use in the future to unlock this wallet.
 Without password imported keys will not be retrievable.
 saving password to passwd
-# shell
+
+```

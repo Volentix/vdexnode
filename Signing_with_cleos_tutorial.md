@@ -56,10 +56,10 @@ private key: imported private key for: EOS8FBXJUfbANf3xeDWPoJxnip3Ych9HjzLBr1VaX
 
 ```
 
-## make sure the wallet is open
+## make sure the wallet is unlocked
 
 ```
-cleos wallet open -n <named_wallet>
+cleos wallet unlock -n <named_wallet>
 
 ```
 
